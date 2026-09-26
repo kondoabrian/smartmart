@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Profile | SmartMart Delivery</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body class="smart-delivery-profile-body">
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="delivery-profile-navbar">
+
+    <div class="container">
+
+        <div class="delivery-profile-navbar-inner">
+
+            <a
+                href="{{ url_for('delivery_dashboard') }}"
+                class="delivery-profile-brand"
+            >
+
+                <span class="delivery-profile-brand-icon">
+                    🚚
+                </span>
+
+                <span>
+
+                    <strong>
+                        SmartMart
+                    </strong>
+
+                    <small>
+                        Delivery Portal
+                    </small>
+
+                </span>
+
+            </a>
+
+
+            <div class="delivery-profile-nav-actions">
+
+                <a
+                    href="{{ url_for('delivery_dashboard') }}"
+                    class="delivery-profile-dashboard-link"
+                >
+                    Dashboard
+                </a>
+
+                <a
+                    href="{{ url_for('delivery_logout') }}"
+                    class="delivery-profile-logout"
+                >
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     PROFILE PAGE
+========================================================= -->
+
+<main
+    class="smart-delivery-profile-section"
+    data-delivery-profile="true"
+>
+
+    <div class="container py-5">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <div class="delivery-profile-page-header">
+
+            <div class="section-label">
+                DELIVERY ACCOUNT
+            </div>
+
+            <h1>
+                My Profile
+            </h1>
+
+            <p>
+                View and manage your SmartMart delivery account.
+            </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             SUCCESS MESSAGE
+        ====================================================== -->
+
+        {% if request.args.get("success") %}
+
+        <div class="alert alert-success delivery-profile-message">
+
+            <strong>
+                ✓ Success
+            </strong>
+
+            <div>
+                {{ request.args.get("success") }}
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- =====================================================
+             ERROR MESSAGE
+        ====================================================== -->
+
+        {% if request.args.get("error") %}
+
+        <div class="alert alert-danger delivery-profile-message">
+
+            <strong>
+                ⚠ Error
+            </strong>
+
+            <div>
+                {{ request.args.get("error") }}
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <div class="row g-4">
+
+
+            <!-- =================================================
+                 PROFILE INFORMATION
+            ================================================== -->
+
+            <div class="col-lg-8">
+
+                <div class="delivery-profile-card">
+
+
+                    <!-- PROFILE HEADER -->
+
+                    <div class="delivery-profile-card-header">
+
+                        <div class="delivery-profile-avatar">
+
+                            {% if person.full_name %}
+                                {{ person.full_name[0]|upper }}
+                            {% else %}
+                                D
+                            {% endif %}
+
+                        </div>
+
+
+                        <div>
+
+                            <h2>
+                                {{ person.full_name }}
+                            </h2>
+
+                            <span class="delivery-profile-active">
+
+                                <span></span>
+
+                                {% if person.status == "active" %}
+                                    Active Delivery Account
+                                {% else %}
+                                    Inactive Delivery Account
+                                {% endif %}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PROFILE INFORMATION -->
+
+                    <div class="delivery-profile-information">
+
+
+                        <!-- NAME -->
+
+                        <div class="delivery-profile-info-item">
+
+                            <div class="delivery-profile-info-icon">
+                                👤
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Full Name
+                                </span>
+
+                                <strong>
+                                    {{ person.full_name }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="delivery-profile-info-item">
+
+                            <div class="delivery-profile-info-icon">
+                                📞
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Phone Number
+                                </span>
+
+                                <a
+                                    href="tel:{{ person.phone }}"
+                                >
+                                    {{ person.phone }}
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ROLE -->
+
+                        <div class="delivery-profile-info-item">
+
+                            <div class="delivery-profile-info-icon">
+                                🚚
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Account Role
+                                </span>
+
+                                <strong>
+                                    Delivery Personnel
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="delivery-profile-info-item">
+
+                            <div class="delivery-profile-info-icon">
+                                🟢
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Account Status
+                                </span>
+
+                                <strong class="delivery-profile-status-text">
+
+                                    {% if person.status == "active" %}
+                                        Active
+                                    {% else %}
+                                        {{ person.status|capitalize }}
+                                    {% endif %}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- DISTRICT -->
+
+                        <div class="delivery-profile-info-item">
+
+                            <div class="delivery-profile-info-icon">
+                                📍
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    District
+                                </span>
+
+                                <strong>
+                                    {{ person.district or "Not provided" }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TOWN -->
+
+                        <div class="delivery-profile-info-item">
+
+                            <div class="delivery-profile-info-icon">
+                                🏙️
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Town
+                                </span>
+
+                                <strong>
+                                    {{ person.town or "Not provided" }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ADDRESS -->
+
+                        <div class="delivery-profile-info-item">
+
+                            <div class="delivery-profile-info-icon">
+                                🏠
+                            </div>
+
+                            <div>
+
+                                <span>
+                                    Address
+                                </span>
+
+                                <strong>
+                                    {{ person.address or "Not provided" }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 QUICK ACTIONS
+            ================================================== -->
+
+            <div class="col-lg-4">
+
+                <div class="delivery-profile-side-card">
+
+                    <div class="delivery-profile-side-icon">
+                        ⚡
+                    </div>
+
+                    <h2>
+                        Quick Actions
+                    </h2>
+
+                    <p>
+                        Access the main tools for managing your deliveries.
+                    </p>
+
+
+                    <!-- DASHBOARD -->
+
+                    <a
+                        href="{{ url_for('delivery_dashboard') }}"
+                        class="delivery-profile-action primary"
+                    >
+
+                        <span>
+                            📋
+                        </span>
+
+                        Delivery Dashboard
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+
+                    <!-- LOGOUT -->
+
+                    <a
+                        href="{{ url_for('delivery_logout') }}"
+                        class="delivery-profile-action logout"
+                    >
+
+                        <span>
+                            🔒
+                        </span>
+
+                        Logout
+
+                    </a>
+
+                </div>
+
+
+                <!-- SECURITY INFORMATION -->
+
+                <div class="delivery-profile-security">
+
+                    <div class="delivery-profile-security-icon">
+                        🔐
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Account Security
+                        </strong>
+
+                        <p>
+                            Keep your delivery account credentials
+                            private and do not share your password.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             CHANGE PASSWORD
+        ====================================================== -->
+
+        <div class="delivery-profile-password-card">
+
+            <div class="delivery-profile-password-header">
+
+                <div class="delivery-profile-password-icon">
+                    🔐
+                </div>
+
+                <div>
+
+                    <div class="section-label">
+                        ACCOUNT SECURITY
+                    </div>
+
+                    <h2>
+                        Change Password
+                    </h2>
+
+                    <p>
+                        Update your delivery account password regularly
+                        to keep your account secure.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('delivery_change_password') }}"
+                class="delivery-change-password-form"
+            >
+
+
+                <!-- CURRENT PASSWORD -->
+
+                <div class="delivery-password-field">
+
+                    <label for="current_password">
+                        Current Password
+                    </label>
+
+                    <div class="delivery-password-input-wrapper">
+
+                        <input
+                            type="password"
+                            id="current_password"
+                            name="current_password"
+                            class="form-control"
+                            placeholder="Enter your current password"
+                            autocomplete="current-password"
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            data-target="current_password"
+                            aria-label="Show password"
+                        >
+                            👁️
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- NEW PASSWORD -->
+
+                    <div class="col-md-6">
+
+                        <div class="delivery-password-field">
+
+                            <label for="new_password">
+                                New Password
+                            </label>
+
+                            <div class="delivery-password-input-wrapper">
+
+                                <input
+                                    type="password"
+                                    id="new_password"
+                                    name="new_password"
+                                    class="form-control"
+                                    placeholder="Enter new password"
+                                    autocomplete="new-password"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    data-target="new_password"
+                                    aria-label="Show password"
+                                >
+                                    👁️
+                                </button>
+
+                            </div>
+
+                            <small>
+                                Minimum 6 characters.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="col-md-6">
+
+                        <div class="delivery-password-field">
+
+                            <label for="confirm_password">
+                                Confirm New Password
+                            </label>
+
+                            <div class="delivery-password-input-wrapper">
+
+                                <input
+                                    type="password"
+                                    id="confirm_password"
+                                    name="confirm_password"
+                                    class="form-control"
+                                    placeholder="Confirm new password"
+                                    autocomplete="new-password"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    data-target="confirm_password"
+                                    aria-label="Show password"
+                                >
+                                    👁️
+                                </button>
+
+                            </div>
+
+                            <small>
+                                Enter the same password again.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD REQUIREMENTS -->
+
+                <div class="delivery-password-requirements">
+
+                    <strong>
+                        Password Requirements
+                    </strong>
+
+                    <ul>
+
+                        <li>
+                            At least 6 characters
+                        </li>
+
+                        <li>
+                            Must be different from your current password
+                        </li>
+
+                        <li>
+                            Do not share your password with other people
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <div class="delivery-password-submit">
+
+                    <button
+                        type="submit"
+                        class="delivery-change-password-button"
+                    >
+
+                        🔐 Change Password
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- =====================================================
+             DELIVERY ROLE INFORMATION
+        ====================================================== -->
+
+        <div class="delivery-profile-role-card">
+
+            <div class="delivery-profile-role-icon">
+                🚚
+            </div>
+
+            <div>
+
+                <div class="section-label">
+                    YOUR ROLE
+                </div>
+
+                <h2>
+                    SmartMart Delivery Personnel
+                </h2>
+
+                <p>
+                    Your delivery account allows you to view orders
+                    assigned to you, access customer delivery details,
+                    update delivery progress, and confirm completed
+                    deliveries.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             BACK TO DASHBOARD
+        ====================================================== -->
+
+        <div class="delivery-profile-bottom">
+
+            <a
+                href="{{ url_for('delivery_dashboard') }}"
+            >
+                ← Back to Delivery Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script
+    src="{{ url_for('static', filename='js/main.js') }}"
+></script>
+
+
+</body>
+
+</html>

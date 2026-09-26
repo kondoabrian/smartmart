@@ -1,0 +1,404 @@
+{% extends "base.html" %}
+
+{% block title %}
+Stock Adjustment History | SmartMart
+{% endblock %}
+
+{% block content %}
+
+<section class="smart-stock-history-section py-5">
+
+    <div class="container">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="stock-history-page-header">
+
+            <div>
+
+                <div class="section-label">
+                    SMARTMART INVENTORY
+                </div>
+
+                <h1 class="stock-history-page-title">
+                    Stock Adjustment History
+                </h1>
+
+                <p class="stock-history-page-subtitle">
+                    Review every manual stock addition and removal
+                    recorded in the SmartMart inventory.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('admin_inventory') }}"
+                class="stock-history-back-btn"
+            >
+                <span>←</span>
+                Inventory
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             HISTORY CARD
+        ================================================== -->
+
+        <div class="stock-history-main-card">
+
+
+            <!-- Card Header -->
+
+            <div class="stock-history-card-header">
+
+                <div>
+
+                    <div class="stock-history-label">
+                        INVENTORY AUDIT TRAIL
+                    </div>
+
+                    <h2 class="stock-history-card-title">
+                        Adjustment Records
+                    </h2>
+
+                    <p class="stock-history-card-description">
+                        Track when stock was changed, what changed,
+                        and which administrator made the adjustment.
+                    </p>
+
+                </div>
+
+
+                <div class="stock-history-header-icon">
+                    📋
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 HISTORY TABLE
+            ================================================== -->
+
+            <div class="stock-history-table-wrapper">
+
+                <div class="table-responsive">
+
+                    <table class="table stock-history-table align-middle">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Product</th>
+
+                                <th>Action</th>
+
+                                <th>Quantity</th>
+
+                                <th>Before</th>
+
+                                <th>After</th>
+
+                                <th>Reason</th>
+
+                                <th>Admin</th>
+
+                                <th>Date</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% if adjustments %}
+
+                                {% for adjustment in adjustments %}
+
+                                <tr>
+
+
+                                    <!-- Number -->
+
+                                    <td>
+
+                                        <span class="stock-history-row-number">
+                                            {{ loop.index }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Product -->
+
+                                    <td>
+
+                                        <div class="stock-history-product">
+
+                                            <div class="stock-history-product-icon">
+                                                📦
+                                            </div>
+
+                                            <strong>
+                                                {{ adjustment.product_name }}
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- Action -->
+
+                                    <td>
+
+                                        {% if adjustment.action == "ADD" %}
+
+                                            <span class="stock-history-action stock-history-action-add">
+                                                <span class="stock-history-action-icon">
+                                                    +
+                                                </span>
+                                                ADD
+                                            </span>
+
+                                        {% elif adjustment.action == "REMOVE" %}
+
+                                            <span class="stock-history-action stock-history-action-remove">
+                                                <span class="stock-history-action-icon">
+                                                    −
+                                                </span>
+                                                REMOVE
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="stock-history-action stock-history-action-sale">
+                                                <span class="stock-history-action-icon">
+                                                    ✓
+                                                </span>
+                                                {{ adjustment.action }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <!-- Quantity -->
+
+                                    <td>
+
+                                        <span class="stock-history-quantity">
+                                            {{ adjustment.quantity }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Before -->
+
+                                    <td>
+
+                                        <span class="stock-history-stock-before">
+                                            {{ adjustment.stock_before }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- After -->
+
+                                    <td>
+
+                                        <span class="stock-history-stock-after">
+                                            {{ adjustment.stock_after }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Reason -->
+
+                                    <td>
+
+                                        {% if adjustment.reason %}
+
+                                            <span class="stock-history-reason">
+                                                {{ adjustment.reason }}
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="stock-history-no-data">
+                                                No reason provided
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <!-- Admin -->
+
+                                    <td>
+
+                                        <div class="stock-history-admin">
+
+                                            <div class="stock-history-admin-avatar">
+                                                {{ adjustment.admin_username[0]|upper if adjustment.admin_username else "A" }}
+                                            </div>
+
+                                            <span>
+                                                {{ adjustment.admin_username or "System" }}
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- Date -->
+
+                                    <td>
+
+                                        <span class="stock-history-date">
+                                            {{ adjustment.created_at }}
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+
+                            {% else %}
+
+
+                                <!-- =================================================
+                                     EMPTY STATE
+                                ================================================== -->
+
+                                <tr>
+
+                                    <td
+                                        colspan="9"
+                                        class="stock-history-empty-cell"
+                                    >
+
+                                        <div class="stock-history-empty-state">
+
+                                            <div class="stock-history-empty-icon">
+                                                📋
+                                            </div>
+
+                                            <h3>
+                                                No Stock Adjustments Yet
+                                            </h3>
+
+                                            <p>
+                                                Stock adjustment records
+                                                will appear here once
+                                                inventory changes are made.
+                                            </p>
+
+                                            <a
+                                                href="{{ url_for('admin_inventory') }}"
+                                                class="stock-history-empty-btn"
+                                            >
+                                                ← Back to Inventory
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+
+                            {% endif %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             INFORMATION CARD
+        ================================================== -->
+
+        <div class="stock-history-information-card">
+
+            <div class="stock-history-information-icon">
+                ℹ️
+            </div>
+
+            <div>
+
+                <h3>
+                    Stock History
+                </h3>
+
+                <p>
+                    Every manual stock adjustment is recorded with
+                    the administrator, quantity, previous stock,
+                    new stock, reason and date. This provides a clear
+                    audit trail for inventory management.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK NAVIGATION
+        ================================================== -->
+
+        <div class="stock-history-navigation">
+
+            <a
+                href="{{ url_for('admin_inventory') }}"
+                class="stock-history-nav-btn stock-history-nav-primary"
+            >
+                📦 Inventory
+            </a>
+
+            <a
+                href="{{ url_for('admin_products') }}"
+                class="stock-history-nav-btn"
+            >
+                🛍️ Manage Products
+            </a>
+
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="stock-history-nav-btn"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,627 @@
+{% extends "base.html" %}
+
+{% block title %}
+Inventory Management | SmartMart
+{% endblock %}
+
+{% block content %}
+
+<section class="smart-inventory-section py-5">
+
+    <div class="container">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="inventory-page-header">
+
+            <div>
+
+                <div class="section-label">
+                    SMARTMART INVENTORY
+                </div>
+
+                <h1 class="inventory-page-title">
+                    Inventory Management
+                </h1>
+
+                <p class="inventory-page-subtitle">
+                    Monitor product stock, identify low-stock items,
+                    and make controlled inventory adjustments.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="inventory-dashboard-btn"
+            >
+                <span>←</span>
+                Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             INVENTORY SUMMARY
+        ================================================== -->
+
+        <div class="row g-4 mb-5">
+
+
+            <!-- Total Products -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="inventory-stat-card inventory-stat-products">
+
+                    <div class="inventory-stat-content">
+
+                        <div>
+
+                            <span class="inventory-stat-label">
+                                Total Products
+                            </span>
+
+                            <h2 class="inventory-stat-number">
+                                {{ total_products }}
+                            </h2>
+
+                            <p class="inventory-stat-description">
+                                Products currently in the system
+                            </p>
+
+                        </div>
+
+                        <div class="inventory-stat-icon">
+                            🛍️
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Low Stock -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="inventory-stat-card inventory-stat-low">
+
+                    <div class="inventory-stat-content">
+
+                        <div>
+
+                            <span class="inventory-stat-label">
+                                Low Stock
+                            </span>
+
+                            <h2 class="inventory-stat-number">
+                                {{ low_stock }}
+                            </h2>
+
+                            <p class="inventory-stat-description">
+                                Products with 5 or fewer items
+                            </p>
+
+                        </div>
+
+                        <div class="inventory-stat-icon">
+                            ⚠️
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Out of Stock -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="inventory-stat-card inventory-stat-out">
+
+                    <div class="inventory-stat-content">
+
+                        <div>
+
+                            <span class="inventory-stat-label">
+                                Out of Stock
+                            </span>
+
+                            <h2 class="inventory-stat-number">
+                                {{ out_of_stock }}
+                            </h2>
+
+                            <p class="inventory-stat-description">
+                                Products with zero stock
+                            </p>
+
+                        </div>
+
+                        <div class="inventory-stat-icon">
+                            🚫
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PRODUCT STOCK
+        ================================================== -->
+
+        <div class="inventory-main-card">
+
+
+            <!-- Card Header -->
+
+            <div class="inventory-card-header">
+
+                <div>
+
+                    <div class="inventory-card-label">
+                        STOCK OVERVIEW
+                    </div>
+
+                    <h2 class="inventory-card-title">
+                        Product Stock
+                    </h2>
+
+                    <p class="inventory-card-description">
+                        View current stock levels and make manual
+                        inventory adjustments.
+                    </p>
+
+                </div>
+
+
+                <div class="inventory-management-actions">
+
+                    <a
+                        href="{{ url_for('admin_stock_history') }}"
+                        class="inventory-action-btn inventory-action-primary"
+                    >
+                        📋 Stock History
+                    </a>
+
+                    <a
+                        href="{{ url_for('admin_products') }}"
+                        class="inventory-action-btn inventory-action-secondary"
+                    >
+                        Manage Products
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PRODUCT TABLE
+            ================================================== -->
+
+            <div class="inventory-table-wrapper">
+
+                <div class="table-responsive">
+
+                    <table class="table inventory-table align-middle">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Product</th>
+
+                                <th>Category</th>
+
+                                <th>Buying Price</th>
+
+                                <th>Selling Price</th>
+
+                                <th>Stock</th>
+
+                                <th>Status</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% if products %}
+
+                                {% for product in products %}
+
+                                <tr>
+
+
+                                    <!-- Number -->
+
+                                    <td>
+
+                                        <span class="inventory-row-number">
+                                            {{ loop.index }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Product -->
+
+                                    <td>
+
+                                        <div class="inventory-product-cell">
+
+                                            <div class="inventory-product-icon">
+                                                📦
+                                            </div>
+
+                                            <div>
+
+                                                <strong class="inventory-product-name">
+                                                    {{ product.name }}
+                                                </strong>
+
+                                                <small class="inventory-product-label">
+                                                    Product #{{ product.id }}
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- Category -->
+
+                                    <td>
+
+                                        <span class="inventory-category">
+                                            {{ product.category_name }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Buying Price -->
+
+                                    <td>
+
+                                        <span class="inventory-price">
+                                            UGX
+                                            {{ "{:,.0f}".format(
+                                                product.buying_price
+                                            ) }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Selling Price -->
+
+                                    <td>
+
+                                        <span class="inventory-price inventory-selling-price">
+                                            UGX
+                                            {{ "{:,.0f}".format(
+                                                product.price
+                                            ) }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Stock -->
+
+                                    <td>
+
+                                        <span
+                                            class="
+                                            inventory-stock-number
+                                            {% if product.stock == 0 %}
+                                                inventory-stock-out
+                                            {% elif product.stock <= 5 %}
+                                                inventory-stock-low
+                                            {% else %}
+                                                inventory-stock-good
+                                            {% endif %}
+                                            "
+                                        >
+                                            {{ product.stock }}
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Status -->
+
+                                    <td>
+
+                                        {% if product.stock == 0 %}
+
+                                            <span class="inventory-status inventory-status-out">
+                                                <span class="inventory-status-dot"></span>
+                                                Out of Stock
+                                            </span>
+
+                                        {% elif product.stock <= 5 %}
+
+                                            <span class="inventory-status inventory-status-low">
+                                                <span class="inventory-status-dot"></span>
+                                                Low Stock
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="inventory-status inventory-status-good">
+                                                <span class="inventory-status-dot"></span>
+                                                In Stock
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <!-- Update Stock -->
+
+                                    <td>
+
+                                        <a
+                                            href="{{ url_for(
+                                                'admin_update_stock',
+                                                product_id=product.id
+                                            ) }}"
+                                            class="inventory-update-btn"
+                                        >
+                                            Update Stock
+                                            <span>→</span>
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+
+                            {% else %}
+
+
+                                <!-- =================================================
+                                     EMPTY STATE
+                                ================================================== -->
+
+                                <tr>
+
+                                    <td
+                                        colspan="8"
+                                        class="inventory-empty-cell"
+                                    >
+
+                                        <div class="inventory-empty-state">
+
+                                            <div class="inventory-empty-icon">
+                                                📦
+                                            </div>
+
+                                            <h3>
+                                                No Products Found
+                                            </h3>
+
+                                            <p>
+                                                There are currently no products
+                                                in the inventory.
+                                            </p>
+
+                                            <a
+                                                href="{{ url_for(
+                                                    'admin_add_product'
+                                                ) }}"
+                                                class="inventory-add-btn"
+                                            >
+                                                ➕ Add Product
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+
+                            {% endif %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             STOCK INFORMATION
+        ================================================== -->
+
+        <div class="inventory-information-card">
+
+            <div class="inventory-information-header">
+
+                <div class="inventory-information-icon">
+                    ℹ️
+                </div>
+
+                <div>
+
+                    <h3>
+                        Stock Information
+                    </h3>
+
+                    <p>
+                        Understand how SmartMart classifies product
+                        stock levels.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- In Stock -->
+
+                <div class="col-lg-4">
+
+                    <div class="inventory-info-item">
+
+                        <span class="inventory-status inventory-status-good">
+                            <span class="inventory-status-dot"></span>
+                            In Stock
+                        </span>
+
+                        <p>
+                            Products with more than
+                            <strong>5 items</strong> available.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Low Stock -->
+
+                <div class="col-lg-4">
+
+                    <div class="inventory-info-item">
+
+                        <span class="inventory-status inventory-status-low">
+                            <span class="inventory-status-dot"></span>
+                            Low Stock
+                        </span>
+
+                        <p>
+                            Products with
+                            <strong>1–5 items</strong> available.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Out of Stock -->
+
+                <div class="col-lg-4">
+
+                    <div class="inventory-info-item">
+
+                        <span class="inventory-status inventory-status-out">
+                            <span class="inventory-status-dot"></span>
+                            Out of Stock
+                        </span>
+
+                        <p>
+                            Products with
+                            <strong>0 items</strong> available.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+        ================================================== -->
+
+        <div class="inventory-quick-actions">
+
+            <div>
+
+                <div class="inventory-card-label">
+                    INVENTORY TOOLS
+                </div>
+
+                <h3>
+                    Quick Actions
+                </h3>
+
+                <p>
+                    Access the most frequently used inventory
+                    management functions.
+                </p>
+
+            </div>
+
+
+            <div class="inventory-quick-buttons">
+
+                <a
+                    href="{{ url_for('admin_add_product') }}"
+                    class="inventory-quick-btn inventory-quick-primary"
+                >
+                    ➕ Add Product
+                </a>
+
+                <a
+                    href="{{ url_for('admin_products') }}"
+                    class="inventory-quick-btn"
+                >
+                    🛍️ Manage Products
+                </a>
+
+                <a
+                    href="{{ url_for('admin_stock_history') }}"
+                    class="inventory-quick-btn"
+                >
+                    📋 Stock History
+                </a>
+
+                <a
+                    href="{{ url_for('admin_dashboard') }}"
+                    class="inventory-quick-btn"
+                >
+                    ← Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

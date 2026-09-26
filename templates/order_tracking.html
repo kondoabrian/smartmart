@@ -1,0 +1,1044 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Order Tracking | SmartMart
+{% endblock %}
+
+
+{% block content %}
+
+<section class="smart-order-tracking-section py-5">
+
+    <div class="container">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+             ===================================================== -->
+
+        <div class="tracking-page-header text-center mb-5">
+
+            <div class="section-label">
+                SMARTMART ORDER TRACKING
+            </div>
+
+            <h1 class="tracking-page-title">
+                Track Your Order
+            </h1>
+
+            <p class="tracking-page-subtitle">
+                Check the progress of your SmartMart order from
+                placement to delivery.
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             SEARCH ORDER
+             ===================================================== -->
+
+        <div class="row justify-content-center mb-4">
+
+            <div class="col-lg-8">
+
+                <div class="tracking-search-card">
+
+                    <div class="tracking-search-icon">
+                        🔍
+                    </div>
+
+
+                    <div class="tracking-search-content">
+
+                        <h4>
+                            Search Another Order
+                        </h4>
+
+                        <p>
+                            Enter your SmartMart order number to view
+                            its latest delivery status.
+                        </p>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('track_order') }}"
+                            id="trackingSearchForm"
+                        >
+
+                            <div class="tracking-search-form">
+
+                                <input
+                                    type="text"
+                                    id="trackingSearchInput"
+                                    name="order_number"
+                                    class="tracking-search-input"
+                                    placeholder="Example: SM-A82F91C4"
+                                    autocomplete="off"
+                                    maxlength="20"
+                                    required
+                                >
+
+
+                                <button
+                                    type="submit"
+                                    class="tracking-search-btn"
+                                    id="trackingSearchButton"
+                                >
+
+                                    <span id="trackingSearchIcon">
+                                        🔍
+                                    </span>
+
+                                    <span id="trackingSearchText">
+                                        Track Order
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+
+                            <div
+                                id="trackingSearchError"
+                                class="tracking-search-error"
+                                role="alert"
+                            ></div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             ERROR
+             ===================================================== -->
+
+        {% if error %}
+
+        <div class="row justify-content-center mb-4">
+
+            <div class="col-lg-8">
+
+                <div class="tracking-error-card">
+
+                    <div class="tracking-error-icon">
+                        ⚠️
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Order Not Found
+                        </strong>
+
+                        <p>
+                            {{ error }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+
+        {% if order %}
+
+
+        <!-- =====================================================
+             ORDER HEADER
+             ===================================================== -->
+
+        <div class="tracking-order-header-card mb-4">
+
+            <div class="tracking-order-header-left">
+
+                <div class="tracking-order-main-icon">
+                    📦
+                </div>
+
+                <div>
+
+                    <span class="tracking-order-label">
+                        ORDER NUMBER
+                    </span>
+
+                    <h2 id="trackingDisplayedOrderNumber">
+                        {{ order.order_number }}
+                    </h2>
+
+                    <p>
+                        Ordered on {{ order.created_at }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="tracking-status-wrapper">
+
+                <span class="tracking-status-label">
+                    CURRENT STATUS
+                </span>
+
+
+                {% if order.status == "NEW" %}
+
+                <span
+                    class="tracking-status-badge status-new tracking-current-status"
+                >
+                    ORDER PLACED
+                </span>
+
+
+                {% elif order.status == "CONFIRMED" %}
+
+                <span
+                    class="tracking-status-badge status-confirmed tracking-current-status"
+                >
+                    CONFIRMED
+                </span>
+
+
+                {% elif order.status == "PREPARING" %}
+
+                <span
+                    class="tracking-status-badge status-preparing tracking-current-status"
+                >
+                    PREPARING
+                </span>
+
+
+                {% elif order.status == "ASSIGNED" %}
+
+                <span
+                    class="tracking-status-badge status-assigned tracking-current-status"
+                >
+                    DELIVERY ASSIGNED
+                </span>
+
+
+                {% elif order.status == "OUT FOR DELIVERY" %}
+
+                <span
+                    class="tracking-status-badge status-out-delivery tracking-current-status"
+                >
+                    OUT FOR DELIVERY
+                </span>
+
+
+                {% elif order.status == "DELIVERED" %}
+
+                <span
+                    class="tracking-status-badge status-delivered tracking-current-status"
+                >
+                    DELIVERED
+                </span>
+
+
+                {% elif order.status == "CANCELLED" %}
+
+                <span
+                    class="tracking-status-badge status-cancelled tracking-current-status"
+                >
+                    CANCELLED
+                </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             ORDER PROGRESS
+             ===================================================== -->
+
+        {% if order.status != "CANCELLED" %}
+
+        <div class="tracking-section-card mb-4">
+
+            <div class="tracking-section-heading">
+
+                <div class="tracking-heading-icon">
+                    🚚
+                </div>
+
+                <div>
+
+                    <h3>
+                        Order Progress
+                    </h3>
+
+                    <p>
+                        Follow your order through each stage.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% set progress = {
+                "NEW": 1,
+                "CONFIRMED": 2,
+                "PREPARING": 3,
+                "ASSIGNED": 4,
+                "OUT FOR DELIVERY": 5,
+                "DELIVERED": 6
+            } %}
+
+
+            {% set current_step = progress[order.status] %}
+
+
+            <div
+                class="tracking-progress-wrapper"
+                data-current-step="{{ current_step }}"
+            >
+
+                <div class="tracking-progress-line"></div>
+
+
+                <div class="tracking-progress-steps">
+
+
+                    <!-- =================================================
+                         STEP 1
+                         ================================================= -->
+
+                    <div
+                        class="tracking-step"
+                        data-step="1"
+                    >
+
+                        {% if current_step >= 1 %}
+
+                        <div class="tracking-step-circle completed">
+                            ✓
+                        </div>
+
+                        {% else %}
+
+                        <div class="tracking-step-circle">
+                            1
+                        </div>
+
+                        {% endif %}
+
+
+                        <div class="tracking-step-text">
+
+                            <strong>
+                                Order Placed
+                            </strong>
+
+                            <span>
+                                Order received
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         STEP 2
+                         ================================================= -->
+
+                    <div
+                        class="tracking-step"
+                        data-step="2"
+                    >
+
+                        {% if current_step >= 2 %}
+
+                        <div class="tracking-step-circle completed">
+                            ✓
+                        </div>
+
+                        {% else %}
+
+                        <div class="tracking-step-circle">
+                            2
+                        </div>
+
+                        {% endif %}
+
+
+                        <div class="tracking-step-text">
+
+                            <strong>
+                                Confirmed
+                            </strong>
+
+                            <span>
+                                Order confirmed
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         STEP 3
+                         ================================================= -->
+
+                    <div
+                        class="tracking-step"
+                        data-step="3"
+                    >
+
+                        {% if current_step >= 3 %}
+
+                        <div class="tracking-step-circle completed">
+                            ✓
+                        </div>
+
+                        {% else %}
+
+                        <div class="tracking-step-circle">
+                            3
+                        </div>
+
+                        {% endif %}
+
+
+                        <div class="tracking-step-text">
+
+                            <strong>
+                                Preparing
+                            </strong>
+
+                            <span>
+                                Being prepared
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         STEP 4
+                         ================================================= -->
+
+                    <div
+                        class="tracking-step"
+                        data-step="4"
+                    >
+
+                        {% if current_step >= 4 %}
+
+                        <div class="tracking-step-circle completed">
+                            ✓
+                        </div>
+
+                        {% else %}
+
+                        <div class="tracking-step-circle">
+                            4
+                        </div>
+
+                        {% endif %}
+
+
+                        <div class="tracking-step-text">
+
+                            <strong>
+                                Assigned
+                            </strong>
+
+                            <span>
+                                Delivery assigned
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         STEP 5
+                         ================================================= -->
+
+                    <div
+                        class="tracking-step"
+                        data-step="5"
+                    >
+
+                        {% if current_step >= 5 %}
+
+                        <div class="tracking-step-circle completed">
+                            ✓
+                        </div>
+
+                        {% else %}
+
+                        <div class="tracking-step-circle">
+                            5
+                        </div>
+
+                        {% endif %}
+
+
+                        <div class="tracking-step-text">
+
+                            <strong>
+                                Out for Delivery
+                            </strong>
+
+                            <span>
+                                On the way
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         STEP 6
+                         ================================================= -->
+
+                    <div
+                        class="tracking-step"
+                        data-step="6"
+                    >
+
+                        {% if current_step >= 6 %}
+
+                        <div class="tracking-step-circle completed">
+                            ✓
+                        </div>
+
+                        {% else %}
+
+                        <div class="tracking-step-circle">
+                            6
+                        </div>
+
+                        {% endif %}
+
+
+                        <div class="tracking-step-text">
+
+                            <strong>
+                                Delivered
+                            </strong>
+
+                            <span>
+                                Order received
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- =====================================================
+             CUSTOMER + DELIVERY INFORMATION
+             ===================================================== -->
+
+        <div class="row g-4 mb-4">
+
+
+            <!-- =================================================
+                 CUSTOMER INFORMATION
+                 ================================================= -->
+
+            <div class="col-lg-6">
+
+                <div class="tracking-info-card h-100">
+
+                    <div class="tracking-card-heading">
+
+                        <div class="tracking-card-icon customer-icon">
+                            👤
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Customer Information
+                            </h3>
+
+                            <span>
+                                Your order details
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tracking-divider"></div>
+
+
+                    <div class="tracking-detail-list">
+
+
+                        <div class="tracking-detail-item">
+
+                            <span class="tracking-detail-label">
+                                Name
+                            </span>
+
+                            <strong>
+                                {{ order.customer_name }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="tracking-detail-item">
+
+                            <span class="tracking-detail-label">
+                                Phone
+                            </span>
+
+                            <a href="tel:{{ order.phone }}">
+                                {{ order.phone }}
+                            </a>
+
+                        </div>
+
+
+                        <div class="tracking-detail-item">
+
+                            <span class="tracking-detail-label">
+                                District
+                            </span>
+
+                            <strong>
+                                {{ order.district }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="tracking-detail-item">
+
+                            <span class="tracking-detail-label">
+                                Town / City
+                            </span>
+
+                            <strong>
+                                {{ order.town }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DELIVERY INFORMATION
+                 ================================================= -->
+
+            <div class="col-lg-6">
+
+                <div class="tracking-info-card h-100">
+
+                    <div class="tracking-card-heading">
+
+                        <div class="tracking-card-icon delivery-icon">
+                            🚚
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Delivery Information
+                            </h3>
+
+                            <span>
+                                Where your order is going
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="tracking-divider"></div>
+
+
+                    <div class="tracking-detail-list">
+
+
+                        <div class="tracking-detail-block">
+
+                            <span class="tracking-detail-label">
+                                Delivery Address
+                            </span>
+
+                            <strong>
+                                {{ order.delivery_address }}
+                            </strong>
+
+                        </div>
+
+
+
+                        {% if order.additional_directions %}
+
+                        <div class="tracking-detail-block">
+
+                            <span class="tracking-detail-label">
+                                Additional Directions
+                            </span>
+
+                            <strong>
+                                {{ order.additional_directions }}
+                            </strong>
+
+                        </div>
+
+                        {% endif %}
+
+
+
+                        {% if order.delivery_person_name %}
+
+                        <div class="tracking-delivery-person">
+
+                            <div class="tracking-person-avatar">
+                                🛵
+                            </div>
+
+
+                            <div class="tracking-person-info">
+
+                                <span>
+                                    DELIVERY PERSON
+                                </span>
+
+                                <strong>
+                                    {{ order.delivery_person_name }}
+                                </strong>
+
+                                <a
+                                    href="tel:{{ order.delivery_person_phone }}"
+                                >
+                                    📞 {{ order.delivery_person_phone }}
+                                </a>
+
+                            </div>
+
+                        </div>
+
+
+                        {% else %}
+
+
+                        <div class="tracking-not-assigned">
+
+                            <span>
+                                ℹ️
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Delivery Not Yet Assigned
+                                </strong>
+
+                                <p>
+                                    A delivery person has not yet
+                                    been assigned to this order.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        {% endif %}
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             ORDERED PRODUCTS
+             ===================================================== -->
+
+        <div class="tracking-products-card mb-4">
+
+            <div class="tracking-products-header">
+
+                <div class="tracking-card-heading">
+
+                    <div class="tracking-card-icon products-icon">
+                        🛍️
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Ordered Products
+                        </h3>
+
+                        <span>
+                            Items included in this order
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="tracking-products-list">
+
+
+                {% for item in items %}
+
+                <div class="tracking-product-row">
+
+
+                    <div class="tracking-product-main">
+
+
+                        <div class="tracking-product-image-wrapper">
+
+                            {% if item.product_image %}
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename='images/products/' + item.product_image
+                                ) }}"
+                                alt="{{ item.product_name }}"
+                                class="tracking-product-image"
+                            >
+
+                            {% else %}
+
+                            <div class="tracking-product-placeholder">
+                                📦
+                            </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="tracking-product-info">
+
+                            <h5>
+                                {{ item.product_name }}
+                            </h5>
+
+                            <span>
+                                Quantity: {{ item.quantity }}
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="tracking-product-pricing">
+
+                        <span>
+                            UGX {{ "{:,.0f}".format(item.unit_price) }}
+                            each
+                        </span>
+
+                        <strong>
+                            UGX {{ "{:,.0f}".format(item.subtotal) }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+
+
+            <div class="tracking-total-row">
+
+                <span>
+                    Order Total
+                </span>
+
+                <strong>
+                    UGX {{ "{:,.0f}".format(order.total_amount) }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             DELIVERED MESSAGE
+             ===================================================== -->
+
+        {% if order.status == "DELIVERED" %}
+
+        <div class="tracking-result-message delivered-message">
+
+            <div class="tracking-result-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <h3>
+                    Order Delivered
+                </h3>
+
+                <p>
+                    Your SmartMart order has been delivered.
+                    Thank you for shopping with us!
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- =====================================================
+             CANCELLED MESSAGE
+             ===================================================== -->
+
+        {% if order.status == "CANCELLED" %}
+
+        <div class="tracking-result-message cancelled-message">
+
+            <div class="tracking-result-icon">
+                !
+            </div>
+
+            <div>
+
+                <h3>
+                    Order Cancelled
+                </h3>
+
+                <p>
+                    This order has been cancelled.
+                    Please contact SmartMart if you need assistance.
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- =====================================================
+             ACTIONS
+             ===================================================== -->
+
+        <div class="tracking-page-actions">
+
+
+            <a
+                href="{{ url_for('track_order') }}"
+                class="tracking-action-secondary"
+                id="trackingAnotherOrderButton"
+            >
+
+                <span>
+                    🔍
+                </span>
+
+                <span id="trackingAnotherOrderText">
+                    Track Another Order
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('home') }}"
+                class="tracking-action-primary"
+                id="trackingContinueShoppingButton"
+            >
+
+                <span>
+                    🛍️
+                </span>
+
+                <span id="trackingContinueShoppingText">
+                    Continue Shopping
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

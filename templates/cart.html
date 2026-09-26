@@ -1,0 +1,451 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Shopping Cart | SmartMart
+{% endblock %}
+
+
+{% block content %}
+
+<section class="smart-cart-section py-5">
+
+    <div class="container">
+
+
+        <!-- =====================================================
+             CART HEADER
+             ===================================================== -->
+
+        <div class="cart-page-header mb-4">
+
+            <div>
+
+                <div class="section-label">
+                    YOUR SHOPPING
+                </div>
+
+                <h1 class="cart-page-title">
+                    Shopping Cart
+                </h1>
+
+                <p class="cart-page-subtitle">
+                    Review your selected products before checkout.
+                </p>
+
+            </div>
+
+
+            {% if cart_items %}
+
+            <a
+                href="{{ url_for('clear_cart') }}"
+                class="cart-clear-btn"
+                id="clearCartButton"
+            >
+
+                🗑️ Clear Cart
+
+            </a>
+
+            {% endif %}
+
+        </div>
+
+
+
+        {% if cart_items %}
+
+
+        <div class="row g-4">
+
+
+            <!-- =================================================
+                 CART ITEMS
+                 ================================================= -->
+
+            <div class="col-lg-8">
+
+
+                <div class="cart-items-header">
+
+                    <span>
+                        {{ cart_items|length }}
+                        item{% if cart_items|length != 1 %}s{% endif %}
+                    </span>
+
+                    <span>
+                        Your selected products
+                    </span>
+
+                </div>
+
+
+                {% for item in cart_items %}
+
+
+                <div class="cart-product-card">
+
+
+                    <!-- =================================================
+                         PRODUCT IMAGE
+                         ================================================= -->
+
+                    <div class="cart-product-image-wrapper">
+
+                        {% if item.image %}
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='images/products/' + item.image
+                            ) }}"
+                            class="cart-product-image"
+                            alt="{{ item.name }}"
+                        >
+
+                        {% else %}
+
+                        <div class="cart-product-placeholder">
+                            📦
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         PRODUCT INFORMATION
+                         ================================================= -->
+
+                    <div class="cart-product-info">
+
+                        <div class="cart-product-category">
+                            SmartMart Product
+                        </div>
+
+                        <h5 class="cart-product-name">
+                            {{ item.name }}
+                        </h5>
+
+                        <div class="cart-product-unit-price">
+
+                            UGX
+                            {{ "{:,.0f}".format(item.price) }}
+
+                            <span>
+                                each
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         QUANTITY
+                         ================================================= -->
+
+                    <div class="cart-product-quantity">
+
+                        <small>
+                            Quantity
+                        </small>
+
+                        <strong>
+                            {{ item.quantity }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         SUBTOTAL
+                         ================================================= -->
+
+                    <div class="cart-product-subtotal">
+
+                        <small>
+                            Subtotal
+                        </small>
+
+                        <strong>
+
+                            UGX
+                            {{ "{:,.0f}".format(item.subtotal) }}
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         REMOVE
+                         ================================================= -->
+
+                    <div class="cart-product-remove">
+
+                        <a
+                            href="{{ url_for(
+                                'remove_from_cart',
+                                product_id=item.id
+                            ) }}"
+                            class="cart-remove-btn"
+                            data-product-name="{{ item.name }}"
+                        >
+
+                            🗑️ Remove
+
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+                {% endfor %}
+
+
+
+                <!-- =================================================
+                     CONTINUE SHOPPING
+                     ================================================= -->
+
+                <div class="cart-continue-wrapper mt-4">
+
+                    <a
+                        href="{{ url_for('home') }}"
+                        class="cart-continue-btn"
+                    >
+
+                        ← Continue Shopping
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ORDER SUMMARY
+                 ================================================= -->
+
+            <div class="col-lg-4">
+
+
+                <div class="cart-summary-card">
+
+
+                    <!-- SUMMARY HEADER -->
+
+                    <div class="cart-summary-header">
+
+                        <div class="cart-summary-icon">
+                            🛒
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Order Summary
+                            </h4>
+
+                            <small>
+                                Your shopping total
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+
+
+
+                    <!-- ITEMS -->
+
+                    <div class="cart-summary-row">
+
+                        <span>
+                            Items
+                        </span>
+
+                        <strong>
+                            {{ cart_items|length }}
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- DELIVERY -->
+
+                    <div class="cart-summary-row">
+
+                        <span>
+                            Delivery
+                        </span>
+
+                        <span class="cart-delivery-text">
+                            Available
+                        </span>
+
+                    </div>
+
+
+                    <hr>
+
+
+
+                    <!-- TOTAL -->
+
+                    <div class="cart-total-row">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong>
+
+                            UGX
+                            {{ "{:,.0f}".format(total) }}
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         CHECKOUT
+                         ================================================= -->
+
+                    <a
+                        href="{{ url_for('checkout') }}"
+                        class="cart-checkout-btn"
+                        id="checkoutButton"
+                    >
+
+                        <span>
+                            Proceed to Checkout
+                        </span>
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <!-- =================================================
+                         CONTINUE SHOPPING
+                         ================================================= -->
+
+                    <a
+                        href="{{ url_for('home') }}"
+                        class="cart-summary-shopping-btn"
+                    >
+
+                        Continue Shopping
+
+                    </a>
+
+
+
+                    <!-- =================================================
+                         TRUST MESSAGE
+                         ================================================= -->
+
+                    <div class="cart-trust-message">
+
+                        <div>
+                            🔒
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Secure Shopping
+                            </strong>
+
+                            <small>
+                                Your order information is handled securely.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- =====================================================
+             EMPTY CART
+             ===================================================== -->
+
+        <div class="empty-cart-container">
+
+
+            <div class="empty-cart-icon">
+                🛒
+            </div>
+
+
+            <div class="section-label">
+                YOUR CART
+            </div>
+
+
+            <h2 class="empty-cart-title">
+                Your cart is empty
+            </h2>
+
+
+            <p class="empty-cart-text">
+
+                You haven't added any products yet.
+                Explore SmartMart and find something you like.
+
+            </p>
+
+
+            <a
+                href="{{ url_for('home') }}"
+                class="empty-cart-btn"
+            >
+
+                🛍️ Start Shopping
+
+            </a>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,808 @@
+{% extends "base.html" %}
+
+{% block title %}Order Details | SmartMart{% endblock %}
+
+{% block content %}
+
+<section class="smart-admin-order-details-section py-5">
+
+    <div class="container">
+
+        <!-- ==========================================
+             PAGE HEADER
+        =========================================== -->
+
+        <div class="admin-order-details-header">
+
+            <div>
+
+                <div class="section-label">
+                    SMARTMART ORDER MANAGEMENT
+                </div>
+
+                <h1 class="admin-order-details-title">
+                    Order Details
+                </h1>
+
+                <p class="admin-order-details-subtitle">
+                    Order #{{ order.order_number }}
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('admin_orders') }}"
+                class="admin-order-back-btn"
+            >
+                ← Back to Orders
+            </a>
+
+        </div>
+
+
+        <!-- ==========================================
+             ORDER STATUS HERO
+        =========================================== -->
+
+        <div class="admin-order-hero-card">
+
+            <div>
+
+                <span class="admin-order-hero-label">
+                    ORDER NUMBER
+                </span>
+
+                <h2>
+                    {{ order.order_number }}
+                </h2>
+
+                <p>
+                    Placed on {{ order.created_at }}
+                </p>
+
+            </div>
+
+
+            <div class="admin-order-hero-status">
+
+                <span class="admin-order-hero-status-label">
+                    CURRENT STATUS
+                </span>
+
+                {% if order.status == "NEW" %}
+
+                    <span class="admin-order-status status-new">
+                        NEW
+                    </span>
+
+                {% elif order.status == "CONFIRMED" %}
+
+                    <span class="admin-order-status status-confirmed">
+                        CONFIRMED
+                    </span>
+
+                {% elif order.status == "PREPARING" %}
+
+                    <span class="admin-order-status status-preparing">
+                        PREPARING
+                    </span>
+
+                {% elif order.status == "ASSIGNED" %}
+
+                    <span class="admin-order-status status-assigned">
+                        ASSIGNED
+                    </span>
+
+                {% elif order.status == "OUT FOR DELIVERY" %}
+
+                    <span class="admin-order-status status-out-for-delivery">
+                        OUT FOR DELIVERY
+                    </span>
+
+                {% elif order.status == "DELIVERED" %}
+
+                    <span class="admin-order-status status-delivered">
+                        DELIVERED
+                    </span>
+
+                {% elif order.status == "CANCELLED" %}
+
+                    <span class="admin-order-status status-cancelled">
+                        CANCELLED
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             CUSTOMER INFORMATION
+        =========================================== -->
+
+        <div class="admin-order-section-card">
+
+            <div class="admin-order-section-header">
+
+                <div class="admin-order-section-icon">
+                    👤
+                </div>
+
+                <div>
+
+                    <h2>
+                        Customer Information
+                    </h2>
+
+                    <p>
+                        Customer and delivery details
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-order-section-body">
+
+                <div class="row g-4">
+
+                    <!-- NAME -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="admin-order-info-box">
+
+                            <span class="admin-order-info-label">
+                                Customer Name
+                            </span>
+
+                            <strong>
+                                {{ order.customer_name }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="admin-order-info-box">
+
+                            <span class="admin-order-info-label">
+                                Phone
+                            </span>
+
+                            <strong>
+
+                                <a
+                                    href="tel:{{ order.phone }}"
+                                    class="admin-order-phone-link"
+                                >
+                                    {{ order.phone }}
+                                </a>
+
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DISTRICT -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="admin-order-info-box">
+
+                            <span class="admin-order-info-label">
+                                District
+                            </span>
+
+                            <strong>
+                                {{ order.district }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOWN -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="admin-order-info-box">
+
+                            <span class="admin-order-info-label">
+                                Town
+                            </span>
+
+                            <strong>
+                                {{ order.town }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DELIVERY ADDRESS -->
+
+                    <div class="col-lg-8 col-md-12">
+
+                        <div class="admin-order-info-box">
+
+                            <span class="admin-order-info-label">
+                                Delivery Address
+                            </span>
+
+                            <strong>
+                                {{ order.delivery_address }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ADDITIONAL DIRECTIONS -->
+
+                    {% if order.additional_directions %}
+
+                    <div class="col-12">
+
+                        <div class="admin-order-directions-box">
+
+                            <span class="admin-order-info-label">
+                                Additional Directions
+                            </span>
+
+                            <p>
+                                {{ order.additional_directions }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             DELIVERY ASSIGNMENT
+        =========================================== -->
+
+        <div class="admin-order-section-card">
+
+            <div class="admin-order-section-header delivery-header">
+
+                <div class="admin-order-section-icon">
+                    🚚
+                </div>
+
+                <div>
+
+                    <h2>
+                        Delivery Assignment
+                    </h2>
+
+                    <p>
+                        Manage the delivery person assigned to this order
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-order-section-body">
+
+                {% if order.delivery_person_id %}
+
+                    <div class="assigned-delivery-card">
+
+                        <div class="assigned-delivery-icon">
+                            🚚
+                        </div>
+
+                        <div class="assigned-delivery-content">
+
+                            <span class="assigned-delivery-label">
+                                DELIVERY PERSON ASSIGNED
+                            </span>
+
+                            <h3>
+                                {{ order.delivery_person_name }}
+                            </h3>
+
+                            <div class="assigned-delivery-details">
+
+                                <span>
+                                    📞 {{ order.delivery_person_phone }}
+                                </span>
+
+                                {% if order.delivery_person_district %}
+
+                                <span>
+                                    📍 {{ order.delivery_person_district }}
+                                </span>
+
+                                {% endif %}
+
+                                {% if order.delivery_person_town %}
+
+                                <span>
+                                    🏘️ {{ order.delivery_person_town }}
+                                </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="unassigned-delivery-card">
+
+                        <div class="unassigned-delivery-icon">
+                            ⚠️
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                No Delivery Person Assigned
+                            </h3>
+
+                            <p>
+                                Assign a delivery person before the order
+                                moves into the delivery stage.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                {% if order.status not in ["DELIVERED", "CANCELLED"] %}
+
+                <div class="delivery-assignment-form">
+
+                    <div class="delivery-form-title">
+                        Assign or Change Delivery Person
+                    </div>
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'admin_assign_delivery',
+                            order_id=order.id
+                        ) }}"
+                    >
+
+                        <div class="row g-3 align-items-end">
+
+                            <div class="col-lg-9">
+
+                                <label
+                                    for="delivery_person_id"
+                                    class="admin-order-form-label"
+                                >
+                                    Delivery Person
+                                </label>
+
+                                <select
+                                    id="delivery_person_id"
+                                    name="delivery_person_id"
+                                    class="admin-order-select"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select delivery person
+                                    </option>
+
+                                    {% for person in delivery_personnel %}
+
+                                    <option
+                                        value="{{ person.id }}"
+                                        {% if order.delivery_person_id == person.id %}
+                                            selected
+                                        {% endif %}
+                                    >
+
+                                        {{ person.full_name }}
+                                        - {{ person.phone }}
+
+                                    </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-lg-3">
+
+                                <button
+                                    type="submit"
+                                    class="admin-assign-delivery-btn"
+                                >
+                                    🚚 Assign
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             PRODUCTS ORDERED
+        =========================================== -->
+
+        <div class="admin-order-section-card">
+
+            <div class="admin-order-section-header">
+
+                <div class="admin-order-section-icon">
+                    🛍️
+                </div>
+
+                <div>
+
+                    <h2>
+                        Products Ordered
+                    </h2>
+
+                    <p>
+                        Items included in this customer order
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-order-products-wrapper">
+
+                <div class="table-responsive">
+
+                    <table class="table admin-order-products-table align-middle mb-0">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Product
+                                </th>
+
+                                <th>
+                                    Quantity
+                                </th>
+
+                                <th>
+                                    Unit Price
+                                </th>
+
+                                <th>
+                                    Subtotal
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for item in items %}
+
+                            <tr>
+
+                                <td>
+
+                                    <div class="admin-order-product">
+
+                                        {% if item.product_image %}
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename='images/products/' + item.product_image
+                                            ) }}"
+                                            alt="{{ item.product_name }}"
+                                            class="admin-order-product-image"
+                                        >
+
+                                        {% else %}
+
+                                        <div class="admin-order-product-placeholder">
+                                            🛍️
+                                        </div>
+
+                                        {% endif %}
+
+                                        <div>
+
+                                            <strong>
+                                                {{ item.product_name }}
+                                            </strong>
+
+                                            <span>
+                                                SmartMart Product
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="admin-order-quantity">
+                                        {{ item.quantity }}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="admin-order-price">
+                                        UGX {{ "{:,.0f}".format(item.unit_price) }}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <strong class="admin-order-subtotal">
+                                        UGX {{ "{:,.0f}".format(item.subtotal) }}
+                                    </strong>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+
+                        <tfoot>
+
+                            <tr>
+
+                                <th colspan="3" class="text-end">
+                                    Order Total
+                                </th>
+
+                                <th>
+
+                                    <span class="admin-order-grand-total">
+                                        UGX
+                                        {{ "{:,.0f}".format(
+                                            order.total_amount
+                                        ) }}
+                                    </span>
+
+                                </th>
+
+                            </tr>
+
+                        </tfoot>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             STATUS UPDATE
+        =========================================== -->
+
+        <div class="admin-order-section-card">
+
+            <div class="admin-order-section-header status-header">
+
+                <div class="admin-order-section-icon">
+                    🔄
+                </div>
+
+                <div>
+
+                    <h2>
+                        Update Order Status
+                    </h2>
+
+                    <p>
+                        Move this order through the SmartMart delivery workflow
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-order-section-body">
+
+                {% if allowed_transitions %}
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'admin_update_order_status',
+                        order_id=order.id
+                    ) }}"
+                >
+
+                    <div class="row g-3 align-items-end">
+
+                        <div class="col-lg-8">
+
+                            <label
+                                for="order_status"
+                                class="admin-order-form-label"
+                            >
+                                Next Order Status
+                            </label>
+
+                            <select
+                                id="order_status"
+                                name="status"
+                                class="admin-order-select"
+                                required
+                            >
+
+                                <option value="">
+                                    -- Select Next Status --
+                                </option>
+
+                                {% for next_status in allowed_transitions %}
+
+                                <option value="{{ next_status }}">
+                                    {{ next_status }}
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="col-lg-4">
+
+                            <button
+                                type="submit"
+                                class="admin-update-status-btn"
+                            >
+                                Update Status
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+                {% else %}
+
+                    {% if order.status == "DELIVERED" %}
+
+                    <div class="order-final-message order-delivered-message">
+
+                        <div class="order-final-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Order Completed
+                            </h3>
+
+                            <p>
+                                This order has already been delivered.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    {% elif order.status == "CANCELLED" %}
+
+                    <div class="order-final-message order-cancelled-message">
+
+                        <div class="order-final-icon">
+                            !
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Order Cancelled
+                            </h3>
+
+                            <p>
+                                No further status changes are available.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             ORDER TOTAL
+        =========================================== -->
+
+        <div class="admin-order-total-card">
+
+            <div>
+
+                <span>
+                    ORDER TOTAL
+                </span>
+
+                <small>
+                    Total amount for this order
+                </small>
+
+            </div>
+
+            <strong>
+                UGX {{ "{:,.0f}".format(order.total_amount) }}
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

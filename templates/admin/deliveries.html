@@ -1,0 +1,1092 @@
+{% extends "base.html" %}
+
+{% block title %}
+Delivery Management | SmartMart
+{% endblock %}
+
+{% block content %}
+<section
+    class="smart-delivery-management-section py-5"
+    data-admin-deliveries="true"
+>
+
+
+    <div class="container-fluid px-lg-4">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <div class="delivery-management-header">
+
+            <div>
+
+                <div class="section-label">
+                    SMARTMART DELIVERY CENTER
+                </div>
+
+                <h1 class="delivery-management-title">
+                    Delivery Management
+                </h1>
+
+                <p class="delivery-management-subtitle">
+                    Manage customer deliveries, assignments and
+                    delivery progress from one place.
+                </p>
+
+            </div>
+
+
+            <div class="delivery-management-header-actions">
+
+                <a
+                    href="{{ url_for('admin_dashboard') }}"
+                    class="delivery-header-btn delivery-header-btn-light"
+                >
+                    <span>←</span>
+                    Dashboard
+                </a>
+
+                <a
+                    href="{{ url_for('admin_delivery_personnel') }}"
+                    class="delivery-header-btn delivery-header-btn-primary"
+                >
+                    <span>👤</span>
+                    Delivery Personnel
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             STATUS SUMMARY
+        ====================================================== -->
+
+        <div class="row g-4 mb-5">
+
+
+            <!-- NEW -->
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="delivery-summary-card">
+
+                    <div class="delivery-summary-icon">
+                        🆕
+                    </div>
+
+                    <div class="delivery-summary-content">
+
+                        <span>
+                            New
+                        </span>
+
+                        <strong>
+                            {{ status_counts.get("NEW", 0) }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONFIRMED -->
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="delivery-summary-card">
+
+                    <div class="delivery-summary-icon">
+                        ✅
+                    </div>
+
+                    <div class="delivery-summary-content">
+
+                        <span>
+                            Confirmed
+                        </span>
+
+                        <strong>
+                            {{ status_counts.get("CONFIRMED", 0) }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PREPARING -->
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="delivery-summary-card">
+
+                    <div class="delivery-summary-icon">
+                        📦
+                    </div>
+
+                    <div class="delivery-summary-content">
+
+                        <span>
+                            Preparing
+                        </span>
+
+                        <strong>
+                            {{ status_counts.get("PREPARING", 0) }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ASSIGNED -->
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="delivery-summary-card">
+
+                    <div class="delivery-summary-icon">
+                        👤
+                    </div>
+
+                    <div class="delivery-summary-content">
+
+                        <span>
+                            Assigned
+                        </span>
+
+                        <strong>
+                            {{ status_counts.get("ASSIGNED", 0) }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- OUT FOR DELIVERY -->
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="delivery-summary-card">
+
+                    <div class="delivery-summary-icon">
+                        🛵
+                    </div>
+
+                    <div class="delivery-summary-content">
+
+                        <span>
+                            Out for Delivery
+                        </span>
+
+                        <strong>
+                            {{ status_counts.get("OUT FOR DELIVERY", 0) }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DELIVERED -->
+
+            <div class="col-6 col-md-4 col-lg-2">
+
+                <div class="delivery-summary-card">
+
+                    <div class="delivery-summary-icon">
+                        🎉
+                    </div>
+
+                    <div class="delivery-summary-content">
+
+                        <span>
+                            Delivered
+                        </span>
+
+                        <strong>
+                            {{ status_counts.get("DELIVERED", 0) }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SEARCH AND FILTER
+        ====================================================== -->
+
+        <div class="delivery-filter-panel mb-5">
+
+            <div class="delivery-filter-top">
+
+                <div>
+
+                    <div class="delivery-section-label">
+                        FIND ORDERS
+                    </div>
+
+                    <h2>
+                        Search & Filter Deliveries
+                    </h2>
+
+                    <p>
+                        Search by order number, customer name or
+                        phone number, then filter by delivery status.
+                    </p>
+
+                </div>
+
+                <div class="delivery-filter-symbol">
+                    🔎
+                </div>
+
+            </div>
+
+
+            <form
+                method="GET"
+                action="{{ url_for('admin_deliveries') }}"
+            >
+
+                <div class="row g-4 align-items-end">
+
+
+                    <!-- SEARCH -->
+
+                    <div class="col-lg-6">
+
+                        <label class="delivery-form-label">
+                            Search Orders
+                        </label>
+
+                        <div class="delivery-input-wrapper">
+
+                            <span>
+                                🔍
+                            </span>
+
+                            <input
+                                type="text"
+                                name="search"
+                                value="{{ search }}"
+                                class="delivery-form-input"
+                                placeholder="Order number, customer or phone..."
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STATUS -->
+
+                    <div class="col-lg-4">
+
+                        <label class="delivery-form-label">
+                            Delivery Status
+                        </label>
+
+                        <select
+                            name="status"
+                            class="delivery-form-select"
+                        >
+
+                            <option value="">
+                                All Statuses
+                            </option>
+
+                            <option
+                                value="NEW"
+                                {% if status =="NEW" %}
+                                    selected
+                                {% endif %}
+                            >
+                                NEW
+                            </option>
+
+                            <option
+                                value="CONFIRMED"
+                                {% if status =="CONFIRMED" %}
+                                    selected
+                                {% endif %}
+                            >
+                                CONFIRMED
+                            </option>
+
+                            <option
+                                value="PREPARING"
+                                {% if status =="PREPARING" %}
+                                    selected
+                                {% endif %}
+                            >
+                                PREPARING
+                            </option>
+
+                            <option
+                                value="ASSIGNED"
+                                {% if status =="ASSIGNED" %}
+                                    selected
+                                {% endif %}
+                            >
+                                ASSIGNED
+                            </option>
+
+                            <option
+                                value="OUT FOR DELIVERY"
+                                {% if status =="OUT-FOR-DELIVERY" %}
+                                    selected
+                                {% endif %}
+                            >
+                                OUT FOR DELIVERY
+                            </option>
+
+                            <option
+                                value="DELIVERED"
+                                {% if status =="DELIVERED" %}
+                                    selected
+                                {% endif %}
+                            >
+                                DELIVERED
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="col-lg-2">
+
+                        <button
+                            type="submit"
+                            class="delivery-filter-btn"
+                        >
+                            🔍 Search
+                        </button>
+
+                        <a
+                            href="{{ url_for('admin_deliveries') }}"
+                            class="delivery-reset-btn"
+                        >
+                            Reset Filters
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- =====================================================
+             DELIVERY ORDERS
+        ====================================================== -->
+
+        <div class="delivery-orders-panel">
+
+
+            <!-- TABLE HEADER -->
+
+            <div class="delivery-orders-header">
+
+                <div>
+
+                    <div class="delivery-section-label">
+                        CUSTOMER DELIVERIES
+                    </div>
+
+                    <h2>
+                        Delivery Orders
+                    </h2>
+
+                    <p>
+                        Review delivery details, assigned personnel
+                        and order status.
+                    </p>
+
+                </div>
+
+
+                <div class="delivery-order-count">
+
+                    <span>
+                        {{ deliveries|length }}
+                    </span>
+
+                    <small>
+                        order(s)
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            {% if deliveries %}
+
+
+            <!-- =================================================
+                 TABLE
+            ================================================== -->
+
+            <div class="delivery-table-wrapper">
+
+                <div class="table-responsive">
+
+                    <table class="table delivery-management-table align-middle">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ORDER
+                                </th>
+
+                                <th>
+                                    CUSTOMER
+                                </th>
+
+                                <th>
+                                    LOCATION
+                                </th>
+
+                                <th>
+                                    DELIVERY ADDRESS
+                                </th>
+
+                                <th>
+                                    DELIVERY PERSON
+                                </th>
+
+                                <th>
+                                    AMOUNT
+                                </th>
+
+                                <th>
+                                    STATUS
+                                </th>
+
+                                <th>
+                                    DATE
+                                </th>
+
+                                <th>
+                                    ACTION
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for delivery in deliveries %}
+
+                            <tr>
+
+
+                                <!-- ORDER -->
+
+                                <td>
+
+                                    <a
+                                        href="{{ url_for(
+                                            'admin_order_details',
+                                            order_id=delivery.id
+                                        ) }}"
+                                        class="delivery-order-number"
+                                    >
+                                        {{ delivery.order_number }}
+                                    </a>
+
+                                </td>
+
+
+                                <!-- CUSTOMER -->
+
+                                <td>
+
+                                    <div class="delivery-customer">
+
+                                        <div class="delivery-customer-avatar">
+                                            {{ delivery.customer_name[0]|upper }}
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                {{ delivery.customer_name }}
+                                            </strong>
+
+                                            <a
+                                                href="tel:{{ delivery.phone }}"
+                                            >
+                                                📞 {{ delivery.phone }}
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- LOCATION -->
+
+                                <td>
+
+                                    <div class="delivery-location">
+
+                                        <strong>
+                                            {{ delivery.district }}
+                                        </strong>
+
+                                        {% if delivery.town %}
+
+                                            <span>
+                                                {{ delivery.town }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- ADDRESS -->
+
+                                <td>
+
+                                    <div class="delivery-address">
+
+                                        <strong>
+                                            {{ delivery.delivery_address }}
+                                        </strong>
+
+                                        {% if delivery.additional_directions %}
+
+                                            <span>
+                                                📍 {{ delivery.additional_directions }}
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- DELIVERY PERSON -->
+
+                                <td>
+
+                                    {% if delivery.delivery_person_name %}
+
+                                        <div class="assigned-person">
+
+                                            <div class="assigned-person-avatar">
+                                                👤
+                                            </div>
+
+                                            <div>
+
+                                                <strong>
+                                                    {{ delivery.delivery_person_name }}
+                                                </strong>
+
+                                                <span>
+                                                    📞 {{ delivery.delivery_person_phone }}
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    {% else %}
+
+                                        <div class="not-assigned">
+
+                                            <span>
+                                                ⚠
+                                            </span>
+
+                                            <div>
+
+                                                <strong>
+                                                    Not Assigned
+                                                </strong>
+
+                                                <small>
+                                                    Delivery person required
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- AMOUNT -->
+
+                                <td>
+
+                                    <strong class="delivery-order-amount">
+                                        UGX {{ "{:,.0f}".format(
+                                            delivery.total_amount
+                                        ) }}
+                                    </strong>
+
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    {% if delivery.status == "NEW" %}
+
+                                        <span class="delivery-status-badge delivery-status-new">
+                                            🆕 NEW
+                                        </span>
+
+                                    {% elif delivery.status == "CONFIRMED" %}
+
+                                        <span class="delivery-status-badge delivery-status-confirmed">
+                                            ✅ CONFIRMED
+                                        </span>
+
+                                    {% elif delivery.status == "PREPARING" %}
+
+                                        <span class="delivery-status-badge delivery-status-preparing">
+                                            📦 PREPARING
+                                        </span>
+
+                                    {% elif delivery.status == "ASSIGNED" %}
+
+                                        <span class="delivery-status-badge delivery-status-assigned">
+                                            👤 ASSIGNED
+                                        </span>
+
+                                    {% elif delivery.status == "OUT FOR DELIVERY" %}
+
+                                        <span class="delivery-status-badge delivery-status-out">
+                                            🛵 OUT FOR DELIVERY
+                                        </span>
+
+                                    {% elif delivery.status == "DELIVERED" %}
+
+                                        <span class="delivery-status-badge delivery-status-delivered">
+                                            🎉 DELIVERED
+                                        </span>
+
+                                    {% elif delivery.status == "CANCELLED" %}
+
+                                        <span class="delivery-status-badge delivery-status-cancelled">
+                                            ❌ CANCELLED
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="delivery-status-badge delivery-status-default">
+                                            {{ delivery.status }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- DATE -->
+
+                                <td>
+
+                                    <span class="delivery-created-date">
+                                        {{ delivery.created_at }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- ACTION -->
+
+                                <td>
+
+                                    <a
+                                        href="{{ url_for(
+                                            'admin_order_details',
+                                            order_id=delivery.id
+                                        ) }}"
+                                        class="delivery-view-btn"
+                                    >
+                                        View
+                                        <span>→</span>
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            {% else %}
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div class="delivery-empty-state">
+
+                <div class="delivery-empty-icon">
+                    🚚
+                </div>
+
+                <h3>
+                    No Delivery Orders Found
+                </h3>
+
+                {% if search or status %}
+
+                    <p>
+                        No orders match your current search or
+                        status filter.
+                    </p>
+
+                    <a
+                        href="{{ url_for('admin_deliveries') }}"
+                        class="delivery-empty-btn"
+                    >
+                        Clear Filters
+                    </a>
+
+                {% else %}
+
+                    <p>
+                        Delivery orders will appear here when
+                        customers place orders.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =====================================================
+             DELIVERY WORKFLOW
+        ====================================================== -->
+
+        <div class="delivery-workflow-panel mt-4">
+
+            <div class="delivery-workflow-header">
+
+                <div>
+
+                    <div class="delivery-section-label">
+                        ORDER JOURNEY
+                    </div>
+
+                    <h2>
+                        Delivery Workflow
+                    </h2>
+
+                    <p>
+                        Every order moves through these stages
+                        before reaching the customer.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="delivery-workflow-timeline">
+
+
+                <!-- STEP 1 -->
+
+                <div class="delivery-workflow-item">
+
+                    <div class="delivery-workflow-icon">
+                        🆕
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            NEW
+                        </strong>
+
+                        <span>
+                            Customer places the order.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="delivery-workflow-line"></div>
+
+
+                <!-- STEP 2 -->
+
+                <div class="delivery-workflow-item">
+
+                    <div class="delivery-workflow-icon">
+                        ✅
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            CONFIRMED
+                        </strong>
+
+                        <span>
+                            Admin confirms the order.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="delivery-workflow-line"></div>
+
+
+                <!-- STEP 3 -->
+
+                <div class="delivery-workflow-item">
+
+                    <div class="delivery-workflow-icon">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            PREPARING
+                        </strong>
+
+                        <span>
+                            Products are prepared.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="delivery-workflow-line"></div>
+
+
+                <!-- STEP 4 -->
+
+                <div class="delivery-workflow-item">
+
+                    <div class="delivery-workflow-icon">
+                        👤
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ASSIGNED
+                        </strong>
+
+                        <span>
+                            Delivery person is assigned.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="delivery-workflow-line"></div>
+
+
+                <!-- STEP 5 -->
+
+                <div class="delivery-workflow-item">
+
+                    <div class="delivery-workflow-icon">
+                        🛵
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            OUT FOR DELIVERY
+                        </strong>
+
+                        <span>
+                            Order is on the way.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="delivery-workflow-line"></div>
+
+
+                <!-- STEP 6 -->
+
+                <div class="delivery-workflow-item">
+
+                    <div class="delivery-workflow-icon">
+                        🎉
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            DELIVERED
+                        </strong>
+
+                        <span>
+                            Customer receives the order.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             QUICK ACTIONS
+        ====================================================== -->
+
+        <div class="delivery-quick-panel mt-4">
+
+            <div class="delivery-quick-heading">
+
+                <div class="delivery-section-label">
+                    SMARTMART MANAGEMENT
+                </div>
+
+                <h2>
+                    Quick Actions
+                </h2>
+
+                <p>
+                    Quickly access other administration areas.
+                </p>
+
+            </div>
+
+
+            <div class="delivery-quick-actions">
+
+                <a
+                    href="{{ url_for('admin_orders') }}"
+                    class="delivery-action-btn"
+                >
+                    📋
+                    <span>All Orders</span>
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_delivery_personnel') }}"
+                    class="delivery-action-btn"
+                >
+                    👤
+                    <span>Delivery Personnel</span>
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_add_delivery_person') }}"
+                    class="delivery-action-btn delivery-action-primary"
+                >
+                    ➕
+                    <span>Add Delivery Person</span>
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_customers') }}"
+                    class="delivery-action-btn"
+                >
+                    👥
+                    <span>Customers</span>
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_inventory') }}"
+                    class="delivery-action-btn"
+                >
+                    📦
+                    <span>Inventory</span>
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_dashboard') }}"
+                    class="delivery-action-btn"
+                >
+                    🏠
+                    <span>Dashboard</span>
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

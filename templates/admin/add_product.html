@@ -1,0 +1,462 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Product | SmartMart
+{% endblock %}
+
+{% block content %}
+
+<section class="smart-add-product-section py-5">
+
+    <div class="container">
+
+        <!-- =========================
+             BACK LINK
+        ========================== -->
+
+        <div class="add-product-back-wrapper mb-4">
+
+            <a
+                href="{{ url_for('admin_products') }}"
+                class="add-product-back-link">
+
+                ← Back to Products
+
+            </a>
+
+        </div>
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-xl-9 col-lg-10">
+
+                <!-- =========================
+                     PAGE HEADER
+                ========================== -->
+
+                <div class="add-product-page-header">
+
+                    <div class="section-label">
+                        SMARTMART ADMINISTRATION
+                    </div>
+
+                    <h1 class="add-product-page-title">
+                        Add New Product
+                    </h1>
+
+                    <p class="add-product-page-subtitle">
+                        Add a new product to your SmartMart inventory.
+                    </p>
+
+                </div>
+
+
+                <!-- =========================
+                     FORM CARD
+                ========================== -->
+
+                <div class="add-product-card">
+
+                    <div class="add-product-card-header">
+
+                        <div>
+
+                            <h2>
+                                Product Information
+                            </h2>
+
+                            <p>
+                                Enter the details below to create your product.
+                            </p>
+
+                        </div>
+
+                        <div class="add-product-card-icon">
+                            🛍️
+                        </div>
+
+                    </div>
+
+
+                    <div class="add-product-card-body">
+
+                        <form
+                            action="{{ url_for('admin_add_product') }}"
+                            method="POST"
+                            enctype="multipart/form-data">
+
+
+                            <!-- =========================
+                                 BASIC INFORMATION
+                            ========================== -->
+
+                            <div class="add-product-form-section">
+
+                                <div class="add-product-section-heading">
+
+                                    <span class="add-product-section-number">
+                                        01
+                                    </span>
+
+                                    <div>
+
+                                        <h3>
+                                            Basic Information
+                                        </h3>
+
+                                        <p>
+                                            Provide the main information about this product.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- PRODUCT NAME -->
+
+                                <div class="add-product-field">
+
+                                    <label for="productName">
+                                        Product Name
+                                        <span>*</span>
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="productName"
+                                        name="name"
+                                        class="add-product-input"
+                                        placeholder="Example: Bluetooth Earphones"
+                                        required>
+
+                                </div>
+
+
+                                <!-- CATEGORY -->
+
+                                <div class="add-product-field">
+
+                                    <label for="productCategory">
+                                        Category
+                                        <span>*</span>
+                                    </label>
+
+                                    <select
+                                        id="productCategory"
+                                        name="category_id"
+                                        class="add-product-input"
+                                        required>
+
+                                        <option value="">
+                                            Select Category
+                                        </option>
+
+                                        {% for category in categories %}
+
+                                        <option
+                                            value="{{ category.id }}">
+
+                                            {{ category.name }}
+
+                                        </option>
+
+                                        {% endfor %}
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- DESCRIPTION -->
+
+                                <div class="add-product-field">
+
+                                    <label for="productDescription">
+                                        Description
+                                        <span>*</span>
+                                    </label>
+
+                                    <textarea
+                                        id="productDescription"
+                                        name="description"
+                                        class="add-product-input add-product-textarea"
+                                        rows="5"
+                                        placeholder="Describe the product, its features and benefits..."
+                                        required></textarea>
+
+                                    <small>
+                                        Give customers useful information about the product.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 PRICING & STOCK
+                            ========================== -->
+
+                            <div class="add-product-form-section">
+
+                                <div class="add-product-section-heading">
+
+                                    <span class="add-product-section-number">
+                                        02
+                                    </span>
+
+                                    <div>
+
+                                        <h3>
+                                            Pricing & Stock
+                                        </h3>
+
+                                        <p>
+                                            Set the product prices and initial inventory quantity.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row g-4">
+
+
+                                    <!-- BUYING PRICE -->
+
+                                    <div class="col-md-6">
+
+                                        <div class="add-product-field">
+
+                                            <label for="buyingPrice">
+                                                Buying Price
+                                                <span>*</span>
+                                            </label>
+
+                                            <div class="add-product-price-input">
+
+                                                <span>
+                                                    UGX
+                                                </span>
+
+                                                <input
+                                                    type="number"
+                                                    id="buyingPrice"
+                                                    name="buying_price"
+                                                    min="0"
+                                                    step="1"
+                                                    placeholder="0"
+                                                    required>
+
+                                            </div>
+
+                                            <small>
+                                                The amount SmartMart pays to acquire the product.
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- SELLING PRICE -->
+
+                                    <div class="col-md-6">
+
+                                        <div class="add-product-field">
+
+                                            <label for="sellingPrice">
+                                                Selling Price
+                                                <span>*</span>
+                                            </label>
+
+                                            <div class="add-product-price-input">
+
+                                                <span>
+                                                    UGX
+                                                </span>
+
+                                                <input
+                                                    type="number"
+                                                    id="sellingPrice"
+                                                    name="price"
+                                                    min="0"
+                                                    step="1"
+                                                    placeholder="0"
+                                                    required>
+
+                                            </div>
+
+                                            <small>
+                                                The price customers will pay for this product.
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- INITIAL STOCK -->
+
+                                    <div class="col-md-6">
+
+                                        <div class="add-product-field">
+
+                                            <label for="productStock">
+                                                Initial Stock
+                                                <span>*</span>
+                                            </label>
+
+                                            <input
+                                                type="number"
+                                                id="productStock"
+                                                name="stock"
+                                                class="add-product-input"
+                                                min="0"
+                                                value="0"
+                                                required>
+
+                                            <small>
+                                                Enter the number of units currently available.
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 PRODUCT IMAGE
+                            ========================== -->
+
+                            <div class="add-product-form-section">
+
+                                <div class="add-product-section-heading">
+
+                                    <span class="add-product-section-number">
+                                        03
+                                    </span>
+
+                                    <div>
+
+                                        <h3>
+                                            Product Image
+                                        </h3>
+
+                                        <p>
+                                            Upload an image that represents this product.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="add-product-upload-area">
+
+                                    <div class="add-product-upload-icon">
+                                        🖼️
+                                    </div>
+
+                                    <div class="add-product-upload-content">
+
+                                        <label for="productImage">
+
+                                            Choose Product Image
+
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            id="productImage"
+                                            name="image"
+                                            class="add-product-file-input"
+                                            accept=".jpg,.jpeg,.png,.webp">
+
+                                        <small>
+                                            Supported formats: JPG, JPEG, PNG or WEBP
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 FORM ACTIONS
+                            ========================== -->
+
+                            <div class="add-product-form-actions">
+
+                                <a
+                                    href="{{ url_for('admin_products') }}"
+                                    class="add-product-cancel-btn">
+
+                                    Cancel
+
+                                </a>
+
+
+                                <button
+                                    type="submit"
+                                    class="add-product-submit-btn">
+
+                                    <span>＋</span>
+                                    Add Product
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     INFORMATION NOTE
+                ========================== -->
+
+                <div class="add-product-info-note">
+
+                    <div class="add-product-info-icon">
+                        💡
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Before adding the product
+                        </strong>
+
+                        <p>
+                            Make sure the product name, category, prices,
+                            description and initial stock quantity are correct.
+                            You can update product information later from
+                            Product Management.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

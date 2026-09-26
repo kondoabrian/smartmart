@@ -1,0 +1,969 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Dashboard | SmartMart
+{% endblock %}
+
+
+{% block content %}
+
+<section
+    class="smart-admin-dashboard"
+    data-admin-dashboard="true"
+>
+
+    <div class="container py-5">
+
+
+        <!-- =====================================================
+             DASHBOARD HEADER
+        ====================================================== -->
+
+        <div class="admin-dashboard-header">
+
+            <div>
+
+                <div class="admin-section-label">
+                    SMARTMART ADMINISTRATION
+                </div>
+
+                <h1 class="admin-dashboard-title">
+                    📊 Admin Dashboard
+                </h1>
+
+                <p class="admin-dashboard-subtitle">
+                    Manage your products, customers, orders,
+                    inventory, deliveries and business performance.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('admin_logout') }}"
+                class="admin-logout-btn"
+                id="adminLogoutButton"
+            >
+                🚪
+                <span id="adminLogoutText">
+                    Logout
+                </span>
+            </a>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             WELCOME CARD
+        ====================================================== -->
+
+        <div class="admin-welcome-card">
+
+            <div class="admin-welcome-icon">
+                👋
+            </div>
+
+            <div>
+
+                <div class="admin-welcome-label">
+                    WELCOME BACK
+                </div>
+
+                <h3>
+                    Hello, {{ session.get('admin_username', 'Admin') }}
+                </h3>
+
+                <p>
+                    Welcome to the SmartMart management system.
+                    Choose a module below to manage your business.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             SUMMARY
+        ====================================================== -->
+
+        <div class="admin-section-heading">
+
+            <div>
+
+                <span>
+                    OVERVIEW
+                </span>
+
+                <h2>
+                    Business Summary
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="row g-4 mb-5">
+
+
+            <!-- =================================================
+                 PRODUCTS
+                 ================================================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="admin-stat-card">
+
+                    <div class="admin-stat-top">
+
+                        <div>
+
+                            <div class="admin-stat-label">
+                                PRODUCTS
+                            </div>
+
+                            <div
+                                class="admin-stat-value"
+                                data-stat-value="{{ total_products }}"
+                            >
+                                0
+                            </div>
+
+                        </div>
+
+
+                        <div class="admin-stat-icon purple">
+                            🛍️
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="{{ url_for('admin_products') }}"
+                        class="admin-stat-link admin-dashboard-link"
+                    >
+                        Manage Products →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ORDERS
+                 ================================================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="admin-stat-card">
+
+                    <div class="admin-stat-top">
+
+                        <div>
+
+                            <div class="admin-stat-label">
+                                ORDERS
+                            </div>
+
+                            <div
+                                class="admin-stat-value"
+                                data-stat-value="{{ total_orders }}"
+                            >
+                                0
+                            </div>
+
+                        </div>
+
+
+                        <div class="admin-stat-icon pink">
+                            🧾
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="{{ url_for('admin_orders') }}"
+                        class="admin-stat-link admin-dashboard-link"
+                    >
+                        Manage Orders →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CUSTOMERS
+                 ================================================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="admin-stat-card">
+
+                    <div class="admin-stat-top">
+
+                        <div>
+
+                            <div class="admin-stat-label">
+                                CUSTOMERS
+                            </div>
+
+                            <div
+                                class="admin-stat-value"
+                                data-stat-value="{{ total_customers }}"
+                            >
+                                0
+                            </div>
+
+                        </div>
+
+
+                        <div class="admin-stat-icon blue">
+                            👥
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="{{ url_for('admin_customers') }}"
+                        class="admin-stat-link admin-dashboard-link"
+                    >
+                        Manage Customers →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SALES
+                 ================================================= -->
+
+            <div class="col-12 col-sm-6 col-xl-3">
+
+                <div class="admin-stat-card">
+
+                    <div class="admin-stat-top">
+
+                        <div>
+
+                            <div class="admin-stat-label">
+                                TOTAL SALES
+                            </div>
+
+                            <div
+                                class="admin-stat-sales"
+                                data-stat-sales="{{ total_sales }}"
+                            >
+                                UGX 0
+                            </div>
+
+                        </div>
+
+
+                        <div class="admin-stat-icon green">
+                            💰
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="{{ url_for('admin_sales') }}"
+                        class="admin-stat-link admin-dashboard-link"
+                    >
+                        View Sales →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             MANAGEMENT MODULES
+        ====================================================== -->
+
+        <div class="admin-section-heading">
+
+            <div>
+
+                <span>
+                    MANAGEMENT
+                </span>
+
+                <h2>
+                    Business Modules
+                </h2>
+
+            </div>
+
+            <p>
+                Everything you need to operate SmartMart.
+            </p>
+
+        </div>
+
+
+
+        <div class="row g-4 mb-5">
+
+
+            <!-- PRODUCTS -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="admin-module-card">
+
+                    <div class="admin-module-icon purple">
+                        🛍️
+                    </div>
+
+                    <h3>
+                        Products
+                    </h3>
+
+                    <p>
+                        Add, edit and manage SmartMart products,
+                        prices, images, stock and product status.
+                    </p>
+
+                    <div class="admin-module-actions">
+
+                        <a
+                            href="{{ url_for('admin_products') }}"
+                            class="admin-module-btn primary admin-dashboard-link"
+                        >
+                            Manage Products
+                        </a>
+
+                        <a
+                            href="{{ url_for('admin_add_product') }}"
+                            class="admin-module-btn outline admin-dashboard-link"
+                        >
+                            + Add Product
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ORDERS -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="admin-module-card">
+
+                    <div class="admin-module-icon pink">
+                        🧾
+                    </div>
+
+                    <h3>
+                        Orders
+                    </h3>
+
+                    <p>
+                        View customer orders, inspect order details
+                        and update order status.
+                    </p>
+
+                    <div class="admin-module-actions">
+
+                        <a
+                            href="{{ url_for('admin_orders') }}"
+                            class="admin-module-btn pink admin-dashboard-link"
+                        >
+                            Manage Orders
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CUSTOMERS -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="admin-module-card">
+
+                    <div class="admin-module-icon blue">
+                        👥
+                    </div>
+
+                    <h3>
+                        Customers
+                    </h3>
+
+                    <p>
+                        View customers, phone numbers, locations,
+                        order history and total spending.
+                    </p>
+
+                    <div class="admin-module-actions">
+
+                        <a
+                            href="{{ url_for('admin_customers') }}"
+                            class="admin-module-btn outline admin-dashboard-link"
+                        >
+                            Manage Customers
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- INVENTORY -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="admin-module-card">
+
+                    <div class="admin-module-icon green">
+                        📦
+                    </div>
+
+                    <h3>
+                        Inventory
+                    </h3>
+
+                    <p>
+                        Monitor stock levels, add stock, remove
+                        stock and identify low-stock products.
+                    </p>
+
+                    <div class="admin-module-actions">
+
+                        <a
+                            href="{{ url_for('admin_inventory') }}"
+                            class="admin-module-btn green admin-dashboard-link"
+                        >
+                            Manage Inventory
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SALES -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="admin-module-card">
+
+                    <div class="admin-module-icon purple">
+                        📊
+                    </div>
+
+                    <h3>
+                        Sales & Profit
+                    </h3>
+
+                    <p>
+                        Monitor total sales, product costs,
+                        gross profit and units sold.
+                    </p>
+
+                    <div class="admin-module-actions">
+
+                        <a
+                            href="{{ url_for('admin_sales') }}"
+                            class="admin-module-btn green admin-dashboard-link"
+                        >
+                            View Sales & Profit
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STOCK HISTORY -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="admin-module-card">
+
+                    <div class="admin-module-icon dark">
+                        📋
+                    </div>
+
+                    <h3>
+                        Stock History
+                    </h3>
+
+                    <p>
+                        View stock additions and removals,
+                        including the reason and administrator.
+                    </p>
+
+                    <div class="admin-module-actions">
+
+                        <a
+                            href="{{ url_for('admin_stock_history') }}"
+                            class="admin-module-btn dark admin-dashboard-link"
+                        >
+                            View Stock History
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DELIVERY -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="admin-module-card">
+
+                    <div class="admin-module-icon blue">
+                        🚚
+                    </div>
+
+                    <h3>
+                        Delivery Management
+                    </h3>
+
+                    <p>
+                        Manage customer deliveries, delivery
+                        addresses and delivery progress.
+                    </p>
+
+                    <div class="admin-module-actions">
+
+                        <a
+                            href="{{ url_for('admin_deliveries') }}"
+                            class="admin-module-btn outline admin-dashboard-link"
+                        >
+                            Manage Deliveries
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PERSONNEL -->
+
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <div class="admin-module-card">
+
+                    <div class="admin-module-icon pink">
+                        👤
+                    </div>
+
+                    <h3>
+                        Delivery Personnel
+                    </h3>
+
+                    <p>
+                        Add, edit and manage delivery personnel
+                        and monitor their delivery activity.
+                    </p>
+
+                    <div class="admin-module-actions">
+
+                        <a
+                            href="{{ url_for('admin_delivery_personnel') }}"
+                            class="admin-module-btn outline admin-dashboard-link"
+                        >
+                            Manage Personnel
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             QUICK ACTIONS
+        ====================================================== -->
+
+        <div class="admin-wide-card mb-5">
+
+            <div class="admin-wide-header">
+
+                <div>
+
+                    <div class="admin-card-label">
+                        QUICK ACCESS
+                    </div>
+
+                    <h2>
+                        ⚡ Quick Actions
+                    </h2>
+
+                    <p>
+                        Quickly jump to the most frequently used
+                        administration tools.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-quick-actions">
+
+
+                <a
+                    href="{{ url_for('admin_add_product') }}"
+                    class="admin-quick-btn primary admin-dashboard-link"
+                >
+                    ➕ Add Product
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_products') }}"
+                    class="admin-quick-btn admin-dashboard-link"
+                >
+                    🛍 Products
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_orders') }}"
+                    class="admin-quick-btn admin-dashboard-link"
+                >
+                    🧾 Orders
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_customers') }}"
+                    class="admin-quick-btn admin-dashboard-link"
+                >
+                    👥 Customers
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_inventory') }}"
+                    class="admin-quick-btn admin-dashboard-link"
+                >
+                    📦 Inventory
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_sales') }}"
+                    class="admin-quick-btn admin-dashboard-link"
+                >
+                    📊 Sales & Profit
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_stock_history') }}"
+                    class="admin-quick-btn admin-dashboard-link"
+                >
+                    📋 Stock History
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_deliveries') }}"
+                    class="admin-quick-btn admin-dashboard-link"
+                >
+                    🚚 Deliveries
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_delivery_personnel') }}"
+                    class="admin-quick-btn admin-dashboard-link"
+                >
+                    👤 Personnel
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             SYSTEM INFORMATION + BUSINESS OPERATIONS
+        ====================================================== -->
+
+        <div class="row g-4 mb-5">
+
+
+            <!-- SYSTEM INFORMATION -->
+
+            <div class="col-lg-6">
+
+                <div class="admin-info-card h-100">
+
+                    <div class="admin-card-label">
+                        SYSTEM OVERVIEW
+                    </div>
+
+                    <h2>
+                        ℹ️ SmartMart System
+                    </h2>
+
+                    <p>
+                        The SmartMart administration system
+                        currently provides the following modules:
+                    </p>
+
+
+                    <div class="admin-feature-list">
+
+                        <div>✓ 🛍 Product Management</div>
+                        <div>✓ 🧾 Order Management</div>
+                        <div>✓ 👥 Customer Management</div>
+                        <div>✓ 📦 Inventory Management</div>
+                        <div>✓ 📋 Stock Adjustment History</div>
+                        <div>✓ 📊 Sales & Profit Management</div>
+                        <div>✓ 🚚 Delivery Management</div>
+                        <div>✓ 👤 Delivery Personnel Management</div>
+                        <div>✓ 📍 Customer Delivery Information</div>
+                        <div>✓ 📈 Business Performance Monitoring</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BUSINESS OPERATIONS -->
+
+            <div class="col-lg-6">
+
+                <div class="admin-info-card h-100">
+
+                    <div class="admin-card-label">
+                        BUSINESS OPERATIONS
+                    </div>
+
+                    <h2>
+                        🏪 How SmartMart Works
+                    </h2>
+
+
+                    <div class="admin-operation">
+
+                        <div class="admin-operation-icon">
+                            🛒
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Sales
+                            </h4>
+
+                            <p>
+                                Products are displayed online,
+                                customers place orders and sales
+                                are recorded automatically.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-operation">
+
+                        <div class="admin-operation-icon">
+                            📦
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Inventory
+                            </h4>
+
+                            <p>
+                                Product stock is monitored,
+                                adjusted and reduced when customer
+                                orders are placed.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-operation">
+
+                        <div class="admin-operation-icon">
+                            🚚
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Delivery
+                            </h4>
+
+                            <p>
+                                Customer orders can be prepared,
+                                assigned to delivery personnel and
+                                tracked until delivery.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             DELIVERY WORKFLOW
+        ====================================================== -->
+
+        <div class="admin-wide-card mb-5">
+
+            <div class="admin-card-label">
+                ORDER FULFILLMENT
+            </div>
+
+            <h2>
+                🚚 Delivery Workflow
+            </h2>
+
+            <p class="admin-workflow-description">
+                Customer orders can move through the following
+                delivery stages:
+            </p>
+
+
+            <div class="admin-workflow">
+
+
+                <div class="workflow-step">
+                    <span>🆕</span>
+                    NEW
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-step">
+                    <span>✅</span>
+                    CONFIRMED
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-step">
+                    <span>📦</span>
+                    PREPARING
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-step">
+                    <span>👤</span>
+                    ASSIGNED
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-step">
+                    <span>🚚</span>
+                    OUT FOR DELIVERY
+                </div>
+
+
+                <div class="workflow-arrow">
+                    →
+                </div>
+
+
+                <div class="workflow-step delivered">
+                    <span>✔️</span>
+                    DELIVERED
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

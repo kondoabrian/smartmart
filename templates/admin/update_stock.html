@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}
+Update Stock - SmartMart
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1>📦 Update Stock</h1>
+
+            <p class="text-muted mb-0">
+                Increase or decrease product stock.
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('admin_inventory') }}"
+            class="btn btn-outline-dark"
+        >
+            ← Back to Inventory
+        </a>
+
+    </div>
+
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7 col-lg-6">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h3 class="mb-4">
+                        {{ product.name }}
+                    </h3>
+
+
+                    <!-- Current stock -->
+
+                    <div class="alert alert-info">
+
+                        <div class="d-flex justify-content-between">
+
+                            <span>
+                                Current Stock
+                            </span>
+
+                            <strong class="fs-4">
+                                {{ product.stock }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Error -->
+
+                    {% if error %}
+
+                    <div class="alert alert-danger">
+
+                        {{ error }}
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'admin_update_stock',
+                            product_id=product.id
+                        ) }}"
+                    >
+
+
+                        <!-- Quantity -->
+
+                        <div class="mb-4">
+
+                            <label
+                                for="quantity"
+                                class="form-label fw-bold"
+                            >
+                                Quantity
+                            </label>
+
+                            <input
+                                type="number"
+                                id="quantity"
+                                name="quantity"
+                                class="form-control form-control-lg"
+                                min="1"
+                                required
+                            >
+
+                            <div class="form-text">
+                                Enter the number of items to add
+                                or remove.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Reason -->
+
+                        <div class="mb-4">
+
+                            <label
+                                for="reason"
+                                class="form-label fw-bold"
+                            >
+                                Reason
+                            </label>
+
+                            <textarea
+                                id="reason"
+                                name="reason"
+                                class="form-control"
+                                rows="3"
+                                placeholder="Example: New stock received"
+                                required
+                            ></textarea>
+
+                            <div class="form-text">
+                                Explain why the stock was changed.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Actions -->
+
+                        <div class="d-grid gap-2">
+
+                            <button
+                                type="submit"
+                                name="action"
+                                value="add"
+                                class="btn btn-success btn-lg"
+                            >
+                                ➕ Add Stock
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                name="action"
+                                value="remove"
+                                class="btn btn-danger btn-lg"
+                            >
+                                ➖ Remove Stock
+                            </button>
+
+
+                            <a
+                                href="{{ url_for('admin_inventory') }}"
+                                class="btn btn-outline-secondary"
+                            >
+                                Cancel
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

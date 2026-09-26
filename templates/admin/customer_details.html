@@ -1,0 +1,521 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Details | SmartMart{% endblock %}
+
+{% block content %}
+
+<section
+    class="smart-customer-details-section py-5"
+    data-admin-customer-details="true"
+>
+
+    <div class="container">
+
+        <!-- ==========================================
+             PAGE HEADER
+        =========================================== -->
+
+        <div class="customer-details-header">
+
+            <div>
+
+                <div class="section-label">
+                    SMARTMART CUSTOMER MANAGEMENT
+                </div>
+
+                <h1 class="customer-details-title">
+                    Customer Details
+                </h1>
+
+                <p class="customer-details-subtitle">
+                    View customer information, order history, and spending activity.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('admin_customers') }}"
+                class="customer-details-back-btn"
+                data-customer-back="true"
+            >
+                ← Customers
+            </a>
+
+        </div>
+
+
+        <!-- ==========================================
+             CUSTOMER PROFILE
+        =========================================== -->
+
+        <div class="customer-profile-card">
+
+            <div class="customer-profile-header">
+
+                <div class="customer-profile-icon">
+                    👤
+                </div>
+
+                <div>
+
+                    <h2>
+                        Customer Information
+                    </h2>
+
+                    <p>
+                        Basic information and purchasing summary
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="customer-profile-body">
+
+                <div class="row g-4">
+
+                    <!-- CUSTOMER NAME -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="customer-info-item">
+
+                            <div class="customer-info-icon">
+                                👤
+                            </div>
+
+                            <div>
+
+                                <span class="customer-info-label">
+                                    Customer Name
+                                </span>
+
+                                <h4>
+                                    {{ customer.customer_name }}
+                                </h4>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="customer-info-item">
+
+                            <div class="customer-info-icon">
+                                📞
+                            </div>
+
+                            <div>
+
+                                <span class="customer-info-label">
+                                    Phone
+                                </span>
+
+                                <h4>
+
+                                    <a
+                                        href="tel:{{ customer.phone }}"
+                                        class="customer-phone-link"
+                                    >
+                                        {{ customer.phone }}
+                                    </a>
+
+                                </h4>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="customer-info-item">
+
+                            <div class="customer-info-icon">
+                                📍
+                            </div>
+
+                            <div>
+
+                                <span class="customer-info-label">
+                                    Location
+                                </span>
+
+                                <h4>
+                                    {{ customer.town }},
+                                    {{ customer.district }}
+                                </h4>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOTAL ORDERS -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="customer-summary-box">
+
+                            <span class="customer-summary-label">
+                                Total Orders
+                            </span>
+
+                            <strong>
+                                {{ customer.total_orders }}
+                            </strong>
+
+                            <small>
+                                Orders placed
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOTAL SPENT -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="customer-summary-box">
+
+                            <span class="customer-summary-label">
+                                Total Spent
+                            </span>
+
+                            <strong>
+                                UGX {{ "{:,.0f}".format(customer.total_spent) }}
+                            </strong>
+
+                            <small>
+                                Customer spending
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LAST ORDER -->
+
+                    <div class="col-lg-4 col-md-6">
+
+                        <div class="customer-summary-box">
+
+                            <span class="customer-summary-label">
+                                Last Order
+                            </span>
+
+                            <strong class="customer-last-order">
+                                {{ customer.last_order }}
+                            </strong>
+
+                            <small>
+                                Most recent purchase
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             ORDER HISTORY
+        =========================================== -->
+
+        <div class="customer-orders-card">
+
+            <div class="customer-orders-header">
+
+                <div>
+
+                    <div class="customer-orders-icon">
+                        🧾
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Order History
+                        </h2>
+
+                        <p>
+                            Orders placed by this customer
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% if orders %}
+
+                <div class="customer-order-count">
+
+                    {{ orders|length }}
+
+                    <span>
+                        order{% if orders|length != 1 %}s{% endif %}
+                    </span>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="customer-orders-body">
+
+                {% if orders %}
+
+                <div class="table-responsive">
+
+                    <table class="table smart-customer-orders-table align-middle mb-0">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Order</th>
+
+                                <th>Amount</th>
+
+                                <th>Status</th>
+
+                                <th>Delivery Address</th>
+
+                                <th>Date</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for order in orders %}
+
+                            <tr>
+
+                                <td>
+
+                                    <span class="customer-order-number-index">
+                                        {{ loop.index }}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="customer-order-reference">
+
+                                        <span class="order-small-icon">
+                                            📦
+                                        </span>
+
+                                        <strong>
+                                            {{ order.order_number }}
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <strong class="customer-order-amount">
+
+                                        UGX
+                                        {{ "{:,.0f}".format(order.total_amount) }}
+
+                                    </strong>
+
+                                </td>
+
+
+                                <td>
+
+                                    {% if order.status == "NEW" %}
+
+                                        <span class="smart-status-badge status-new">
+                                            NEW
+                                        </span>
+
+                                    {% elif order.status == "CONFIRMED" %}
+
+                                        <span class="smart-status-badge status-confirmed">
+                                            CONFIRMED
+                                        </span>
+
+                                    {% elif order.status == "PREPARING" %}
+
+                                        <span class="smart-status-badge status-preparing">
+                                            PREPARING
+                                        </span>
+
+                                    {% elif order.status == "ASSIGNED" %}
+
+                                        <span class="smart-status-badge status-assigned">
+                                            ASSIGNED
+                                        </span>
+
+                                    {% elif order.status == "OUT FOR DELIVERY" %}
+
+                                        <span class="smart-status-badge status-out-for-delivery">
+                                            OUT FOR DELIVERY
+                                        </span>
+
+                                    {% elif order.status == "DELIVERED" %}
+
+                                        <span class="smart-status-badge status-delivered">
+                                            DELIVERED
+                                        </span>
+
+                                    {% elif order.status == "CANCELLED" %}
+
+                                        <span class="smart-status-badge status-cancelled">
+                                            CANCELLED
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="smart-status-badge status-default">
+                                            {{ order.status }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="customer-delivery-address">
+
+                                        📍
+
+                                        <span>
+                                            {{ order.delivery_address }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="customer-order-date">
+                                        {{ order.created_at }}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <a
+                                        href="{{ url_for(
+                                            'admin_order_details',
+                                            order_id=order.id
+                                        ) }}"
+                                        class="customer-view-order-btn"
+                                        data-customer-view-order="true"
+                                    >
+                                        View Order →
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <!-- EMPTY ORDERS -->
+
+                <div class="customer-no-orders">
+
+                    <div class="customer-no-orders-icon">
+                        🧾
+                    </div>
+
+                    <h3>
+                        No Orders Yet
+                    </h3>
+
+                    <p>
+                        This customer has no orders in SmartMart.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             QUICK ACTIONS
+        =========================================== -->
+
+        <div class="customer-details-actions">
+
+            <a
+                href="{{ url_for('admin_customers') }}"
+                class="customer-action-btn customer-action-secondary"
+                data-customer-back="true"
+            >
+                ← Back to Customers
+            </a>
+
+            <a
+                href="{{ url_for('admin_orders') }}"
+                class="customer-action-btn customer-action-orders"
+                data-customer-all-orders="true"
+            >
+                🧾 All Orders
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

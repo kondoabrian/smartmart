@@ -1,0 +1,633 @@
+{% extends "base.html" %}
+
+{% block title %}
+Product Management | SmartMart
+{% endblock %}
+
+{% block content %}
+
+<section class="smart-admin-products-section py-5">
+
+    <div class="container">
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <div class="admin-products-header">
+
+            <div class="admin-products-heading">
+
+                <div class="section-label">
+                    SMARTMART ADMINISTRATION
+                </div>
+
+                <h1 class="admin-products-title">
+                    Product Management
+                </h1>
+
+                <p class="admin-products-subtitle">
+                    Add, edit and manage products available in SmartMart.
+                </p>
+
+            </div>
+
+
+            <!-- HEADER ACTIONS -->
+
+            <div class="admin-products-header-actions">
+
+                <a
+                    href="{{ url_for('admin_dashboard') }}"
+                    class="admin-products-dashboard-btn">
+
+                    <span>←</span>
+                    Dashboard
+
+                </a>
+
+                <a
+                    href="{{ url_for('admin_add_product') }}"
+                    class="admin-products-add-btn">
+
+                    <span>＋</span>
+                    Add Product
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PRODUCT SUMMARY
+        ====================================================== -->
+
+        <div class="admin-products-summary">
+
+            <div class="admin-products-summary-card">
+
+                <div class="admin-products-summary-icon">
+                    🛍️
+                </div>
+
+                <div>
+
+                    <span class="admin-products-summary-label">
+                        PRODUCTS
+                    </span>
+
+                    <strong>
+                        {{ products|length }}
+                    </strong>
+
+                    <small>
+                        Products in system
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-products-summary-card">
+
+                <div class="admin-products-summary-icon">
+                    📦
+                </div>
+
+                <div>
+
+                    <span class="admin-products-summary-label">
+                        INVENTORY
+                    </span>
+
+                    <strong>
+                        Managed Separately
+                    </strong>
+
+                    <small>
+                        Use Inventory for stock changes
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-products-summary-card">
+
+                <div class="admin-products-summary-icon">
+                    ✏️
+                </div>
+
+                <div>
+
+                    <span class="admin-products-summary-label">
+                        MANAGEMENT
+                    </span>
+
+                    <strong>
+                        Edit Products
+                    </strong>
+
+                    <small>
+                        Update product information
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PRODUCT MANAGEMENT CARD
+        ====================================================== -->
+
+        <div class="admin-products-card">
+
+            <!-- CARD HEADER -->
+
+            <div class="admin-products-card-header">
+
+                <div>
+
+                    <div class="admin-products-card-label">
+                        PRODUCT CATALOG
+                    </div>
+
+                    <h2>
+                        All Products
+                    </h2>
+
+                    <p>
+                        View product information, prices, stock levels
+                        and current product status.
+                    </p>
+
+                </div>
+
+                <div class="admin-products-card-icon">
+                    🛍️
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PRODUCT TABLE
+            ================================================== -->
+
+            <div class="admin-products-table-wrapper">
+
+                <table class="admin-products-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Product</th>
+
+                            <th>Category</th>
+
+                            <th>Buying Price</th>
+
+                            <th>Selling Price</th>
+
+                            <th>Stock</th>
+
+                            <th>Status</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for product in products %}
+
+                        <tr class="admin-product-row">
+
+
+                            <!-- =================================
+                                 ID
+                            ================================== -->
+
+                            <td>
+
+                                <span class="admin-product-id">
+                                    #{{ product.id }}
+                                </span>
+
+                            </td>
+
+
+                            <!-- =================================
+                                 PRODUCT
+                            ================================== -->
+
+                            <td>
+
+                                <div class="admin-product-info">
+
+                                    <div class="admin-product-image">
+
+                                        {% if product.image %}
+
+                                        <img
+                                            src="{{ url_for(
+                                                'static',
+                                                filename='images/products/' + product.image
+                                            ) }}"
+                                            alt="{{ product.name }}"
+                                            loading="lazy"
+                                        >
+
+                                        {% else %}
+
+                                        <div class="admin-product-image-placeholder">
+                                            🛍️
+                                        </div>
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <div class="admin-product-name">
+
+                                        <strong>
+                                            {{ product.name }}
+                                        </strong>
+
+                                        <small>
+                                            SmartMart Product
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <!-- =================================
+                                 CATEGORY
+                            ================================== -->
+
+                            <td>
+
+                                <span class="admin-product-category">
+
+                                    {{ product.category_name }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- =================================
+                                 BUYING PRICE
+                            ================================== -->
+
+                            <td>
+
+                                <span class="admin-product-price">
+
+                                    UGX
+                                    {{ "{:,.0f}".format(product.buying_price) }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- =================================
+                                 SELLING PRICE
+                            ================================== -->
+
+                            <td>
+
+                                <span class="admin-product-selling-price">
+
+                                    UGX
+                                    {{ "{:,.0f}".format(product.price) }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- =================================
+                                 STOCK
+                            ================================== -->
+
+                            <td>
+
+                                {% if product.stock == 0 %}
+
+                                <span class="admin-stock-badge admin-stock-out">
+
+                                    <span>●</span>
+
+                                    Out of Stock
+
+                                </span>
+
+
+                                {% elif product.stock <= 5 %}
+
+                                <span class="admin-stock-badge admin-stock-low">
+
+                                    <span>●</span>
+
+                                    {{ product.stock }} Low
+
+                                </span>
+
+
+                                {% else %}
+
+                                <span class="admin-stock-badge admin-stock-good">
+
+                                    <span>●</span>
+
+                                    {{ product.stock }}
+
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- =================================
+                                 STATUS
+                            ================================== -->
+
+                            <td>
+
+                                {% if product.status == "active" %}
+
+                                <span class="admin-status-badge admin-status-active">
+
+                                    <span class="admin-status-dot">
+                                        ●
+                                    </span>
+
+                                    Active
+
+                                </span>
+
+                                {% else %}
+
+                                <span class="admin-status-badge admin-status-inactive">
+
+                                    <span class="admin-status-dot">
+                                        ●
+                                    </span>
+
+                                    Inactive
+
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- =================================
+                                 ACTIONS
+                            ================================== -->
+
+                            <td>
+
+                                <div class="admin-product-actions">
+
+
+                                    <!-- EDIT -->
+
+                                    <a
+                                        href="{{ url_for(
+                                            'admin_edit_product',
+                                            product_id=product.id
+                                        ) }}"
+                                        class="admin-product-edit-btn"
+                                        title="Edit {{ product.name }}"
+                                    >
+
+                                        <span>✏️</span>
+                                        Edit
+
+                                    </a>
+
+
+                                    <!-- ACTIVATE / DEACTIVATE -->
+
+                                    {% if product.status == "active" %}
+
+                                    <a
+                                        href="{{ url_for(
+                                            'admin_toggle_product',
+                                            product_id=product.id
+                                        ) }}"
+                                        class="admin-product-deactivate-btn"
+                                        data-product-name="{{ product.name }}"
+                                        data-product-action="deactivate"
+                                    >
+
+                                        Deactivate
+
+                                    </a>
+
+                                    {% else %}
+
+                                    <a
+                                        href="{{ url_for(
+                                            'admin_toggle_product',
+                                            product_id=product.id
+                                        ) }}"
+                                        class="admin-product-activate-btn"
+                                        data-product-name="{{ product.name }}"
+                                        data-product-action="activate"
+                                    >
+
+                                        Activate
+
+                                    </a>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% else %}
+
+                        <!-- =====================================
+                             EMPTY STATE
+                        ====================================== -->
+
+                        <tr>
+
+                            <td
+                                colspan="8"
+                                class="admin-products-empty-cell"
+                            >
+
+                                <div class="admin-products-empty">
+
+                                    <div class="admin-products-empty-icon">
+                                        🛍️
+                                    </div>
+
+                                    <h3>
+                                        No Products Found
+                                    </h3>
+
+                                    <p>
+                                        Your SmartMart product list is currently
+                                        empty. Start by adding your first product.
+                                    </p>
+
+                                    <a
+                                        href="{{ url_for('admin_add_product') }}"
+                                        class="admin-products-add-btn"
+                                    >
+
+                                        <span>＋</span>
+                                        Add Your First Product
+
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             MANAGEMENT NOTE
+        ====================================================== -->
+
+        <div class="admin-products-note">
+
+            <div class="admin-products-note-icon">
+                💡
+            </div>
+
+            <div>
+
+                <strong>
+                    Product Management Tip
+                </strong>
+
+                <p>
+                    Use <b>Edit</b> to update product information.
+                    Stock quantities should be managed through the
+                    <b>Inventory</b> section so that every stock movement
+                    is properly recorded in SmartMart's stock history.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             ADMIN NAVIGATION
+        ====================================================== -->
+
+        <div class="admin-products-bottom-navigation">
+
+            <a
+                href="{{ url_for('admin_inventory') }}"
+                class="admin-products-nav-card"
+            >
+
+                <span class="admin-products-nav-icon">
+                    📦
+                </span>
+
+                <span>
+                    <strong>Inventory</strong>
+                    <small>Manage stock quantities</small>
+                </span>
+
+                <span class="admin-products-nav-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('admin_orders') }}"
+                class="admin-products-nav-card"
+            >
+
+                <span class="admin-products-nav-icon">
+                    📋
+                </span>
+
+                <span>
+                    <strong>Orders</strong>
+                    <small>View customer orders</small>
+                </span>
+
+                <span class="admin-products-nav-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="admin-products-nav-card"
+            >
+
+                <span class="admin-products-nav-icon">
+                    📊
+                </span>
+
+                <span>
+                    <strong>Dashboard</strong>
+                    <small>Return to administration</small>
+                </span>
+
+                <span class="admin-products-nav-arrow">
+                    →
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

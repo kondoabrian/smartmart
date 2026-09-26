@@ -1,0 +1,461 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}Order Management | SmartMart{% endblock %}
+
+{% block content %}
+
+<section class="smart-admin-orders-section py-5">
+
+    <div class="container">
+
+        <!-- ==========================================
+             PAGE HEADER
+        =========================================== -->
+
+        <div class="admin-orders-header">
+
+            <div>
+
+                <div class="section-label">
+                    SMARTMART ORDER MANAGEMENT
+                </div>
+
+                <h1 class="admin-orders-title">
+                    Order Management
+                </h1>
+
+                <p class="admin-orders-subtitle">
+                    View and manage customer orders from one place.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="admin-orders-dashboard-btn"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- ==========================================
+             ORDERS CARD
+        =========================================== -->
+
+        <div class="admin-orders-card">
+
+            <div class="admin-orders-card-header">
+
+                <div>
+
+                    <div class="admin-orders-card-icon">
+                        🧾
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Customer Orders
+                        </h2>
+
+                        <p>
+                            All orders received through SmartMart
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% if orders %}
+
+                <div class="admin-orders-count">
+
+                    {{ orders|length }}
+
+                    <span>
+                        order{% if orders|length != 1 %}s{% endif %}
+                    </span>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ==========================================
+                 ORDER SEARCH AND FILTER
+            =========================================== -->
+
+            <div class="admin-orders-tools">
+
+                <!-- SEARCH -->
+
+                <div class="admin-orders-search">
+
+                    <input
+                        type="text"
+                        id="adminOrderSearch"
+                        placeholder="Search order, customer, phone or location..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <!-- STATUS FILTER -->
+
+                <div class="admin-orders-filter">
+
+                    <select id="adminOrderStatusFilter">
+
+                        <option value="ALL">
+                            All Statuses
+                        </option>
+
+                        <option value="NEW">
+                            New
+                        </option>
+
+                        <option value="CONFIRMED">
+                            Confirmed
+                        </option>
+
+                        <option value="PREPARING">
+                            Preparing
+                        </option>
+
+                        <option value="ASSIGNED">
+                            Assigned
+                        </option>
+
+                        <option value="OUT FOR DELIVERY">
+                            Out for Delivery
+                        </option>
+
+                        <option value="DELIVERED">
+                            Delivered
+                        </option>
+
+                        <option value="CANCELLED">
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==========================================
+                 NO SEARCH RESULTS MESSAGE
+            =========================================== -->
+
+            <div
+                id="adminOrdersNoResults"
+                class="admin-orders-no-results"
+            >
+                No orders match your search or selected status.
+            </div>
+
+
+            <!-- ==========================================
+                 TABLE
+            =========================================== -->
+
+            <div class="admin-orders-table-wrapper">
+
+                <div class="table-responsive">
+
+                    <table class="table smart-admin-orders-table align-middle mb-0">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Order</th>
+
+                                <th>Customer</th>
+
+                                <th>Phone</th>
+
+                                <th>Location</th>
+
+                                <th>Total</th>
+
+                                <th>Status</th>
+
+                                <th>Date</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for order in orders %}
+
+                            <tr
+                                class="admin-order-row"
+                                data-order="{{ order.order_number|lower }}"
+                                data-customer="{{ order.customer_name|lower }}"
+                                data-phone="{{ order.phone|lower }}"
+                                data-location="{{ (order.town ~ ' ' ~ order.district)|lower }}"
+                                data-status="{{ order.status }}"
+                            >
+
+                                <!-- ==================================
+                                     ORDER NUMBER
+                                =================================== -->
+
+                                <td>
+
+                                    <div class="admin-order-reference">
+
+                                        <span class="admin-order-icon">
+                                            📦
+                                        </span>
+
+                                        <strong>
+                                            {{ order.order_number }}
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- ==================================
+                                     CUSTOMER
+                                =================================== -->
+
+                                <td>
+
+                                    <div class="admin-order-customer">
+
+                                        <div class="admin-order-avatar">
+                                            {{ order.customer_name[0]|upper }}
+                                        </div>
+
+                                        <strong>
+                                            {{ order.customer_name }}
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- ==================================
+                                     PHONE
+                                =================================== -->
+
+                                <td>
+
+                                    <a
+                                        href="tel:{{ order.phone }}"
+                                        class="admin-order-phone"
+                                    >
+                                        📞 {{ order.phone }}
+                                    </a>
+
+                                </td>
+
+
+                                <!-- ==================================
+                                     LOCATION
+                                =================================== -->
+
+                                <td>
+
+                                    <div class="admin-order-location">
+
+                                        <span>
+                                            📍
+                                        </span>
+
+                                        <span>
+                                            {{ order.town }},
+                                            {{ order.district }}
+                                        </span>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- ==================================
+                                     TOTAL
+                                =================================== -->
+
+                                <td>
+
+                                    <strong class="admin-order-total">
+
+                                        UGX
+                                        {{ "{:,.0f}".format(
+                                            order.total_amount
+                                        ) }}
+
+                                    </strong>
+
+                                </td>
+
+
+                                <!-- ==================================
+                                     STATUS
+                                =================================== -->
+
+                                <td>
+
+                                    {% if order.status == "NEW" %}
+
+                                        <span class="admin-order-status status-new">
+                                            NEW
+                                        </span>
+
+                                    {% elif order.status == "CONFIRMED" %}
+
+                                        <span class="admin-order-status status-confirmed">
+                                            CONFIRMED
+                                        </span>
+
+                                    {% elif order.status == "PREPARING" %}
+
+                                        <span class="admin-order-status status-preparing">
+                                            PREPARING
+                                        </span>
+
+                                    {% elif order.status == "ASSIGNED" %}
+
+                                        <span class="admin-order-status status-assigned">
+                                            ASSIGNED
+                                        </span>
+
+                                    {% elif order.status == "OUT FOR DELIVERY" %}
+
+                                        <span class="admin-order-status status-out-for-delivery">
+                                            OUT FOR DELIVERY
+                                        </span>
+
+                                    {% elif order.status == "DELIVERED" %}
+
+                                        <span class="admin-order-status status-delivered">
+                                            DELIVERED
+                                        </span>
+
+                                    {% elif order.status == "CANCELLED" %}
+
+                                        <span class="admin-order-status status-cancelled">
+                                            CANCELLED
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="admin-order-status status-default">
+                                            {{ order.status }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- ==================================
+                                     DATE
+                                =================================== -->
+
+                                <td>
+
+                                    <span class="admin-order-date">
+                                        {{ order.created_at }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- ==================================
+                                     ACTION
+                                =================================== -->
+
+                                <td>
+
+                                    <a
+                                        href="{{ url_for(
+                                            'admin_order_details',
+                                            order_id=order.id
+                                        ) }}"
+                                        class="admin-view-order-btn"
+                                    >
+                                        View →
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                            {% else %}
+
+                            <!-- ==================================
+                                 EMPTY STATE
+                            =================================== -->
+
+                            <tr>
+
+                                <td colspan="8">
+
+                                    <div class="admin-orders-empty">
+
+                                        <div class="admin-orders-empty-icon">
+                                            🛒
+                                        </div>
+
+                                        <h3>
+                                            No Orders Yet
+                                        </h3>
+
+                                        <p>
+                                            Customer orders will appear here
+                                            once they are placed.
+                                        </p>
+
+                                        <a
+                                            href="{{ url_for('admin_dashboard') }}"
+                                            class="admin-orders-empty-btn"
+                                        >
+                                            ← Back to Dashboard
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
+```

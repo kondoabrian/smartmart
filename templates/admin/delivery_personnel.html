@@ -1,0 +1,622 @@
+{% extends "base.html" %}
+
+{% block title %}Delivery Personnel | SmartMart{% endblock %}
+
+{% block content %}
+
+<section
+    class="smart-delivery-personnel-section py-5"
+    data-admin-delivery-personnel="true"
+>
+
+    <div class="container-fluid px-lg-4">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <div class="delivery-personnel-header">
+
+            <div class="delivery-personnel-heading">
+
+                <div class="section-label">
+                    SMARTMART DELIVERY TEAM
+                </div>
+
+                <h1 class="delivery-personnel-title">
+                    Delivery Personnel
+                </h1>
+
+                <p class="delivery-personnel-subtitle">
+                    Manage the people responsible for delivering
+                    SmartMart orders to customers.
+                </p>
+
+            </div>
+
+
+            <div class="delivery-personnel-header-actions">
+
+                <a
+                    href="{{ url_for('admin_dashboard') }}"
+                    class="personnel-header-btn personnel-dashboard-btn"
+                >
+                    <span>←</span>
+                    Dashboard
+                </a>
+
+                <a
+                    href="{{ url_for('admin_add_delivery_person') }}"
+                    class="personnel-header-btn personnel-add-btn"
+                >
+                    <span>＋</span>
+                    Add Personnel
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             INFORMATION CARD
+        ====================================================== -->
+
+        <div class="personnel-info-card">
+
+            <div class="personnel-info-icon">
+                ℹ️
+            </div>
+
+            <div>
+
+                <h3>
+                    Delivery Personnel
+                </h3>
+
+                <p>
+                    Delivery personnel can be assigned to customer
+                    orders from the Delivery Management section.
+                    Their delivery activity is tracked automatically
+                    by SmartMart.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PERSONNEL LIST
+        ====================================================== -->
+
+        <div class="personnel-main-card">
+
+            <div class="personnel-card-header">
+
+                <div>
+
+                    <div class="personnel-card-label">
+                        DELIVERY TEAM
+                    </div>
+
+                    <h2>
+                        👤 Delivery Personnel List
+                    </h2>
+
+                </div>
+
+                {% if personnel %}
+
+                <div class="personnel-count-badge">
+                    {{ personnel|length }} Personnel
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- =================================================
+                 SEARCH AND FILTER
+            ================================================== -->
+
+            {% if personnel %}
+
+            <div class="personnel-controls">
+
+                <div class="personnel-search-box">
+
+                    <label for="deliveryPersonnelSearch">
+                        Search Personnel
+                    </label>
+
+                    <div class="personnel-search-input">
+
+                        <span>
+                            🔍
+                        </span>
+
+                        <input
+                            type="text"
+                            id="deliveryPersonnelSearch"
+                            placeholder="Search name, phone, town or district..."
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="personnel-status-filter">
+
+                    <label for="deliveryPersonnelStatusFilter">
+                        Status
+                    </label>
+
+                    <select
+                        id="deliveryPersonnelStatusFilter"
+                    >
+
+                        <option value="">
+                            All Personnel
+                        </option>
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="personnel-card-body">
+
+                {% if personnel %}
+
+                <div class="table-responsive">
+
+                    <table class="table personnel-table align-middle mb-0">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Personnel</th>
+
+                                <th>Phone</th>
+
+                                <th>Location</th>
+
+                                <th>Status</th>
+
+                                <th>Total Deliveries</th>
+
+                                <th>Active</th>
+
+                                <th>Completed</th>
+
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="deliveryPersonnelTableBody">
+
+                            {% for person in personnel %}
+
+                            <tr
+                                class="delivery-personnel-row"
+                                data-name="{{ person.full_name }}"
+                                data-phone="{{ person.phone }}"
+                                data-town="{{ person.town or '' }}"
+                                data-district="{{ person.district or '' }}"
+                                data-status="{{ person.status }}"
+                            >
+
+
+                                <!-- NUMBER -->
+
+                                <td>
+
+                                    <div class="personnel-number">
+                                        {{ loop.index }}
+                                    </div>
+
+                                </td>
+
+
+                                <!-- PERSONNEL -->
+
+                                <td>
+
+                                    <div class="personnel-profile">
+
+                                        <div class="personnel-avatar">
+
+                                            {% if person.full_name %}
+                                                {{ person.full_name[0]|upper }}
+                                            {% else %}
+                                                D
+                                            {% endif %}
+
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                {{ person.full_name }}
+                                            </strong>
+
+                                            {% if person.address %}
+
+                                            <small>
+                                                📍 {{ person.address }}
+                                            </small>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- PHONE -->
+
+                                <td>
+
+                                    <a
+                                        href="tel:{{ person.phone }}"
+                                        class="personnel-phone"
+                                    >
+                                        📞 {{ person.phone }}
+                                    </a>
+
+                                </td>
+
+
+                                <!-- LOCATION -->
+
+                                <td>
+
+                                    <div class="personnel-location">
+
+                                        {% if person.town %}
+
+                                        <strong>
+                                            {{ person.town }}
+                                        </strong>
+
+                                        {% endif %}
+
+                                        {% if person.district %}
+
+                                        <small>
+                                            {{ person.district }}
+                                        </small>
+
+                                        {% endif %}
+
+                                        {% if not person.town and not person.district %}
+
+                                        <small>
+                                            Not provided
+                                        </small>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    {% if person.status == "active" %}
+
+                                    <span class="personnel-status active">
+                                        ● ACTIVE
+                                    </span>
+
+                                    {% else %}
+
+                                    <span class="personnel-status inactive">
+                                        ● INACTIVE
+                                    </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- TOTAL DELIVERIES -->
+
+                                <td>
+
+                                    <span class="delivery-stat total">
+                                        {{ person.total_deliveries }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- ACTIVE DELIVERIES -->
+
+                                <td>
+
+                                    <span class="delivery-stat active-delivery">
+                                        {{ person.active_deliveries }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- COMPLETED -->
+
+                                <td>
+
+                                    <span class="delivery-stat completed">
+                                        {{ person.completed_deliveries }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- ACTIONS -->
+
+                                <td>
+
+                                    <div class="personnel-actions">
+
+                                        <a
+                                            href="{{ url_for(
+                                                'admin_edit_delivery_person',
+                                                person_id=person.id
+                                            ) }}"
+                                            class="personnel-action edit personnel-action-button"
+                                        >
+                                            ✏️ Edit
+                                        </a>
+
+
+                                        {% if person.status == "active" %}
+
+                                        <a
+                                            href="{{ url_for(
+                                                'admin_toggle_delivery_person',
+                                                person_id=person.id
+                                            ) }}"
+                                            class="personnel-action deactivate personnel-action-button"
+                                            data-action="deactivate"
+                                        >
+                                            Deactivate
+                                        </a>
+
+                                        {% else %}
+
+                                        <a
+                                            href="{{ url_for(
+                                                'admin_toggle_delivery_person',
+                                                person_id=person.id
+                                            ) }}"
+                                            class="personnel-action activate personnel-action-button"
+                                            data-action="activate"
+                                        >
+                                            Activate
+                                        </a>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- =================================================
+                     NO SEARCH RESULTS
+                ================================================== -->
+
+                <div
+                    id="deliveryPersonnelNoResults"
+                    class="personnel-no-results"
+                    style="display: none;"
+                >
+
+                    <div class="personnel-empty-icon">
+                        🔍
+                    </div>
+
+                    <h3>
+                        No Personnel Found
+                    </h3>
+
+                    <p>
+                        No delivery personnel match your search
+                        or selected status.
+                    </p>
+
+                </div>
+
+
+                {% else %}
+
+                <!-- =================================================
+                     EMPTY STATE
+                ================================================== -->
+
+                <div class="personnel-empty-state">
+
+                    <div class="personnel-empty-icon">
+                        👤
+                    </div>
+
+                    <h3>
+                        No Delivery Personnel
+                    </h3>
+
+                    <p>
+                        You haven't added any delivery personnel yet.
+                        Add your first delivery person to start assigning
+                        customer orders.
+                    </p>
+
+                    <a
+                        href="{{ url_for('admin_add_delivery_person') }}"
+                        class="personnel-empty-btn"
+                    >
+                        ＋ Add Delivery Personnel
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             QUICK ACTIONS
+        ====================================================== -->
+
+        <div class="personnel-quick-card">
+
+            <div class="personnel-quick-header">
+
+                <div>
+
+                    <div class="personnel-card-label">
+                        ADMINISTRATION
+                    </div>
+
+                    <h2>
+                        ⚡ Quick Actions
+                    </h2>
+
+                </div>
+
+                <p>
+                    Quickly move between delivery management areas.
+                </p>
+
+            </div>
+
+
+            <div class="personnel-quick-actions">
+
+                <a
+                    href="{{ url_for('admin_deliveries') }}"
+                    class="personnel-quick-btn delivery"
+                >
+
+                    <span>
+                        🚚
+                    </span>
+
+                    <div>
+                        <strong>
+                            Delivery Management
+                        </strong>
+
+                        <small>
+                            Manage customer deliveries
+                        </small>
+                    </div>
+
+                    <span class="quick-arrow">
+                        →
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_orders') }}"
+                    class="personnel-quick-btn orders"
+                >
+
+                    <span>
+                        🧾
+                    </span>
+
+                    <div>
+                        <strong>
+                            Orders
+                        </strong>
+
+                        <small>
+                            View and manage orders
+                        </small>
+                    </div>
+
+                    <span class="quick-arrow">
+                        →
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_dashboard') }}"
+                    class="personnel-quick-btn dashboard"
+                >
+
+                    <span>
+                        🏠
+                    </span>
+
+                    <div>
+                        <strong>
+                            Dashboard
+                        </strong>
+
+                        <small>
+                            Return to administration
+                        </small>
+                    </div>
+
+                    <span class="quick-arrow">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

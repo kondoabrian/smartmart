@@ -1,0 +1,692 @@
+{% extends "base.html" %}
+
+{% block title %}
+Sales & Profit | SmartMart
+{% endblock %}
+
+{% block content %}
+
+<section class="smart-sales-section py-5">
+
+    <div class="container">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <div class="sales-page-header">
+
+            <div>
+
+                <div class="section-label">
+                    SMARTMART BUSINESS ANALYTICS
+                </div>
+
+                <h1 class="sales-page-title">
+                    Sales & Profit
+                </h1>
+
+                <p class="sales-page-subtitle">
+                    Monitor SmartMart sales, product costs,
+                    orders, and profit performance.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="sales-dashboard-btn"
+            >
+                <span>←</span>
+                Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             FINANCIAL SUMMARY
+        ================================================== -->
+
+        <div class="row g-4 mb-4">
+
+
+            <!-- TOTAL SALES -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="sales-stat-card sales-stat-revenue">
+
+                    <div class="sales-stat-top">
+
+                        <div>
+
+                            <span class="sales-stat-label">
+                                Total Sales
+                            </span>
+
+                            <h2 class="sales-stat-number">
+                                UGX {{ "{:,.0f}".format(total_sales) }}
+                            </h2>
+
+                        </div>
+
+                        <div class="sales-stat-icon">
+                            💰
+                        </div>
+
+                    </div>
+
+                    <p class="sales-stat-description">
+                        Revenue from completed orders
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL COST -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="sales-stat-card sales-stat-cost">
+
+                    <div class="sales-stat-top">
+
+                        <div>
+
+                            <span class="sales-stat-label">
+                                Total Cost
+                            </span>
+
+                            <h2 class="sales-stat-number">
+                                UGX {{ "{:,.0f}".format(total_cost) }}
+                            </h2>
+
+                        </div>
+
+                        <div class="sales-stat-icon">
+                            📦
+                        </div>
+
+                    </div>
+
+                    <p class="sales-stat-description">
+                        Cost of products sold
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- GROSS PROFIT -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="sales-stat-card sales-stat-profit">
+
+                    <div class="sales-stat-top">
+
+                        <div>
+
+                            <span class="sales-stat-label">
+                                Gross Profit
+                            </span>
+
+                            <h2 class="sales-stat-number">
+                                UGX {{ "{:,.0f}".format(gross_profit) }}
+                            </h2>
+
+                        </div>
+
+                        <div class="sales-stat-icon">
+                            📈
+                        </div>
+
+                    </div>
+
+                    <p class="sales-stat-description">
+                        Sales minus product cost
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             BUSINESS ACTIVITY SUMMARY
+        ================================================== -->
+
+        <div class="row g-4 mb-4">
+
+
+            <!-- ORDERS -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="sales-mini-card">
+
+                    <div class="sales-mini-icon">
+                        🧾
+                    </div>
+
+                    <div>
+
+                        <span class="sales-mini-label">
+                            Orders
+                        </span>
+
+                        <h3>
+                            {{ total_orders }}
+                        </h3>
+
+                        <p>
+                            Non-cancelled orders
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- UNITS SOLD -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="sales-mini-card">
+
+                    <div class="sales-mini-icon">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <span class="sales-mini-label">
+                            Units Sold
+                        </span>
+
+                        <h3>
+                            {{ units_sold }}
+                        </h3>
+
+                        <p>
+                            Total products sold
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TODAY SALES -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="sales-mini-card">
+
+                    <div class="sales-mini-icon">
+                        📅
+                    </div>
+
+                    <div>
+
+                        <span class="sales-mini-label">
+                            Today's Sales
+                        </span>
+
+                        <h3>
+                            UGX {{ "{:,.0f}".format(today_sales) }}
+                        </h3>
+
+                        <p>
+                            Sales made today
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PERIOD PERFORMANCE
+        ================================================== -->
+
+        <div class="row g-4 mb-5">
+
+
+            <!-- TODAY PROFIT -->
+
+            <div class="col-lg-6">
+
+                <div class="sales-period-card">
+
+                    <div class="sales-period-icon">
+                        📈
+                    </div>
+
+                    <div>
+
+                        <span class="sales-period-label">
+                            TODAY'S PROFIT
+                        </span>
+
+                        <h2>
+                            UGX {{ "{:,.0f}".format(today_profit) }}
+                        </h2>
+
+                        <p>
+                            Profit generated today.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MONTH SALES -->
+
+            <div class="col-lg-6">
+
+                <div class="sales-period-card">
+
+                    <div class="sales-period-icon">
+                        📅
+                    </div>
+
+                    <div>
+
+                        <span class="sales-period-label">
+                            THIS MONTH'S SALES
+                        </span>
+
+                        <h2>
+                            UGX {{ "{:,.0f}".format(month_sales) }}
+                        </h2>
+
+                        <p>
+                            Sales generated during the current month.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MONTH PROFIT
+        ================================================== -->
+
+        <div class="sales-month-profit-card mb-5">
+
+            <div class="sales-month-profit-content">
+
+                <div>
+
+                    <div class="sales-month-profit-label">
+                        CURRENT MONTH PERFORMANCE
+                    </div>
+
+                    <h2>
+                        This Month's Profit
+                    </h2>
+
+                    <p>
+                        Profit generated during the current month.
+                    </p>
+
+                </div>
+
+                <div class="sales-month-profit-value">
+
+                    UGX {{ "{:,.0f}".format(month_profit) }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SALES DETAILS
+        ================================================== -->
+
+        <div class="sales-details-card">
+
+
+            <!-- Header -->
+
+            <div class="sales-details-header">
+
+                <div>
+
+                    <div class="sales-details-label">
+                        TRANSACTION RECORDS
+                    </div>
+
+                    <h2>
+                        Sales Details
+                    </h2>
+
+                    <p>
+                        Review individual products sold,
+                        costs, revenue, and profit.
+                    </p>
+
+                </div>
+
+                <div class="sales-details-icon">
+                    🧾
+                </div>
+
+            </div>
+
+
+            <!-- Table -->
+
+            <div class="sales-table-wrapper">
+
+                {% if sales_details %}
+
+                <div class="table-responsive">
+
+                    <table class="table sales-table align-middle">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Order</th>
+
+                                <th>Product</th>
+
+                                <th>Quantity</th>
+
+                                <th>Selling Price</th>
+
+                                <th>Buying Price</th>
+
+                                <th>Sales</th>
+
+                                <th>Cost</th>
+
+                                <th>Profit</th>
+
+                                <th>Date</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for sale in sales_details %}
+
+                            <tr>
+
+
+                                <!-- Number -->
+
+                                <td>
+
+                                    <span class="sales-row-number">
+                                        {{ loop.index }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Order -->
+
+                                <td>
+
+                                    <span class="sales-order-number">
+                                        {{ sale.order_number }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Product -->
+
+                                <td>
+
+                                    <div class="sales-product-cell">
+
+                                        <div class="sales-product-icon">
+                                            📦
+                                        </div>
+
+                                        <strong>
+                                            {{ sale.product_name }}
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- Quantity -->
+
+                                <td>
+
+                                    <span class="sales-quantity">
+                                        {{ sale.quantity }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Selling Price -->
+
+                                <td>
+
+                                    <span class="sales-price">
+                                        UGX {{ "{:,.0f}".format(
+                                            sale.unit_price
+                                        ) }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Buying Price -->
+
+                                <td>
+
+                                    <span class="sales-cost-price">
+                                        UGX {{ "{:,.0f}".format(
+                                            sale.buying_price
+                                        ) }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Sales -->
+
+                                <td>
+
+                                    <span class="sales-revenue-value">
+                                        UGX {{ "{:,.0f}".format(
+                                            sale.sales_amount
+                                        ) }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Cost -->
+
+                                <td>
+
+                                    <span class="sales-cost-value">
+                                        UGX {{ "{:,.0f}".format(
+                                            sale.cost_amount
+                                        ) }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Profit -->
+
+                                <td>
+
+                                    <span class="sales-profit-value">
+                                        UGX {{ "{:,.0f}".format(
+                                            sale.profit
+                                        ) }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Date -->
+
+                                <td>
+
+                                    <span class="sales-date">
+                                        {{ sale.created_at }}
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                {% else %}
+
+
+                <!-- =================================================
+                     EMPTY STATE
+                ================================================== -->
+
+                <div class="sales-empty-state">
+
+                    <div class="sales-empty-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        No Sales Yet
+                    </h3>
+
+                    <p>
+                        Sales information will appear here when
+                        customers place orders.
+                    </p>
+
+                    <a
+                        href="{{ url_for('admin_orders') }}"
+                        class="sales-empty-btn"
+                    >
+                        🧾 View Orders
+                    </a>
+
+                </div>
+
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             QUICK ACTIONS
+        ================================================== -->
+
+        <div class="sales-quick-actions">
+
+            <div>
+
+                <div class="sales-details-label">
+                    BUSINESS MANAGEMENT
+                </div>
+
+                <h3>
+                    Quick Actions
+                </h3>
+
+                <p>
+                    Quickly access other SmartMart management
+                    sections.
+                </p>
+
+            </div>
+
+
+            <div class="sales-quick-buttons">
+
+                <a
+                    href="{{ url_for('admin_orders') }}"
+                    class="sales-quick-btn sales-quick-primary"
+                >
+                    🧾 Manage Orders
+                </a>
+
+                <a
+                    href="{{ url_for('admin_inventory') }}"
+                    class="sales-quick-btn"
+                >
+                    📦 Inventory
+                </a>
+
+                <a
+                    href="{{ url_for('admin_products') }}"
+                    class="sales-quick-btn"
+                >
+                    🛍 Products
+                </a>
+
+                <a
+                    href="{{ url_for('admin_dashboard') }}"
+                    class="sales-quick-btn"
+                >
+                    🏠 Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

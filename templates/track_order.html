@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Track Your Order | SmartMart
+{% endblock %}
+
+
+{% block content %}
+
+<section class="smart-track-section py-5">
+
+    <div class="container">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+             ===================================================== -->
+
+        <div class="track-page-header text-center mb-5">
+
+            <div class="section-label">
+                SMARTMART ORDER TRACKING
+            </div>
+
+            <h1 class="track-page-title">
+                Track Your Order
+            </h1>
+
+            <p class="track-page-subtitle">
+                Enter your SmartMart order number below to check
+                the current status of your order.
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             TRACKING CARD
+             ===================================================== -->
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-6 col-md-8">
+
+                <div class="track-order-card">
+
+
+                    <!-- =================================================
+                         ICON
+                         ================================================= -->
+
+                    <div class="track-order-icon">
+                        📦
+                    </div>
+
+
+                    <h2 class="track-card-title">
+                        Find Your Order
+                    </h2>
+
+
+                    <p class="track-card-text">
+                        Use the order number you received after placing
+                        your order.
+                    </p>
+
+
+
+                    <!-- =================================================
+                         TRACKING FORM
+                         ================================================= -->
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('track_order') }}"
+                        id="trackOrderForm"
+                    >
+
+
+                        <div class="track-input-group">
+
+
+                            <!-- LABEL -->
+
+                            <label
+                                for="order_number"
+                                class="track-input-label"
+                            >
+                                Order Number
+                            </label>
+
+
+
+                            <!-- INPUT -->
+
+                            <input
+                                type="text"
+                                id="order_number"
+                                name="order_number"
+                                class="track-order-input"
+                                placeholder="Example: SM-8F42A91C"
+                                autocomplete="off"
+                                maxlength="20"
+                                required
+                            >
+
+
+
+                            <!-- HELP -->
+
+                            <small class="track-input-help">
+                                Enter the order number exactly as shown
+                                on your order confirmation.
+                            </small>
+
+
+
+                            <!-- JAVASCRIPT ERROR -->
+
+                            <div
+                                id="trackOrderInputError"
+                                class="track-input-error"
+                                role="alert"
+                            ></div>
+
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             BUTTON
+                             ================================================= -->
+
+                        <button
+                            type="submit"
+                            class="track-order-btn"
+                            id="trackOrderButton"
+                        >
+
+                            <span id="trackOrderIcon">
+                                🔍
+                            </span>
+
+                            <span id="trackOrderText">
+                                Track Order
+                            </span>
+
+                        </button>
+
+
+                    </form>
+
+
+
+                    <!-- =================================================
+                         SERVER ERROR
+                         ================================================= -->
+
+                    {% if error %}
+
+                    <div class="track-error-message">
+
+                        <div class="track-error-icon">
+                            ⚠️
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Order Not Found
+                            </strong>
+
+                            <p>
+                                {{ error }}
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             INFORMATION CARDS
+             ===================================================== -->
+
+        <div class="row g-4 justify-content-center mt-5">
+
+
+            <!-- =================================================
+                 CARD 1
+                 ================================================= -->
+
+            <div class="col-md-4">
+
+                <div class="track-info-card">
+
+                    <div class="track-info-icon">
+                        🔢
+                    </div>
+
+                    <h5>
+                        Use Your Order Number
+                    </h5>
+
+                    <p>
+                        Your order number is provided after you
+                        successfully place an order.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CARD 2
+                 ================================================= -->
+
+            <div class="col-md-4">
+
+                <div class="track-info-card">
+
+                    <div class="track-info-icon">
+                        📍
+                    </div>
+
+                    <h5>
+                        Follow Your Order
+                    </h5>
+
+                    <p>
+                        Check the progress of your order as it moves
+                        through the delivery process.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CARD 3
+                 ================================================= -->
+
+            <div class="col-md-4">
+
+                <div class="track-info-card">
+
+                    <div class="track-info-icon">
+                        🛍️
+                    </div>
+
+                    <h5>
+                        Continue Shopping
+                    </h5>
+
+                    <p>
+                        Explore SmartMart and discover more products
+                        for your everyday needs.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             BACK TO SHOPPING
+             ===================================================== -->
+
+        <div class="track-back-shopping text-center mt-5">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="track-back-btn"
+            >
+
+                ← Continue Shopping
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

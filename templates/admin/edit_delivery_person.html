@@ -1,0 +1,657 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Delivery Personnel | SmartMart{% endblock %}
+
+{% block content %}
+
+<section
+    class="smart-edit-personnel-section py-5"
+    data-admin-edit-delivery-person="true"
+>
+
+    <div class="container">
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <div class="edit-personnel-header">
+
+            <div>
+
+                <div class="section-label">
+                    SMARTMART DELIVERY TEAM
+                </div>
+
+                <h1 class="edit-personnel-title">
+                    Edit Delivery Personnel
+                </h1>
+
+                <p class="edit-personnel-subtitle">
+                    Update the information and account status
+                    of this SmartMart delivery person.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('admin_delivery_personnel') }}"
+                class="edit-personnel-back-btn"
+            >
+                <span>←</span>
+                Back to Personnel
+            </a>
+
+        </div>
+
+
+        <!-- =====================================================
+             ERROR
+        ====================================================== -->
+
+        {% if error %}
+
+        <div class="edit-personnel-error">
+
+            <div class="edit-personnel-error-icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <strong>
+                    Unable to Save Changes
+                </strong>
+
+                <p>
+                    {{ error }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- =====================================================
+             MAIN LAYOUT
+        ====================================================== -->
+
+        <div class="row g-4">
+
+
+            <!-- =================================================
+                 EDIT FORM
+            ================================================== -->
+
+            <div class="col-lg-8">
+
+                <div class="edit-personnel-form-card">
+
+
+                    <!-- FORM HEADER -->
+
+                    <div class="edit-personnel-form-header">
+
+                        <div class="edit-personnel-avatar">
+                            {{ person.full_name[0]|upper }}
+                        </div>
+
+                        <div>
+
+                            <div class="personnel-card-label">
+                                PERSONNEL ACCOUNT
+                            </div>
+
+                            <h2>
+                                {{ person.full_name }}
+                            </h2>
+
+                            <p>
+                                Update personnel information below.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FORM BODY -->
+
+                    <div class="edit-personnel-form-body">
+
+                        <form
+                            method="POST"
+                            class="edit-delivery-person-form"
+                        >
+
+
+                            <!-- =================================================
+                                 PERSONAL INFORMATION
+                            ================================================== -->
+
+                            <div class="edit-personnel-section-heading">
+
+                                <span class="edit-personnel-section-number">
+                                    01
+                                </span>
+
+                                <div>
+
+                                    <h3>
+                                        Personal Information
+                                    </h3>
+
+                                    <p>
+                                        Update the personnel's name and phone number.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row g-3">
+
+
+                                <!-- FULL NAME -->
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="full_name"
+                                        class="edit-personnel-label"
+                                    >
+                                        Full Name
+                                        <span>*</span>
+                                    </label>
+
+                                    <div class="edit-personnel-input-wrapper">
+
+                                        <span class="edit-personnel-input-icon">
+                                            👤
+                                        </span>
+
+                                        <input
+                                            type="text"
+                                            id="full_name"
+                                            name="full_name"
+                                            class="edit-personnel-input"
+                                            value="{{ person.full_name }}"
+                                            placeholder="Enter full name"
+                                            autocomplete="name"
+                                            minlength="2"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- PHONE -->
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="phone"
+                                        class="edit-personnel-label"
+                                    >
+                                        Phone Number
+                                        <span>*</span>
+                                    </label>
+
+                                    <div class="edit-personnel-input-wrapper">
+
+                                        <span class="edit-personnel-input-icon">
+                                            📞
+                                        </span>
+
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            name="phone"
+                                            class="edit-personnel-input"
+                                            value="{{ person.phone }}"
+                                            placeholder="e.g. 0700000000"
+                                            autocomplete="tel"
+                                            inputmode="tel"
+                                            required
+                                        >
+
+                                    </div>
+
+                                    <small class="edit-personnel-help">
+                                        This is the phone number used to identify
+                                        the delivery personnel.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 LOCATION
+                            ================================================== -->
+
+                            <div class="edit-personnel-section-heading">
+
+                                <span class="edit-personnel-section-number">
+                                    02
+                                </span>
+
+                                <div>
+
+                                    <h3>
+                                        Location Information
+                                    </h3>
+
+                                    <p>
+                                        Update the delivery person's location.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row g-3">
+
+
+                                <!-- DISTRICT -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="district"
+                                        class="edit-personnel-label"
+                                    >
+                                        District
+                                    </label>
+
+                                    <div class="edit-personnel-input-wrapper">
+
+                                        <span class="edit-personnel-input-icon">
+                                            📍
+                                        </span>
+
+                                        <input
+                                            type="text"
+                                            id="district"
+                                            name="district"
+                                            class="edit-personnel-input"
+                                            value="{{ person.district or '' }}"
+                                            placeholder="Enter district"
+                                            autocomplete="address-level1"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- TOWN -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="town"
+                                        class="edit-personnel-label"
+                                    >
+                                        Town / City
+                                    </label>
+
+                                    <div class="edit-personnel-input-wrapper">
+
+                                        <span class="edit-personnel-input-icon">
+                                            🏙️
+                                        </span>
+
+                                        <input
+                                            type="text"
+                                            id="town"
+                                            name="town"
+                                            class="edit-personnel-input"
+                                            value="{{ person.town or '' }}"
+                                            placeholder="Enter town or city"
+                                            autocomplete="address-level2"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- ADDRESS -->
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="address"
+                                        class="edit-personnel-label"
+                                    >
+                                        Address
+                                    </label>
+
+                                    <div class="edit-personnel-textarea-wrapper">
+
+                                        <span class="edit-personnel-textarea-icon">
+                                            🏠
+                                        </span>
+
+                                        <textarea
+                                            id="address"
+                                            name="address"
+                                            class="edit-personnel-textarea"
+                                            rows="4"
+                                            placeholder="Enter full address"
+                                            autocomplete="street-address"
+                                        >{{ person.address or '' }}</textarea>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 ACCOUNT STATUS
+                            ================================================== -->
+
+                            <div class="edit-personnel-section-heading">
+
+                                <span class="edit-personnel-section-number">
+                                    03
+                                </span>
+
+                                <div>
+
+                                    <h3>
+                                        Account Status
+                                    </h3>
+
+                                    <p>
+                                        Control whether this person can currently
+                                        be used for deliveries.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="edit-personnel-status-box">
+
+                                <div class="edit-personnel-status-icon">
+                                    ⚙️
+                                </div>
+
+                                <div class="edit-personnel-status-content">
+
+                                    <label
+                                        for="status"
+                                        class="edit-personnel-label"
+                                    >
+                                        Personnel Status
+                                        <span>*</span>
+                                    </label>
+
+                                    <select
+                                        id="status"
+                                        name="status"
+                                        class="edit-personnel-select"
+                                        required
+                                    >
+
+                                        <option
+                                            value="active"
+                                            {% if person.status == "active" %}
+                                                selected
+                                            {% endif %}
+                                        >
+                                            Active
+                                        </option>
+
+                                        <option
+                                            value="inactive"
+                                            {% if person.status == "inactive" %}
+                                                selected
+                                            {% endif %}
+                                        >
+                                            Inactive
+                                        </option>
+
+                                    </select>
+
+                                    <small class="edit-personnel-help">
+                                        Active personnel can be selected when
+                                        assigning deliveries.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 INFORMATION NOTICE
+                            ================================================== -->
+
+                            <div class="edit-personnel-update-notice">
+
+                                <div class="edit-personnel-update-icon">
+                                    ℹ️
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Before Saving
+                                    </strong>
+
+                                    <p>
+                                        Make sure the phone number and location
+                                        information are correct. Setting the
+                                        account to inactive will prevent this
+                                        person from being treated as available
+                                        for new delivery assignments.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 ACTIONS
+                            ================================================== -->
+
+                            <div class="edit-personnel-actions">
+
+                                <button
+                                    type="submit"
+                                    class="edit-personnel-save-btn"
+                                >
+                                    <span>💾</span>
+                                    Save Changes
+                                </button>
+
+
+                                <a
+                                    href="{{ url_for('admin_delivery_personnel') }}"
+                                    class="edit-personnel-cancel-btn"
+                                >
+                                    Cancel
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SIDE INFORMATION
+            ================================================== -->
+
+            <div class="col-lg-4">
+
+                <div class="edit-personnel-side-card">
+
+                    <div class="edit-personnel-side-icon">
+                        👤
+                    </div>
+
+                    <div class="personnel-card-label">
+                        CURRENT ACCOUNT
+                    </div>
+
+                    <h2>
+                        {{ person.full_name }}
+                    </h2>
+
+                    <p>
+                        Review the information carefully before
+                        saving changes to this delivery account.
+                    </p>
+
+
+                    <div class="edit-personnel-summary">
+
+
+                        <div class="edit-personnel-summary-item">
+
+                            <span>
+                                📞 Phone
+                            </span>
+
+                            <strong>
+                                {{ person.phone }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="edit-personnel-summary-item">
+
+                            <span>
+                                📍 Location
+                            </span>
+
+                            <strong>
+
+                                {% if person.town %}
+                                    {{ person.town }}
+                                {% else %}
+                                    Not provided
+                                {% endif %}
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="edit-personnel-summary-item">
+
+                            <span>
+                                🚚 Total Deliveries
+                            </span>
+
+                            <strong>
+                                {{ person.total_deliveries }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="edit-personnel-summary-item">
+
+                            <span>
+                                📦 Active Deliveries
+                            </span>
+
+                            <strong>
+                                {{ person.active_deliveries }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="edit-personnel-summary-item">
+
+                            <span>
+                                ✅ Completed
+                            </span>
+
+                            <strong>
+                                {{ person.completed_deliveries }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="edit-personnel-summary-item">
+
+                            <span>
+                                ⚙️ Status
+                            </span>
+
+                            <strong>
+                                {% if person.status == "active" %}
+                                    Active
+                                {% else %}
+                                    Inactive
+                                {% endif %}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     STATUS INFORMATION
+                ================================================== -->
+
+                <div class="edit-personnel-security-card">
+
+                    <div class="edit-personnel-security-icon">
+                        🛡️
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Account Status
+                        </strong>
+
+                        <p>
+                            Changing a personnel account to inactive
+                            prevents it from being treated as an active
+                            delivery resource.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

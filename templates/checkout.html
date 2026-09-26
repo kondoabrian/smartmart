@@ -1,0 +1,609 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Checkout | SmartMart
+{% endblock %}
+
+
+{% block content %}
+
+<section class="smart-checkout-section py-5">
+
+    <div class="container">
+
+
+        <!-- =====================================================
+             PAGE HEADER
+             ===================================================== -->
+
+        <div class="checkout-page-header mb-5">
+
+            <div class="section-label">
+                SMARTMART CHECKOUT
+            </div>
+
+            <h1 class="checkout-page-title">
+                Checkout
+            </h1>
+
+            <p class="checkout-page-subtitle">
+                Enter your delivery information to place your order.
+            </p>
+
+        </div>
+
+
+
+        <div class="row g-5">
+
+
+            <!-- =================================================
+                 CUSTOMER INFORMATION
+                 ================================================= -->
+
+            <div class="col-lg-7">
+
+                <div class="checkout-form-card">
+
+
+                    <!-- FORM HEADER -->
+
+                    <div class="checkout-card-header">
+
+                        <div class="checkout-header-icon">
+                            📍
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Delivery Information
+                            </h4>
+
+                            <p>
+                                Tell us where you would like your order delivered.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="checkout-divider"></div>
+
+
+                    <!-- =================================================
+                         CHECKOUT FORM
+                         ================================================= -->
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('place_order') }}"
+                        id="checkoutForm"
+                    >
+
+
+                        <!-- =================================================
+                             CUSTOMER NAME
+                             ================================================= -->
+
+                        <div class="checkout-form-group">
+
+                            <label
+                                for="customer_name"
+                                class="checkout-label"
+                            >
+
+                                Full Name
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="customer_name"
+                                name="customer_name"
+                                class="checkout-input"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                required
+                            >
+
+                            <div
+                                id="customerNameError"
+                                class="checkout-validation-error"
+                            ></div>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             PHONE
+                             ================================================= -->
+
+                        <div class="checkout-form-group">
+
+                            <label
+                                for="phone"
+                                class="checkout-label"
+                            >
+
+                                Phone Number
+
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                class="checkout-input"
+                                placeholder="e.g. 0700000000"
+                                autocomplete="tel"
+                                required
+                            >
+
+                            <small class="checkout-help-text">
+
+                                Use a phone number that we can use
+                                to contact you about your order.
+
+                            </small>
+
+                            <div
+                                id="phoneError"
+                                class="checkout-validation-error"
+                            ></div>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             DISTRICT + TOWN
+                             ================================================= -->
+
+                        <div class="row g-3">
+
+
+                            <!-- DISTRICT -->
+
+                            <div class="col-md-6">
+
+                                <div class="checkout-form-group">
+
+                                    <label
+                                        for="district"
+                                        class="checkout-label"
+                                    >
+
+                                        District
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="district"
+                                        name="district"
+                                        class="checkout-input"
+                                        placeholder="Enter district"
+                                        autocomplete="address-level1"
+                                        required
+                                    >
+
+                                    <div
+                                        id="districtError"
+                                        class="checkout-validation-error"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- TOWN -->
+
+                            <div class="col-md-6">
+
+                                <div class="checkout-form-group">
+
+                                    <label
+                                        for="town"
+                                        class="checkout-label"
+                                    >
+
+                                        Town / City
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="town"
+                                        name="town"
+                                        class="checkout-input"
+                                        placeholder="Enter town or city"
+                                        autocomplete="address-level2"
+                                        required
+                                    >
+
+                                    <div
+                                        id="townError"
+                                        class="checkout-validation-error"
+                                    ></div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             DELIVERY ADDRESS
+                             ================================================= -->
+
+                        <div class="checkout-form-group">
+
+                            <label
+                                for="delivery_address"
+                                class="checkout-label"
+                            >
+
+                                Delivery Address
+
+                            </label>
+
+                            <textarea
+                                id="delivery_address"
+                                name="delivery_address"
+                                class="checkout-textarea"
+                                rows="3"
+                                placeholder="Enter the address where you want your order delivered"
+                                autocomplete="street-address"
+                                required
+                            ></textarea>
+
+                            <div
+                                id="deliveryAddressError"
+                                class="checkout-validation-error"
+                            ></div>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             ADDITIONAL DIRECTIONS
+                             ================================================= -->
+
+                        <div class="checkout-form-group">
+
+                            <label
+                                for="additional_directions"
+                                class="checkout-label"
+                            >
+
+                                Additional Directions
+
+                                <span>
+                                    (Optional)
+                                </span>
+
+                            </label>
+
+                            <textarea
+                                id="additional_directions"
+                                name="additional_directions"
+                                class="checkout-textarea"
+                                rows="3"
+                                placeholder="For example: Near the market, opposite the school..."
+                            ></textarea>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             ORDERING INFORMATION
+                             ================================================= -->
+
+                        <div class="checkout-process-box">
+
+                            <div class="checkout-process-icon">
+                                📱
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Ordering Process
+                                </strong>
+
+                                <p>
+
+                                    After placing your order, SmartMart
+                                    will create your order number.
+                                    You can then communicate with our
+                                    team through WhatsApp.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             FORM ERROR MESSAGE
+                             ================================================= -->
+
+                        <div
+                            id="checkoutFormError"
+                            class="checkout-form-error"
+                            role="alert"
+                        ></div>
+
+
+
+                        <!-- =================================================
+                             PLACE ORDER
+                             ================================================= -->
+
+                        <button
+                            type="submit"
+                            class="checkout-place-order-btn"
+                            id="placeOrderButton"
+                        >
+
+                            <span class="place-order-icon">
+                                🛍️
+                            </span>
+
+                            <span id="placeOrderText">
+                                Place Order
+                            </span>
+
+                            <span>
+                                →
+                            </span>
+
+                        </button>
+
+
+
+                        <!-- =================================================
+                             BACK TO CART
+                             ================================================= -->
+
+                        <a
+                            href="{{ url_for('cart') }}"
+                            class="checkout-back-btn"
+                            id="checkoutBackButton"
+                        >
+
+                            ← Back to Cart
+
+                        </a>
+
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ORDER SUMMARY
+                 ================================================= -->
+
+            <div class="col-lg-5">
+
+                <div class="checkout-summary-card">
+
+
+                    <!-- SUMMARY HEADER -->
+
+                    <div class="checkout-summary-header">
+
+                        <div class="checkout-summary-icon">
+                            🛒
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Your Order
+                            </h4>
+
+                            <small>
+                                Review your selected products
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="checkout-divider"></div>
+
+
+
+                    <!-- =================================================
+                         PRODUCTS
+                         ================================================= -->
+
+                    <div class="checkout-products">
+
+                        {% for item in cart_items %}
+
+                        <div class="checkout-product">
+
+
+                            <!-- IMAGE -->
+
+                            <div class="checkout-product-image-wrapper">
+
+                                {% if item.image %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename='images/products/' + item.image
+                                    ) }}"
+                                    alt="{{ item.name }}"
+                                    class="checkout-product-image"
+                                >
+
+                                {% else %}
+
+                                <div class="checkout-product-placeholder">
+                                    📦
+                                </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- DETAILS -->
+
+                            <div class="checkout-product-details">
+
+                                <h6>
+                                    {{ item.name }}
+                                </h6>
+
+                                <small>
+                                    Qty: {{ item.quantity }}
+                                </small>
+
+                                <strong>
+
+                                    UGX
+                                    {{ "{:,.0f}".format(item.subtotal) }}
+
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+
+                    <hr>
+
+
+
+                    <!-- =================================================
+                         SUBTOTAL
+                         ================================================= -->
+
+                    <div class="checkout-summary-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong>
+
+                            UGX
+                            {{ "{:,.0f}".format(total) }}
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         DELIVERY
+                         ================================================= -->
+
+                    <div class="checkout-summary-row">
+
+                        <span>
+                            Delivery
+                        </span>
+
+                        <span class="checkout-delivery-status">
+                            To be confirmed
+                        </span>
+
+                    </div>
+
+
+                    <hr>
+
+
+
+                    <!-- =================================================
+                         TOTAL
+                         ================================================= -->
+
+                    <div class="checkout-total-row">
+
+                        <strong>
+                            Order Total
+                        </strong>
+
+                        <strong>
+
+                            UGX
+                            {{ "{:,.0f}".format(total) }}
+
+                        </strong>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         TRUST BOX
+                         ================================================= -->
+
+                    <div class="checkout-trust-box">
+
+                        <div class="checkout-trust-icon">
+                            🔒
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Secure Order
+                            </strong>
+
+                            <small>
+                                Your delivery information is used
+                                to process your order.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

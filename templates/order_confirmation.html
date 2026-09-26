@@ -1,0 +1,448 @@
+{% extends "base.html" %}
+
+{% block title %}
+Order Confirmed | SmartMart
+{% endblock %}
+
+
+{% block content %}
+
+<section class="smart-confirmation-section py-5">
+
+    <div class="container">
+
+
+        <!-- =====================================================
+             SUCCESS HEADER
+             ===================================================== -->
+
+        <div class="confirmation-success-header text-center mb-5">
+
+            <div class="confirmation-success-icon">
+                ✓
+            </div>
+
+            <div class="section-label">
+                SMARTMART ORDER
+            </div>
+
+            <h1 class="confirmation-title">
+                Order Received Successfully!
+            </h1>
+
+            <p class="confirmation-subtitle">
+                Thank you for shopping with SmartMart.
+                Your order has been received and is now being processed.
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             ORDER NUMBER
+             ===================================================== -->
+
+        <div class="confirmation-order-number-card mb-4">
+
+            <div class="confirmation-order-icon">
+                🎉
+            </div>
+
+            <div>
+
+                <span class="confirmation-order-label">
+                    YOUR ORDER NUMBER
+                </span>
+<div class="confirmation-order-number-row">
+
+    <h2 id="orderNumber">
+        {{ order.order_number }}
+    </h2>
+
+    <button
+        type="button"
+        id="copyOrderNumber"
+        class="confirmation-copy-btn"
+    >
+        📋 Copy
+    </button>
+
+</div>
+
+<p id="copyOrderMessage" class="confirmation-copy-message">
+    Keep this number safe. You can use it to track your order.
+</p>
+
+                <p>
+                    Keep this number safe. You can use it to track your order.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             CUSTOMER + ORDER
+             ===================================================== -->
+
+        <div class="row g-4">
+
+
+            <!-- =================================================
+                 CUSTOMER INFORMATION
+                 ================================================= -->
+
+            <div class="col-lg-5">
+
+                <div class="confirmation-card h-100">
+
+                    <div class="confirmation-card-header">
+
+                        <div class="confirmation-card-icon">
+                            👤
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Customer Information
+                            </h4>
+
+                            <small>
+                                Your delivery details
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="confirmation-divider"></div>
+
+
+                    <div class="confirmation-details">
+
+
+                        <div class="confirmation-detail-row">
+
+                            <span>
+                                Name
+                            </span>
+
+                            <strong>
+                                {{ order.customer_name }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="confirmation-detail-row">
+
+                            <span>
+                                Phone
+                            </span>
+
+                            <strong>
+                                {{ order.phone }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="confirmation-detail-row">
+
+                            <span>
+                                District
+                            </span>
+
+                            <strong>
+                                {{ order.district }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="confirmation-detail-row">
+
+                            <span>
+                                Town / City
+                            </span>
+
+                            <strong>
+                                {{ order.town }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="confirmation-detail-block">
+
+                            <span>
+                                Delivery Address
+                            </span>
+
+                            <strong>
+                                {{ order.delivery_address }}
+                            </strong>
+
+                        </div>
+
+
+                        {% if order.additional_directions %}
+
+                        <div class="confirmation-detail-block">
+
+                            <span>
+                                Additional Directions
+                            </span>
+
+                            <strong>
+                                {{ order.additional_directions }}
+                            </strong>
+
+                        </div>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                    <div class="confirmation-status-box">
+
+                        <span>
+                            Order Status
+                        </span>
+
+                        <strong>
+                            {{ order.status }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ORDER ITEMS
+                 ================================================= -->
+
+            <div class="col-lg-7">
+
+                <div class="confirmation-card">
+
+                    <div class="confirmation-card-header">
+
+                        <div class="confirmation-card-icon order-icon">
+                            🛍️
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Your Order
+                            </h4>
+
+                            <small>
+                                Products in this order
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="confirmation-divider"></div>
+
+
+                    <div class="confirmation-items">
+
+
+                        {% for item in items %}
+
+                        <div class="confirmation-product">
+
+
+                            <!-- PRODUCT IMAGE -->
+
+                            <div class="confirmation-product-image-wrapper">
+
+                                {% if item.product_image %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename='images/products/' + item.product_image
+                                    ) }}"
+                                    alt="{{ item.product_name }}"
+                                    class="confirmation-product-image"
+                                >
+
+                                {% else %}
+
+                                <div class="confirmation-product-placeholder">
+                                    📦
+                                </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- PRODUCT DETAILS -->
+
+                            <div class="confirmation-product-info">
+
+                                <h6>
+                                    {{ item.product_name }}
+                                </h6>
+
+                                <span>
+                                    Quantity: {{ item.quantity }}
+                                </span>
+
+                                <small>
+                                    UGX {{ "{:,.0f}".format(item.unit_price) }}
+                                    each
+                                </small>
+
+                            </div>
+
+
+                            <!-- SUBTOTAL -->
+
+                            <div class="confirmation-product-price">
+
+                                <strong>
+                                    UGX
+                                    {{ "{:,.0f}".format(item.subtotal) }}
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+                        {% endfor %}
+
+
+                    </div>
+
+
+                    <!-- TOTAL -->
+
+                    <div class="confirmation-total">
+
+                        <span>
+                            Order Total
+                        </span>
+
+                        <strong>
+                            UGX
+                            {{ "{:,.0f}".format(order.total_amount) }}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             WHATSAPP SECTION
+             ===================================================== -->
+
+        <div class="confirmation-whatsapp-card mt-4">
+
+            <div class="confirmation-whatsapp-icon">
+                💬
+            </div>
+
+            <div class="confirmation-whatsapp-content">
+
+                <h4>
+                    Confirm Your Order
+                </h4>
+
+                <p>
+                    You can send your order details to SmartMart
+                    through WhatsApp for communication about your order.
+                </p>
+
+               <a
+    href="{{ whatsapp_url }}"
+    target="_blank"
+    class="confirmation-whatsapp-btn"
+    id="whatsappOrderButton"
+>
+                    <i class="bi bi-whatsapp"></i>
+
+                    Send Order via WhatsApp
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+                <small>
+                    WhatsApp is used for communication about your order.
+                    Payment confirmation is handled separately.
+                </small>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             ACTION BUTTONS
+             ===================================================== -->
+
+        <div class="confirmation-actions mt-4">
+
+          <a
+    href="{{ url_for('track_order') }}"
+    class="confirmation-track-btn"
+    id="trackOrderButton"
+>
+                🔍
+
+                Track My Order
+
+            </a>
+
+
+            <a
+                href="{{ url_for('home') }}"
+                class="confirmation-shopping-btn"
+            >
+
+                🛍️
+
+                Continue Shopping
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

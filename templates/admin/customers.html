@@ -1,0 +1,628 @@
+{% extends "base.html" %}
+
+{% block title %}
+Customer Management | SmartMart
+{% endblock %}
+
+{% block content %}
+
+<section
+    class="smart-admin-customers-section py-5"
+    data-admin-customers="true"
+>
+
+    <div class="container">
+
+        <!-- =========================
+             PAGE HEADER
+        ========================== -->
+
+        <div class="admin-customers-header">
+
+            <div>
+
+                <div class="section-label">
+                    SMARTMART ADMINISTRATION
+                </div>
+
+                <h1 class="admin-customers-title">
+                    Customer Management
+                </h1>
+
+                <p class="admin-customers-subtitle">
+                    View SmartMart customers and their order activity.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="admin-customers-dashboard-btn"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- =========================
+             SUMMARY CARDS
+        ========================== -->
+
+        <div class="row g-4 mb-4">
+
+
+            <!-- TOTAL CUSTOMERS -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="admin-customer-stat-card">
+
+                    <div class="admin-customer-stat-icon">
+                        👥
+                    </div>
+
+                    <div class="admin-customer-stat-content">
+
+                        <span>
+                            TOTAL CUSTOMERS
+                        </span>
+
+                        <strong>
+                            {{ total_customers }}
+                        </strong>
+
+                        <small>
+                            Unique customers
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CUSTOMERS WITH ORDERS -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="admin-customer-stat-card">
+
+                    <div class="admin-customer-stat-icon">
+                        🧾
+                    </div>
+
+                    <div class="admin-customer-stat-content">
+
+                        <span>
+                            CUSTOMERS WITH ORDERS
+                        </span>
+
+                        <strong>
+                            {{ customers_with_orders }}
+                        </strong>
+
+                        <small>
+                            Customers who have placed orders
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL ORDERS -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="admin-customer-stat-card">
+
+                    <div class="admin-customer-stat-icon">
+                        📦
+                    </div>
+
+                    <div class="admin-customer-stat-content">
+
+                        <span>
+                            TOTAL ORDERS
+                        </span>
+
+                        <strong>
+                            {{ total_orders }}
+                        </strong>
+
+                        <small>
+                            Customer orders
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             SEARCH CARD
+        ========================== -->
+
+        <div class="admin-customers-search-card">
+
+            <div class="admin-customers-search-heading">
+
+                <div class="admin-customers-search-icon">
+                    🔍
+                </div>
+
+                <div>
+
+                    <h2>
+                        Find a Customer
+                    </h2>
+
+                    <p>
+                        Search using the customer's name or phone number.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form
+                method="GET"
+                action="{{ url_for('admin_customers') }}"
+                class="admin-customers-search-form"
+                id="adminCustomersSearchForm"
+            >
+
+                <input
+                    type="text"
+                    name="search"
+                    id="adminCustomerSearch"
+                    class="admin-customers-search-input"
+                    placeholder="Search by customer name or phone..."
+                    value="{{ search }}"
+                    autocomplete="off"
+                >
+
+                <button
+                    type="submit"
+                    class="admin-customers-search-btn"
+                    id="adminCustomersSearchButton"
+                >
+                    🔍 Search
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- =========================
+             CUSTOMER TABLE CARD
+        ========================== -->
+
+        <div class="admin-customers-table-card">
+
+            <div class="admin-customers-table-header">
+
+                <div>
+
+                    <h2>
+                        👥 Customers
+                    </h2>
+
+                    <p>
+                        Customer accounts and purchasing activity.
+                    </p>
+
+                </div>
+
+                <div class="admin-customers-table-icon">
+                    👤
+                </div>
+
+            </div>
+
+
+            <div class="admin-customers-table-body">
+
+                {% if customers %}
+
+                <div class="admin-customers-table-wrapper">
+
+                    <table class="admin-customers-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>#</th>
+
+                                <th>Customer</th>
+
+                                <th>Phone</th>
+
+                                <th>Location</th>
+
+                                <th>Orders</th>
+
+                                <th>Total Spent</th>
+
+                                <th>Last Order</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for customer in customers %}
+
+                            <tr
+                                class="admin-customer-row"
+                                data-customer-name="{{ customer.customer_name }}"
+                                data-customer-phone="{{ customer.phone }}"
+                                data-customer-town="{{ customer.town or '' }}"
+                                data-customer-district="{{ customer.district or '' }}"
+                            >
+
+
+                                <!-- NUMBER -->
+
+                                <td>
+
+                                    <span class="admin-customer-number">
+                                        {{ loop.index }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- CUSTOMER -->
+
+                                <td>
+
+                                    <div class="admin-customer-name-cell">
+
+                                        <div class="admin-customer-avatar">
+                                            {{ customer.customer_name[0]|upper }}
+                                        </div>
+
+                                        <strong>
+                                            {{ customer.customer_name }}
+                                        </strong>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- PHONE -->
+
+                                <td>
+
+                                    <a
+                                        href="tel:{{ customer.phone }}"
+                                        class="admin-customer-phone"
+                                    >
+                                        📞 {{ customer.phone }}
+                                    </a>
+
+                                </td>
+
+
+                                <!-- LOCATION -->
+
+                                <td>
+
+                                    <div class="admin-customer-location">
+
+                                        <strong>
+                                            {{ customer.town or "Not provided" }}
+                                        </strong>
+
+                                        <small>
+                                            {{ customer.district or "Not provided" }}
+                                        </small>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- ORDERS -->
+
+                                <td>
+
+                                    <span class="admin-customer-orders-badge">
+                                        {{ customer.total_orders }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- TOTAL SPENT -->
+
+                                <td>
+
+                                    <strong class="admin-customer-spent">
+
+                                        UGX
+                                        {{ "{:,.0f}".format(customer.total_spent or 0) }}
+
+                                    </strong>
+
+                                </td>
+
+
+                                <!-- LAST ORDER -->
+
+                                <td>
+
+                                    {% if customer.last_order %}
+
+                                    <span class="admin-customer-last-order">
+                                        {{ customer.last_order }}
+                                    </span>
+
+                                    {% else %}
+
+                                    <span class="admin-customer-no-order">
+                                        No order
+                                    </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- ACTION -->
+
+                                <td>
+
+                                    <a
+                                        href="{{ url_for(
+                                            'admin_customer_details',
+                                            phone=customer.phone
+                                        ) }}"
+                                        class="admin-customer-view-btn"
+                                        data-customer-view="true"
+                                    >
+                                        View →
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- =========================
+                     CLIENT-SIDE NO RESULTS
+                ========================== -->
+
+                <div
+                    id="adminCustomersNoResults"
+                    class="admin-customers-empty"
+                    style="display: none;"
+                >
+
+                    <div class="admin-customers-empty-icon">
+                        🔍
+                    </div>
+
+                    <h3>
+                        No Matching Customers
+                    </h3>
+
+                    <p>
+                        No customer on this page matches your search.
+                    </p>
+
+                </div>
+
+
+                {% else %}
+
+                <!-- =========================
+                     EMPTY STATE
+                ========================== -->
+
+                <div class="admin-customers-empty">
+
+                    <div class="admin-customers-empty-icon">
+                        👥
+                    </div>
+
+                    <h3>
+                        No Customers Found
+                    </h3>
+
+                    <p>
+
+                        {% if search %}
+
+                        No customer matches
+                        "<strong>{{ search }}</strong>".
+
+                        {% else %}
+
+                        Customers will appear here when orders are placed.
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             QUICK ACTIONS
+        ========================== -->
+
+        <div class="admin-customers-quick-actions">
+
+            <div class="admin-customers-quick-header">
+
+                <div>
+
+                    <h2>
+                        ⚡ Quick Actions
+                    </h2>
+
+                    <p>
+                        Quickly access other business management areas.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-customers-action-grid">
+
+
+                <a
+                    href="{{ url_for('admin_orders') }}"
+                    class="admin-customer-action-card"
+                >
+
+                    <span class="admin-customer-action-icon">
+                        🧾
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Orders
+                        </strong>
+
+                        <small>
+                            Manage customer orders
+                        </small>
+
+                    </span>
+
+                    <span class="admin-customer-action-arrow">
+                        →
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_sales') }}"
+                    class="admin-customer-action-card"
+                >
+
+                    <span class="admin-customer-action-icon">
+                        📊
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Sales & Profit
+                        </strong>
+
+                        <small>
+                            View business performance
+                        </small>
+
+                    </span>
+
+                    <span class="admin-customer-action-arrow">
+                        →
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_inventory') }}"
+                    class="admin-customer-action-card"
+                >
+
+                    <span class="admin-customer-action-icon">
+                        📦
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Inventory
+                        </strong>
+
+                        <small>
+                            Manage product stock
+                        </small>
+
+                    </span>
+
+                    <span class="admin-customer-action-arrow">
+                        →
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('admin_dashboard') }}"
+                    class="admin-customer-action-card"
+                >
+
+                    <span class="admin-customer-action-icon">
+                        🏠
+                    </span>
+
+                    <span>
+
+                        <strong>
+                            Dashboard
+                        </strong>
+
+                        <small>
+                            Return to administration
+                        </small>
+
+                    </span>
+
+                    <span class="admin-customer-action-arrow">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

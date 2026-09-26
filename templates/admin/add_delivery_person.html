@@ -1,0 +1,689 @@
+{% extends "base.html" %}
+
+{% block title %}Add Delivery Personnel | SmartMart{% endblock %}
+
+{% block content %}
+
+<section
+    class="smart-add-personnel-section py-5"
+    data-admin-add-delivery-person="true"
+>
+
+    <div class="container">
+
+        <!-- =====================================================
+             PAGE HEADER
+        ====================================================== -->
+
+        <div class="add-personnel-header">
+
+            <div>
+
+                <div class="section-label">
+                    SMARTMART DELIVERY TEAM
+                </div>
+
+                <h1 class="add-personnel-title">
+                    Add Delivery Personnel
+                </h1>
+
+                <p class="add-personnel-subtitle">
+                    Register a new delivery person who can receive
+                    and deliver SmartMart customer orders.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('admin_delivery_personnel') }}"
+                class="add-personnel-back-btn"
+            >
+                <span>←</span>
+                Back to Personnel
+            </a>
+
+        </div>
+
+
+        <!-- =====================================================
+             ERROR MESSAGE
+        ====================================================== -->
+
+        {% if error %}
+
+        <div class="add-personnel-error">
+
+            <div class="add-personnel-error-icon">
+                ⚠️
+            </div>
+
+            <div>
+
+                <strong>
+                    Unable to Add Delivery Personnel
+                </strong>
+
+                <p>
+                    {{ error }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- =====================================================
+             FORM LAYOUT
+        ====================================================== -->
+
+        <div class="row g-4 justify-content-center">
+
+            <div class="col-lg-8">
+
+                <div class="add-personnel-form-card">
+
+
+                    <!-- FORM HEADER -->
+
+                    <div class="add-personnel-form-header">
+
+                        <div class="add-personnel-form-icon">
+                            👤
+                        </div>
+
+                        <div>
+
+                            <div class="personnel-card-label">
+                                PERSONNEL REGISTRATION
+                            </div>
+
+                            <h2>
+                                Personnel Information
+                            </h2>
+
+                            <p>
+                                Enter the details below to create
+                                a delivery personnel account.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FORM -->
+
+                    <div class="add-personnel-form-body">
+
+                        <form
+                            method="POST"
+                            class="add-delivery-person-form"
+                        >
+
+
+                            <!-- =================================================
+                                 PERSONAL INFORMATION
+                            ================================================== -->
+
+                            <div class="add-personnel-section-heading">
+
+                                <span class="add-personnel-section-number">
+                                    01
+                                </span>
+
+                                <div>
+
+                                    <h3>
+                                        Personal Information
+                                    </h3>
+
+                                    <p>
+                                        Basic identification and contact details.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row g-3">
+
+
+                                <!-- FULL NAME -->
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="full_name"
+                                        class="add-personnel-label"
+                                    >
+                                        Full Name
+                                        <span>*</span>
+                                    </label>
+
+                                    <div class="add-personnel-input-wrapper">
+
+                                        <span class="add-personnel-input-icon">
+                                            👤
+                                        </span>
+
+                                        <input
+                                            type="text"
+                                            id="full_name"
+                                            name="full_name"
+                                            class="add-personnel-input"
+                                            placeholder="Enter full name"
+                                            autocomplete="name"
+                                            minlength="2"
+                                            required
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- PHONE -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="phone"
+                                        class="add-personnel-label"
+                                    >
+                                        Phone Number
+                                        <span>*</span>
+                                    </label>
+
+                                    <div class="add-personnel-input-wrapper">
+
+                                        <span class="add-personnel-input-icon">
+                                            📞
+                                        </span>
+
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            name="phone"
+                                            class="add-personnel-input"
+                                            placeholder="e.g. 0700000000"
+                                            autocomplete="tel"
+                                            inputmode="tel"
+                                            required
+                                        >
+
+                                    </div>
+
+                                    <small class="add-personnel-help">
+                                        Use the phone number the delivery
+                                        person will use to log in.
+                                    </small>
+
+                                </div>
+
+
+                                <!-- PASSWORD -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="password"
+                                        class="add-personnel-label"
+                                    >
+                                        Login Password
+                                        <span>*</span>
+                                    </label>
+
+                                    <div
+                                        class="add-personnel-input-wrapper password-input-wrapper"
+                                    >
+
+                                        <span class="add-personnel-input-icon">
+                                            🔐
+                                        </span>
+
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            class="add-personnel-input password-input"
+                                            placeholder="Create login password"
+                                            minlength="6"
+                                            autocomplete="new-password"
+                                            required
+                                        >
+
+                                        <button
+                                            type="button"
+                                            class="password-toggle"
+                                            data-target="password"
+                                            aria-label="Show password"
+                                        >
+                                            👁️
+                                        </button>
+
+                                    </div>
+
+                                    <small class="add-personnel-help">
+                                        Minimum 6 characters.
+                                    </small>
+
+                                </div>
+
+
+                                <!-- CONFIRM PASSWORD -->
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="confirm_password"
+                                        class="add-personnel-label"
+                                    >
+                                        Confirm Login Password
+                                        <span>*</span>
+                                    </label>
+
+                                    <div
+                                        class="add-personnel-input-wrapper password-input-wrapper"
+                                    >
+
+                                        <span class="add-personnel-input-icon">
+                                            🔐
+                                        </span>
+
+                                        <input
+                                            type="password"
+                                            id="confirm_password"
+                                            name="confirm_password"
+                                            class="add-personnel-input password-input"
+                                            placeholder="Enter the password again"
+                                            minlength="6"
+                                            autocomplete="new-password"
+                                            required
+                                        >
+
+                                        <button
+                                            type="button"
+                                            class="password-toggle"
+                                            data-target="confirm_password"
+                                            aria-label="Show password"
+                                        >
+                                            👁️
+                                        </button>
+
+                                    </div>
+
+                                    <small class="add-personnel-help">
+                                        Both password fields must match.
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 LOCATION
+                            ================================================== -->
+
+                            <div class="add-personnel-section-heading">
+
+                                <span class="add-personnel-section-number">
+                                    02
+                                </span>
+
+                                <div>
+
+                                    <h3>
+                                        Location Information
+                                    </h3>
+
+                                    <p>
+                                        Add the delivery person's location.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="row g-3">
+
+
+                                <!-- DISTRICT -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="district"
+                                        class="add-personnel-label"
+                                    >
+                                        District
+                                    </label>
+
+                                    <div class="add-personnel-input-wrapper">
+
+                                        <span class="add-personnel-input-icon">
+                                            📍
+                                        </span>
+
+                                        <input
+                                            type="text"
+                                            id="district"
+                                            name="district"
+                                            class="add-personnel-input"
+                                            placeholder="Enter district"
+                                            autocomplete="address-level1"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- TOWN -->
+
+                                <div class="col-md-6">
+
+                                    <label
+                                        for="town"
+                                        class="add-personnel-label"
+                                    >
+                                        Town / City
+                                    </label>
+
+                                    <div class="add-personnel-input-wrapper">
+
+                                        <span class="add-personnel-input-icon">
+                                            🏙️
+                                        </span>
+
+                                        <input
+                                            type="text"
+                                            id="town"
+                                            name="town"
+                                            class="add-personnel-input"
+                                            placeholder="Enter town or city"
+                                            autocomplete="address-level2"
+                                        >
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- ADDRESS -->
+
+                                <div class="col-12">
+
+                                    <label
+                                        for="address"
+                                        class="add-personnel-label"
+                                    >
+                                        Address
+                                    </label>
+
+                                    <div class="add-personnel-textarea-wrapper">
+
+                                        <span class="add-personnel-textarea-icon">
+                                            🏠
+                                        </span>
+
+                                        <textarea
+                                            id="address"
+                                            name="address"
+                                            class="add-personnel-textarea"
+                                            rows="4"
+                                            placeholder="Enter full address"
+                                            autocomplete="street-address"
+                                        ></textarea>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 LOGIN INFORMATION NOTICE
+                            ================================================== -->
+
+                            <div class="personnel-login-notice">
+
+                                <div class="personnel-login-icon">
+                                    🔐
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Delivery Login Account
+                                    </strong>
+
+                                    <p>
+                                        The phone number and password entered
+                                        above will be used by this delivery
+                                        person to access the SmartMart
+                                        delivery dashboard.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 PASSWORD SECURITY NOTICE
+                            ================================================== -->
+
+                            <div class="personnel-password-notice">
+
+                                <div class="personnel-password-notice-icon">
+                                    🛡️
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Password Security
+                                    </strong>
+
+                                    <p>
+                                        The delivery person's password should
+                                        be kept private. SmartMart stores
+                                        passwords securely rather than saving
+                                        the original password directly.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =================================================
+                                 FORM ACTIONS
+                            ================================================== -->
+
+                            <div class="add-personnel-actions">
+
+                                <button
+                                    type="submit"
+                                    class="add-personnel-submit-btn"
+                                >
+                                    <span>＋</span>
+                                    Add Delivery Person
+                                </button>
+
+
+                                <a
+                                    href="{{ url_for('admin_delivery_personnel') }}"
+                                    class="add-personnel-cancel-btn"
+                                >
+                                    Cancel
+                                </a>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SIDE INFORMATION
+            ================================================== -->
+
+            <div class="col-lg-4">
+
+                <div class="personnel-side-card">
+
+                    <div class="personnel-side-icon">
+                        🚚
+                    </div>
+
+                    <div class="personnel-card-label">
+                        DELIVERY WORKFLOW
+                    </div>
+
+                    <h2>
+                        How Delivery Personnel Work
+                    </h2>
+
+                    <p>
+                        Once registered, a delivery person can
+                        receive assigned customer orders and
+                        update their delivery progress.
+                    </p>
+
+
+                    <div class="personnel-workflow">
+
+
+                        <div class="personnel-workflow-item">
+
+                            <span>
+                                01
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Account Created
+                                </strong>
+
+                                <small>
+                                    Admin registers the delivery person.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="personnel-workflow-item">
+
+                            <span>
+                                02
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Order Assigned
+                                </strong>
+
+                                <small>
+                                    Admin assigns a customer order.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="personnel-workflow-item">
+
+                            <span>
+                                03
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Delivery Started
+                                </strong>
+
+                                <small>
+                                    The delivery person takes the order.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="personnel-workflow-item">
+
+                            <span>
+                                04
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Order Delivered
+                                </strong>
+
+                                <small>
+                                    Delivery is completed and recorded.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SECURITY CARD -->
+
+                <div class="personnel-security-card">
+
+                    <div class="personnel-security-icon">
+                        🛡️
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Account Security
+                        </strong>
+
+                        <p>
+                            Delivery passwords are securely processed
+                            by SmartMart before being stored.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

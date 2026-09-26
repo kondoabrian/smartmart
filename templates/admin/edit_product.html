@@ -1,0 +1,503 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Product | SmartMart
+{% endblock %}
+
+{% block content %}
+
+<section class="smart-edit-product-section py-5">
+
+    <div class="container">
+
+        <!-- =========================
+             BACK LINK
+        ========================== -->
+
+        <div class="edit-product-back-wrapper mb-4">
+
+            <a
+                href="{{ url_for('admin_products') }}"
+                class="edit-product-back-link">
+
+                ← Back to Products
+
+            </a>
+
+        </div>
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-xl-9 col-lg-10">
+
+
+                <!-- =========================
+                     PAGE HEADER
+                ========================== -->
+
+                <div class="edit-product-page-header">
+
+                    <div class="section-label">
+                        SMARTMART ADMINISTRATION
+                    </div>
+
+                    <h1 class="edit-product-page-title">
+                        Edit Product
+                    </h1>
+
+                    <p class="edit-product-page-subtitle">
+                        Update the information for
+                        <strong>{{ product.name }}</strong>.
+                    </p>
+
+                </div>
+
+
+                <!-- =========================
+                     MAIN CARD
+                ========================== -->
+
+                <div class="edit-product-card">
+
+
+                    <!-- CARD HEADER -->
+
+                    <div class="edit-product-card-header">
+
+                        <div>
+
+                            <h2>
+                                Product Information
+                            </h2>
+
+                            <p>
+                                Make changes to the product details below.
+                            </p>
+
+                        </div>
+
+                        <div class="edit-product-card-icon">
+                            ✏️
+                        </div>
+
+                    </div>
+
+
+                    <div class="edit-product-card-body">
+
+
+                        <!-- =========================
+                             CURRENT PRODUCT
+                        ========================== -->
+
+                        <div class="edit-product-current-product">
+
+                            <div class="edit-product-current-image">
+
+                                {% if product.image %}
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename='images/products/' + product.image
+                                    ) }}"
+                                    alt="{{ product.name }}"
+                                >
+
+                                {% else %}
+
+                                <div class="edit-product-image-placeholder">
+                                    🛍️
+                                </div>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="edit-product-current-info">
+
+                                <span class="edit-product-current-label">
+                                    CURRENT PRODUCT
+                                </span>
+
+                                <h3>
+                                    {{ product.name }}
+                                </h3>
+
+                                <p>
+                                    Product ID: #{{ product.id }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =========================
+                             EDIT FORM
+                        ========================== -->
+
+                        <form
+                            action="{{ url_for(
+                                'admin_edit_product',
+                                product_id=product.id
+                            ) }}"
+                            method="POST"
+                            enctype="multipart/form-data">
+
+
+                            <!-- =========================
+                                 BASIC INFORMATION
+                            ========================== -->
+
+                            <div class="edit-product-form-section">
+
+                                <div class="edit-product-section-heading">
+
+                                    <span class="edit-product-section-number">
+                                        01
+                                    </span>
+
+                                    <div>
+
+                                        <h3>
+                                            Basic Information
+                                        </h3>
+
+                                        <p>
+                                            Update the product's name, category and description.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- PRODUCT NAME -->
+
+                                <div class="edit-product-field">
+
+                                    <label for="productName">
+                                        Product Name
+                                        <span>*</span>
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="productName"
+                                        name="name"
+                                        class="edit-product-input"
+                                        value="{{ product.name }}"
+                                        required>
+
+                                </div>
+
+
+                                <!-- CATEGORY -->
+
+                                <div class="edit-product-field">
+
+                                    <label for="productCategory">
+                                        Category
+                                        <span>*</span>
+                                    </label>
+
+                                    <select
+                                        id="productCategory"
+                                        name="category_id"
+                                        class="edit-product-input"
+                                        required>
+
+                                        {% for category in categories %}
+
+                                        <option
+                                            value="{{ category.id }}"
+                                            {% if category.id == product.category_id %}
+                                            selected
+                                            {% endif %}>
+
+                                            {{ category.name }}
+
+                                        </option>
+
+                                        {% endfor %}
+
+                                    </select>
+
+                                </div>
+
+
+                                <!-- DESCRIPTION -->
+
+                                <div class="edit-product-field">
+
+                                    <label for="productDescription">
+                                        Description
+                                        <span>*</span>
+                                    </label>
+
+                                    <textarea
+                                        id="productDescription"
+                                        name="description"
+                                        class="edit-product-input edit-product-textarea"
+                                        rows="5"
+                                        required>{{ product.description }}</textarea>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 PRICING
+                            ========================== -->
+
+                            <div class="edit-product-form-section">
+
+                                <div class="edit-product-section-heading">
+
+                                    <span class="edit-product-section-number">
+                                        02
+                                    </span>
+
+                                    <div>
+
+                                        <h3>
+                                            Pricing
+                                        </h3>
+
+                                        <p>
+                                            Update the buying and selling prices of this product.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row g-4">
+
+
+                                    <!-- BUYING PRICE -->
+
+                                    <div class="col-md-6">
+
+                                        <div class="edit-product-field">
+
+                                            <label for="buyingPrice">
+                                                Buying Price
+                                                <span>*</span>
+                                            </label>
+
+                                            <div class="edit-product-price-input">
+
+                                                <span>
+                                                    UGX
+                                                </span>
+
+                                                <input
+                                                    type="number"
+                                                    id="buyingPrice"
+                                                    name="buying_price"
+                                                    value="{{ product.buying_price }}"
+                                                    min="0"
+                                                    step="1"
+                                                    required>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <!-- SELLING PRICE -->
+
+                                    <div class="col-md-6">
+
+                                        <div class="edit-product-field">
+
+                                            <label for="sellingPrice">
+                                                Selling Price
+                                                <span>*</span>
+                                            </label>
+
+                                            <div class="edit-product-price-input">
+
+                                                <span>
+                                                    UGX
+                                                </span>
+
+                                                <input
+                                                    type="number"
+                                                    id="sellingPrice"
+                                                    name="price"
+                                                    value="{{ product.price }}"
+                                                    min="0"
+                                                    step="1"
+                                                    required>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- INVENTORY NOTICE -->
+
+                                <div class="edit-product-inventory-note">
+
+                                    <span>
+                                        📦
+                                    </span>
+
+                                    <div>
+
+                                        <strong>
+                                            Stock is managed separately
+                                        </strong>
+
+                                        <p>
+                                            Product stock is not changed from this page.
+                                            Use the SmartMart Inventory section to add or
+                                            remove stock and keep stock history accurate.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 PRODUCT IMAGE
+                            ========================== -->
+
+                            <div class="edit-product-form-section">
+
+                                <div class="edit-product-section-heading">
+
+                                    <span class="edit-product-section-number">
+                                        03
+                                    </span>
+
+                                    <div>
+
+                                        <h3>
+                                            Product Image
+                                        </h3>
+
+                                        <p>
+                                            Replace the current product image if needed.
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="edit-product-upload-area">
+
+                                    <div class="edit-product-upload-icon">
+                                        🖼️
+                                    </div>
+
+                                    <div class="edit-product-upload-content">
+
+                                        <label for="productImage">
+                                            Change Product Image
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            id="productImage"
+                                            name="image"
+                                            class="edit-product-file-input"
+                                            accept=".jpg,.jpeg,.png,.webp">
+
+                                        <small>
+                                            Leave this empty to keep the current image.
+                                            Supported formats: JPG, JPEG, PNG or WEBP.
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- =========================
+                                 ACTIONS
+                            ========================== -->
+
+                            <div class="edit-product-form-actions">
+
+                                <a
+                                    href="{{ url_for('admin_products') }}"
+                                    class="edit-product-cancel-btn">
+
+                                    Cancel
+
+                                </a>
+
+                                <button
+                                    type="submit"
+                                    class="edit-product-save-btn">
+
+                                    💾
+                                    Save Changes
+
+                                </button>
+
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     INFORMATION NOTE
+                ========================== -->
+
+                <div class="edit-product-info-note">
+
+                    <div class="edit-product-info-icon">
+                        💡
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Remember
+                        </strong>
+
+                        <p>
+                            Changes made here update the product information.
+                            Stock quantities should be changed through Inventory
+                            so that every stock adjustment is recorded correctly.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,532 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{ product.name }} | SmartMart
+{% endblock %}
+
+
+{% block content %}
+
+<section class="product-details-section py-5">
+
+    <div class="container">
+
+
+        <!-- =====================================================
+             BREADCRUMB
+             ===================================================== -->
+
+        <div class="product-breadcrumb mb-4">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="text-decoration-none"
+            >
+                Home
+            </a>
+
+            <span>/</span>
+
+            <span>
+                {{ product.category_name }}
+            </span>
+
+            <span>/</span>
+
+            <strong>
+                {{ product.name }}
+            </strong>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             PRODUCT MAIN AREA
+             ===================================================== -->
+
+        <div class="row g-5 align-items-start">
+
+
+            <!-- =================================================
+                 PRODUCT IMAGE
+                 ================================================= -->
+
+            <div class="col-lg-6">
+
+                <div class="product-details-image-card">
+
+
+                    {% if product.image %}
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='images/products/' + product.image
+                        ) }}"
+                        class="product-details-image"
+                        alt="{{ product.name }}"
+                    >
+
+                    {% else %}
+
+                    <div class="product-details-placeholder">
+
+                        <span>
+                            📦
+                        </span>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- Image label -->
+
+                    <div class="product-image-label">
+
+                        <span>
+                            🛍️ SmartMart
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     PRODUCT TRUST MESSAGE
+                     ================================================= -->
+
+                <div class="product-image-note mt-3">
+
+                    <span>✓</span>
+
+                    Quality products at affordable prices
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PRODUCT INFORMATION
+                 ================================================= -->
+
+            <div class="col-lg-6">
+
+                <div class="product-details-content">
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="product-details-category">
+
+                        {{ product.category_name }}
+
+                    </div>
+
+
+                    <!-- PRODUCT NAME -->
+
+                    <h1 class="product-details-title">
+
+                        {{ product.name }}
+
+                    </h1>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <p class="product-details-description">
+
+                        {{ product.description }}
+
+                    </p>
+
+
+                    <!-- =================================================
+                         PRICE
+                         ================================================= -->
+
+                    <div class="product-price-box">
+
+                        <span class="product-price-label">
+                            Price
+                        </span>
+
+                        <div class="product-details-price">
+
+                            UGX
+                            {{ "{:,.0f}".format(product.price) }}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         STOCK
+                         ================================================= -->
+
+                    <div class="product-details-stock mt-3">
+
+                        {% if product.stock > 0 %}
+
+                        <span class="stock-available">
+
+                            ✓ In Stock
+
+                        </span>
+
+                        <span class="stock-count">
+
+                            {{ product.stock }} available
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="stock-unavailable">
+
+                            ✕ Out of Stock
+
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <hr class="product-details-divider">
+
+
+
+                    <!-- =================================================
+                         ADD TO CART
+                         ================================================= -->
+
+                    {% if product.stock > 0 %}
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'add_to_cart',
+                            product_id=product.id
+                        ) }}"
+                    >
+
+
+                        <!-- Quantity -->
+
+                        <label
+                            for="quantity"
+                            class="quantity-label"
+                        >
+
+                            Quantity
+
+                        </label>
+
+
+                        <div class="quantity-control mb-4">
+
+
+                            <!-- DECREASE -->
+
+                            <button
+                                type="button"
+                                class="quantity-btn"
+                                id="decreaseQuantity"
+                            >
+
+                                −
+
+                            </button>
+
+
+                            <!-- QUANTITY INPUT -->
+
+                            <input
+                                type="number"
+                                id="quantity"
+                                name="quantity"
+                                class="quantity-input"
+                                value="1"
+                                min="1"
+                                max="{{ product.stock }}"
+                                required
+                            >
+
+
+                            <!-- INCREASE -->
+
+                            <button
+                                type="button"
+                                class="quantity-btn"
+                                id="increaseQuantity"
+                            >
+
+                                +
+
+                            </button>
+
+                        </div>
+
+
+                        <!-- Add Cart Button -->
+
+                        <button
+                            type="submit"
+                            class="product-details-cart-btn"
+                        >
+
+                            🛒
+
+                            Add to Cart
+
+                        </button>
+
+                    </form>
+
+
+                    {% else %}
+
+
+                    <!-- OUT OF STOCK -->
+
+                    <button
+                        type="button"
+                        class="product-details-cart-btn out-of-stock-btn"
+                        disabled
+                    >
+
+                        Out of Stock
+
+                    </button>
+
+
+                    {% endif %}
+
+
+
+                    <!-- =================================================
+                         SHOPPING BENEFITS
+                         ================================================= -->
+
+                    <div class="row g-3 mt-4">
+
+
+                        <!-- DELIVERY -->
+
+                        <div class="col-md-4">
+
+                            <div class="product-benefit delivery-benefit">
+
+                                <div class="product-benefit-icon">
+                                    🚚
+                                </div>
+
+                                <strong>
+                                    Delivery
+                                </strong>
+
+                                <small>
+                                    Convenient delivery
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ORDERING -->
+
+                        <div class="col-md-4">
+
+                            <div class="product-benefit ordering-benefit">
+
+                                <div class="product-benefit-icon">
+                                    📱
+                                </div>
+
+                                <strong>
+                                    Easy Ordering
+                                </strong>
+
+                                <small>
+                                    Simple checkout
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TRACKING -->
+
+                        <div class="col-md-4">
+
+                            <div class="product-benefit tracking-benefit">
+
+                                <div class="product-benefit-icon">
+                                    📦
+                                </div>
+
+                                <strong>
+                                    Tracking
+                                </strong>
+
+                                <small>
+                                    Follow your order
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         CONTINUE SHOPPING
+                         ================================================= -->
+
+                    <div class="product-continue-shopping mt-4">
+
+                        <a
+                            href="{{ url_for(
+                                'category_products',
+                                category_id=product.category_id
+                            ) }}"
+                            class="product-back-btn"
+                        >
+
+                            ← Continue Shopping
+
+                        </a>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================================================
+             WHY SHOP THIS PRODUCT
+             ========================================================= -->
+
+        <div class="product-information-section mt-5 pt-5">
+
+
+            <div class="text-center mb-4">
+
+                <div class="section-label">
+                    SMARTMART EXPERIENCE
+                </div>
+
+                <h2 class="section-title">
+                    Shop with confidence
+                </h2>
+
+                <p class="text-secondary">
+                    SmartMart makes shopping simple, convenient and reliable.
+                </p>
+
+            </div>
+
+
+            <div class="row g-4">
+
+
+                <!-- QUALITY -->
+
+                <div class="col-md-4">
+
+                    <div class="product-info-card">
+
+                        <div class="product-info-icon">
+                            ⭐
+                        </div>
+
+                        <h5>
+                            Quality Products
+                        </h5>
+
+                        <p>
+                            Find useful products selected to give you
+                            value and convenience.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AFFORDABLE -->
+
+                <div class="col-md-4">
+
+                    <div class="product-info-card">
+
+                        <div class="product-info-icon">
+                            💰
+                        </div>
+
+                        <h5>
+                            Affordable Prices
+                        </h5>
+
+                        <p>
+                            Shop for everyday products at prices designed
+                            to give you good value.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TRACKING -->
+
+                <div class="col-md-4">
+
+                    <div class="product-info-card">
+
+                        <div class="product-info-icon">
+                            📍
+                        </div>
+
+                        <h5>
+                            Track Your Order
+                        </h5>
+
+                        <p>
+                            After placing an order, you can follow its
+                            progress through SmartMart.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}

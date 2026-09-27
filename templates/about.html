@@ -1,83 +1,143 @@
 {% extends "base.html" %}
 
 {% block title %}
-About Us | SmartMart
+About SmartMart | Smart Shopping Made Simple
 {% endblock %}
 
 {% block content %}
 
 <!-- =========================================================
-     ABOUT SMARTMART HERO
-     ========================================================= -->
+     ABOUT HERO
+========================================================= -->
 
-<section class="py-5 about-hero about-reveal">
+<section class="smart-about-hero">
 
-```
-<div class="container py-4">
+    <div class="smart-about-hero-glow smart-about-glow-one"></div>
+    <div class="smart-about-hero-glow smart-about-glow-two"></div>
 
-    <div class="row align-items-center g-5">
+    <div class="container">
 
-        <div class="col-lg-6">
+        <div class="row align-items-center g-5">
 
-            <span class="about-badge mb-3">
-                ABOUT SMARTMART
-            </span>
+            <!-- HERO TEXT -->
 
-            <h1 class="display-5 fw-bold mb-3 about-hero-title">
+            <div class="col-lg-7">
 
-                Everything You Need,
-                <span>
-                    One Smart Place.
-                </span>
+                <div class="smart-about-reveal">
 
-            </h1>
+                    <span class="smart-about-eyebrow">
+                        ABOUT SMARTMART
+                    </span>
 
-            <p class="lead text-muted about-hero-text">
+                    <h1 class="smart-about-title">
 
-                SmartMart is an online marketplace designed to make
-                shopping simple, convenient and accessible.
+                        Everything You Need.
+                        <span>One Smart Place.</span>
 
-            </p>
+                    </h1>
 
-            <p class="text-muted about-hero-text">
+                    <p class="smart-about-lead">
 
-                We bring different categories of everyday products
-                together in one place, allowing customers to browse
-                products, add them to a cart, place orders and arrange
-                convenient delivery.
+                        SmartMart is an online marketplace designed
+                        to make everyday shopping simple, convenient
+                        and accessible.
 
-            </p>
+                    </p>
 
-            <a
-                href="{{ url_for('home') }}#products"
-                class="btn btn-primary btn-lg"
-            >
+                    <p class="smart-about-description">
 
-                🛍️ Start Shopping
+                        We bring different categories of everyday
+                        products together in one place, allowing
+                        customers to browse products, add items to
+                        a cart, place orders and arrange convenient
+                        delivery.
 
-            </a>
+                    </p>
 
-        </div>
+                    <div class="smart-about-hero-actions">
 
+                        <a
+                            href="{{ url_for('home') }}#products"
+                            class="smart-about-primary-btn"
+                        >
+                            <span>🛍️</span>
+                            Start Shopping
+                        </a>
 
-        <div class="col-lg-6">
+                        <a
+                            href="{{ url_for('contact') }}"
+                            class="smart-about-secondary-btn"
+                        >
+                            Talk to Us
+                            <span>→</span>
+                        </a>
 
-            <div class="about-hero-card p-5 text-center">
+                    </div>
 
-                <div class="about-hero-icon mb-3">
-                    🛍️
                 </div>
 
-                <h3 class="fw-bold">
-                    Smart Shopping
-                </h3>
+            </div>
 
-                <p class="text-muted mb-0">
 
-                    Discover products, place your order and
-                    get your items delivered conveniently.
+            <!-- HERO VISUAL -->
 
-                </p>
+            <div class="col-lg-5">
+
+                <div class="smart-about-visual smart-about-reveal">
+
+                    <div class="smart-about-visual-main">
+
+                        <div class="smart-about-bag">
+                            🛍️
+                        </div>
+
+                        <span class="smart-about-visual-label">
+                            SMART SHOPPING
+                        </span>
+
+                        <h3>
+                            Shop smarter.
+                            <br>
+                            Live easier.
+                        </h3>
+
+                        <p>
+                            Discover products for your everyday
+                            needs in one convenient marketplace.
+                        </p>
+
+                    </div>
+
+
+                    <!-- FLOATING CARD -->
+
+                    <div class="smart-about-floating-card">
+
+                        <div class="smart-about-floating-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Simple & Convenient
+                            </strong>
+
+                            <small>
+                                Browse • Order • Receive
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SMALL DECORATION -->
+
+                    <div class="smart-about-floating-dot dot-one"></div>
+                    <div class="smart-about-floating-dot dot-two"></div>
+
+                </div>
 
             </div>
 
@@ -85,539 +145,597 @@ About Us | SmartMart
 
     </div>
 
-</div>
-```
-
 </section>
 
+
 <!-- =========================================================
-     WHO WE ARE
-     ========================================================= -->
+     QUICK BRAND STATS
+========================================================= -->
 
-<section class="py-5">
+<section class="smart-about-stats">
 
-```
-<div class="container">
+    <div class="container">
 
-    <div class="text-center mb-5 about-reveal">
+        <div class="smart-about-stats-card smart-about-reveal">
 
-        <span class="about-section-label">
-            WHO WE ARE
-        </span>
+            <div class="smart-about-stat">
 
-        <h2 class="fw-bold mt-2">
-            A Marketplace Built Around Convenience
-        </h2>
-
-        <p class="text-muted mx-auto about-section-description">
-
-            SmartMart brings products from different everyday
-            categories together so customers can discover what
-            they need without having to search in many different
-            places.
-
-        </p>
-
-    </div>
-
-
-    <div class="row g-4">
-
-        <!-- Easy Shopping -->
-
-        <div class="col-md-4">
-
-            <div class="about-feature-card about-reveal">
-
-                <div class="about-feature-icon">
+                <div class="smart-about-stat-icon">
                     🛒
                 </div>
 
-                <h4 class="fw-bold">
-                    Easy Shopping
-                </h4>
-
-                <p class="text-muted mb-0">
-
-                    Browse products, view product details,
-                    choose quantities and add items to your
-                    shopping cart.
-
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- Easy Ordering -->
-
-        <div class="col-md-4">
-
-            <div class="about-feature-card about-reveal">
-
-                <div class="about-feature-icon">
-                    📱
-                </div>
-
-                <h4 class="fw-bold">
-                    Easy Ordering
-                </h4>
-
-                <p class="text-muted mb-0">
-
-                    Provide your delivery information during
-                    checkout and receive your order details
-                    after placing an order.
-
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- Convenient Delivery -->
-
-        <div class="col-md-4">
-
-            <div class="about-feature-card about-reveal">
-
-                <div class="about-feature-icon">
-                    🚚
-                </div>
-
-                <h4 class="fw-bold">
-                    Convenient Delivery
-                </h4>
-
-                <p class="text-muted mb-0">
-
-                    SmartMart organizes delivery information
-                    so orders can be prepared and delivered
-                    to the customer's provided location.
-
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-```
-
-</section>
-
-<!-- =========================================================
-     WHAT WE OFFER
-     ========================================================= -->
-
-<section class="py-5 bg-light">
-
-```
-<div class="container">
-
-    <div class="row align-items-center g-5">
-
-        <!-- Categories -->
-
-        <div class="col-lg-6">
-
-            <div class="about-reveal">
-
-                <h2 class="fw-bold mb-4">
-                    What Can You Find on SmartMart?
-                </h2>
-
-                <p class="text-muted">
-
-                    SmartMart brings together a variety of products
-                    for everyday needs.
-
-                </p>
-
-            </div>
-
-
-            <div class="row g-3 mt-2">
-
-                <!-- Gas -->
-
-                <div class="col-6">
-
-                    <div class="about-category-card about-reveal">
-
-                        <div class="about-category-icon">
-                            🔥
-                        </div>
-
-                        <strong class="d-block mt-2">
-                            Gas & Cooking
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Fashion -->
-
-                <div class="col-6">
-
-                    <div class="about-category-card about-reveal">
-
-                        <div class="about-category-icon">
-                            👕
-                        </div>
-
-                        <strong class="d-block mt-2">
-                            Fashion
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Shoes -->
-
-                <div class="col-6">
-
-                    <div class="about-category-card about-reveal">
-
-                        <div class="about-category-icon">
-                            👟
-                        </div>
-
-                        <strong class="d-block mt-2">
-                            Shoes
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Electronics -->
-
-                <div class="col-6">
-
-                    <div class="about-category-card about-reveal">
-
-                        <div class="about-category-icon">
-                            🎧
-                        </div>
-
-                        <strong class="d-block mt-2">
-                            Electronics
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Groceries -->
-
-                <div class="col-6">
-
-                    <div class="about-category-card about-reveal">
-
-                        <div class="about-category-icon">
-                            🛒
-                        </div>
-
-                        <strong class="d-block mt-2">
-                            Groceries
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Household -->
-
-                <div class="col-6">
-
-                    <div class="about-category-card about-reveal">
-
-                        <div class="about-category-icon">
-                            🏠
-                        </div>
-
-                        <strong class="d-block mt-2">
-                            Home & Household
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Beauty -->
-
-                <div class="col-6">
-
-                    <div class="about-category-card about-reveal">
-
-                        <div class="about-category-icon">
-                            💄
-                        </div>
-
-                        <strong class="d-block mt-2">
-                            Beauty & Personal Care
-                        </strong>
-
-                    </div>
-
+                <div>
+                    <strong>
+                        Easy Shopping
+                    </strong>
+
+                    <span>
+                        Browse products with ease
+                    </span>
                 </div>
 
             </div>
 
-        </div>
 
+            <div class="smart-about-stat-divider"></div>
 
-        <!-- How It Works -->
 
-        <div class="col-lg-6">
+            <div class="smart-about-stat">
 
-            <div class="about-process-card p-4 p-lg-5 about-reveal">
-
-                <h3 class="fw-bold mb-4">
-                    How SmartMart Works
-                </h3>
-
-
-                <!-- Step 1 -->
-
-                <div class="about-process-step mb-4">
-
-                    <div class="about-process-number">
-                        1
-                    </div>
-
-                    <div>
-
-                        <h5 class="fw-bold mb-1">
-                            Browse Products
-                        </h5>
-
-                        <p class="text-muted mb-0">
-
-                            Explore categories and find products
-                            that meet your needs.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Step 2 -->
-
-                <div class="about-process-step mb-4">
-
-                    <div class="about-process-number">
-                        2
-                    </div>
-
-                    <div>
-
-                        <h5 class="fw-bold mb-1">
-                            Add to Cart
-                        </h5>
-
-                        <p class="text-muted mb-0">
-
-                            Select the products and quantities
-                            you want.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Step 3 -->
-
-                <div class="about-process-step mb-4">
-
-                    <div class="about-process-number">
-                        3
-                    </div>
-
-                    <div>
-
-                        <h5 class="fw-bold mb-1">
-                            Checkout
-                        </h5>
-
-                        <p class="text-muted mb-0">
-
-                            Enter your contact and delivery
-                            information.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Step 4 -->
-
-                <div class="about-process-step">
-
-                    <div class="about-process-number">
-                        4
-                    </div>
-
-                    <div>
-
-                        <h5 class="fw-bold mb-1">
-                            Receive Your Order
-                        </h5>
-
-                        <p class="text-muted mb-0">
-
-                            Your order is prepared and delivered
-                            using the information you provided.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-```
-
-</section>
-
-<!-- =========================================================
-     WHY SMARTMART
-     ========================================================= -->
-
-<section class="py-5">
-
-```
-<div class="container">
-
-    <div class="text-center mb-5 about-reveal">
-
-        <span class="about-section-label">
-            WHY SMARTMART
-        </span>
-
-        <h2 class="fw-bold mt-2">
-            Designed to Make Shopping Easier
-        </h2>
-
-    </div>
-
-
-    <div class="row g-4">
-
-        <!-- Easy Discovery -->
-
-        <div class="col-md-3">
-
-            <div class="text-center about-benefit about-reveal">
-
-                <div class="about-benefit-icon">
-                    🔎
-                </div>
-
-                <h5 class="fw-bold">
-                    Easy Discovery
-                </h5>
-
-                <p class="text-muted small">
-                    Find products through categories
-                    and product search.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- Simple Cart -->
-
-        <div class="col-md-3">
-
-            <div class="text-center about-benefit about-reveal">
-
-                <div class="about-benefit-icon">
-                    🛒
-                </div>
-
-                <h5 class="fw-bold">
-                    Simple Cart
-                </h5>
-
-                <p class="text-muted small">
-                    Select products and manage quantities
-                    before checkout.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- Order Tracking -->
-
-        <div class="col-md-3">
-
-            <div class="text-center about-benefit about-reveal">
-
-                <div class="about-benefit-icon">
+                <div class="smart-about-stat-icon">
                     📦
                 </div>
 
-                <h5 class="fw-bold">
-                    Order Tracking
-                </h5>
+                <div>
+                    <strong>
+                        Simple Ordering
+                    </strong>
 
-                <p class="text-muted small">
-                    Use your order information to follow
-                    the progress of your order.
-                </p>
+                    <span>
+                        Order what you need
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="smart-about-stat-divider"></div>
+
+
+            <div class="smart-about-stat">
+
+                <div class="smart-about-stat-icon">
+                    🚚
+                </div>
+
+                <div>
+                    <strong>
+                        Convenient Delivery
+                    </strong>
+
+                    <span>
+                        Provide your delivery location
+                    </span>
+                </div>
 
             </div>
 
         </div>
 
+    </div>
 
-        <!-- Communication -->
+</section>
 
-        <div class="col-md-3">
 
-            <div class="text-center about-benefit about-reveal">
+<!-- =========================================================
+     WHO WE ARE
+========================================================= -->
 
-                <div class="about-benefit-icon">
-                    📱
+<section class="smart-about-section smart-about-who">
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+            <!-- LEFT -->
+
+            <div class="col-lg-5">
+
+                <div class="smart-about-section-heading smart-about-reveal">
+
+                    <span class="smart-about-section-label">
+                        WHO WE ARE
+                    </span>
+
+                    <h2>
+                        A marketplace built around
+                        <span>convenience.</span>
+                    </h2>
+
+                    <p>
+                        SmartMart brings products from different
+                        everyday categories together so customers
+                        can discover what they need without having
+                        to search in many different places.
+                    </p>
+
                 </div>
 
-                <h5 class="fw-bold">
-                    Convenient Communication
-                </h5>
+            </div>
 
-                <p class="text-muted small">
-                    Contact SmartMart about your order
-                    through the available communication channels.
+
+            <!-- RIGHT -->
+
+            <div class="col-lg-7">
+
+                <div class="row g-4">
+
+                    <!-- CARD 1 -->
+
+                    <div class="col-md-4">
+
+                        <div class="smart-about-feature-card smart-about-reveal">
+
+                            <div class="smart-about-feature-number">
+                                01
+                            </div>
+
+                            <div class="smart-about-feature-icon">
+                                🛒
+                            </div>
+
+                            <h4>
+                                Easy Shopping
+                            </h4>
+
+                            <p>
+                                Browse products, view details,
+                                choose quantities and add items
+                                to your shopping cart.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CARD 2 -->
+
+                    <div class="col-md-4">
+
+                        <div class="smart-about-feature-card smart-about-reveal">
+
+                            <div class="smart-about-feature-number">
+                                02
+                            </div>
+
+                            <div class="smart-about-feature-icon">
+                                📱
+                            </div>
+
+                            <h4>
+                                Easy Ordering
+                            </h4>
+
+                            <p>
+                                Provide your delivery information
+                                during checkout and receive your
+                                order details after placing an order.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CARD 3 -->
+
+                    <div class="col-md-4">
+
+                        <div class="smart-about-feature-card smart-about-reveal">
+
+                            <div class="smart-about-feature-number">
+                                03
+                            </div>
+
+                            <div class="smart-about-feature-icon">
+                                🚚
+                            </div>
+
+                            <h4>
+                                Convenient Delivery
+                            </h4>
+
+                            <p>
+                                SmartMart organizes delivery
+                                information so orders can be
+                                prepared and delivered to the
+                                provided location.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     WHAT WE OFFER
+========================================================= -->
+
+<section class="smart-about-offer">
+
+    <div class="container">
+
+        <div class="row g-5 align-items-center">
+
+            <!-- CATEGORY SIDE -->
+
+            <div class="col-lg-7">
+
+                <div class="smart-about-reveal">
+
+                    <span class="smart-about-section-label">
+                        OUR MARKETPLACE
+                    </span>
+
+                    <h2 class="smart-about-offer-title">
+                        One marketplace.
+                        <span>Many everyday needs.</span>
+                    </h2>
+
+                    <p class="smart-about-offer-description">
+                        SmartMart brings together a variety of
+                        products for everyday needs, making it easier
+                        to explore different categories from one place.
+                    </p>
+
+                </div>
+
+
+                <div class="smart-about-category-grid">
+
+                    <!-- GAS -->
+
+                    <div class="smart-about-category smart-about-reveal">
+
+                        <div class="smart-about-category-icon">
+                            🔥
+                        </div>
+
+                        <div>
+                            <strong>
+                                Gas & Cooking
+                            </strong>
+
+                            <span>
+                                Cooking essentials
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- FASHION -->
+
+                    <div class="smart-about-category smart-about-reveal">
+
+                        <div class="smart-about-category-icon">
+                            👕
+                        </div>
+
+                        <div>
+                            <strong>
+                                Fashion
+                            </strong>
+
+                            <span>
+                                Everyday clothing
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- SHOES -->
+
+                    <div class="smart-about-category smart-about-reveal">
+
+                        <div class="smart-about-category-icon">
+                            👟
+                        </div>
+
+                        <div>
+                            <strong>
+                                Shoes
+                            </strong>
+
+                            <span>
+                                Footwear choices
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- ELECTRONICS -->
+
+                    <div class="smart-about-category smart-about-reveal">
+
+                        <div class="smart-about-category-icon">
+                            🎧
+                        </div>
+
+                        <div>
+                            <strong>
+                                Electronics
+                            </strong>
+
+                            <span>
+                                Useful devices
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- GROCERIES -->
+
+                    <div class="smart-about-category smart-about-reveal">
+
+                        <div class="smart-about-category-icon">
+                            🛒
+                        </div>
+
+                        <div>
+                            <strong>
+                                Groceries
+                            </strong>
+
+                            <span>
+                                Everyday essentials
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- HOUSEHOLD -->
+
+                    <div class="smart-about-category smart-about-reveal">
+
+                        <div class="smart-about-category-icon">
+                            🏠
+                        </div>
+
+                        <div>
+                            <strong>
+                                Home & Household
+                            </strong>
+
+                            <span>
+                                Home essentials
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- BEAUTY -->
+
+                    <div class="smart-about-category smart-about-reveal">
+
+                        <div class="smart-about-category-icon">
+                            💄
+                        </div>
+
+                        <div>
+                            <strong>
+                                Beauty & Personal Care
+                            </strong>
+
+                            <span>
+                                Personal essentials
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MARKETPLACE MESSAGE -->
+
+            <div class="col-lg-5">
+
+                <div class="smart-about-marketplace-card smart-about-reveal">
+
+                    <div class="smart-about-marketplace-top">
+
+                        <span>
+                            SMARTMART
+                        </span>
+
+                        <div>
+                            ✦
+                        </div>
+
+                    </div>
+
+                    <div class="smart-about-marketplace-icon">
+                        🛍️
+                    </div>
+
+                    <h3>
+                        Everything you need,
+                        <span>within reach.</span>
+                    </h3>
+
+                    <p>
+                        Instead of moving between different places
+                        to look for everyday products, SmartMart
+                        brings different categories together in one
+                        marketplace.
+                    </p>
+
+                    <a
+                        href="{{ url_for('home') }}#products"
+                        class="smart-about-marketplace-link"
+                    >
+                        Explore Products
+                        <span>→</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     HOW IT WORKS
+========================================================= -->
+
+<section class="smart-about-section smart-about-process">
+
+    <div class="container">
+
+        <div class="text-center smart-about-reveal">
+
+            <span class="smart-about-section-label">
+                HOW IT WORKS
+            </span>
+
+            <h2 class="smart-about-process-title">
+                Shopping with SmartMart is simple.
+            </h2>
+
+            <p class="smart-about-process-description">
+                From discovering a product to receiving your order,
+                the process is designed to be straightforward.
+            </p>
+
+        </div>
+
+
+        <div class="smart-about-process-wrapper">
+
+            <!-- STEP 1 -->
+
+            <div class="smart-about-step smart-about-reveal">
+
+                <div class="smart-about-step-number">
+                    01
+                </div>
+
+                <div class="smart-about-step-icon">
+                    🔎
+                </div>
+
+                <h4>
+                    Browse
+                </h4>
+
+                <p>
+                    Explore categories and find products
+                    that meet your needs.
+                </p>
+
+            </div>
+
+
+            <div class="smart-about-step-line"></div>
+
+
+            <!-- STEP 2 -->
+
+            <div class="smart-about-step smart-about-reveal">
+
+                <div class="smart-about-step-number">
+                    02
+                </div>
+
+                <div class="smart-about-step-icon">
+                    🛒
+                </div>
+
+                <h4>
+                    Add to Cart
+                </h4>
+
+                <p>
+                    Select the products and quantities
+                    you want.
+                </p>
+
+            </div>
+
+
+            <div class="smart-about-step-line"></div>
+
+
+            <!-- STEP 3 -->
+
+            <div class="smart-about-step smart-about-reveal">
+
+                <div class="smart-about-step-number">
+                    03
+                </div>
+
+                <div class="smart-about-step-icon">
+                    📝
+                </div>
+
+                <h4>
+                    Checkout
+                </h4>
+
+                <p>
+                    Enter your contact and delivery
+                    information.
+                </p>
+
+            </div>
+
+
+            <div class="smart-about-step-line"></div>
+
+
+            <!-- STEP 4 -->
+
+            <div class="smart-about-step smart-about-reveal">
+
+                <div class="smart-about-step-number">
+                    04
+                </div>
+
+                <div class="smart-about-step-icon">
+                    🚚
+                </div>
+
+                <h4>
+                    Receive
+                </h4>
+
+                <p>
+                    Your order is prepared and delivered
+                    using the information provided.
                 </p>
 
             </div>
@@ -626,43 +744,218 @@ About Us | SmartMart
 
     </div>
 
-</div>
-```
-
 </section>
+
 
 <!-- =========================================================
-     CALL TO ACTION
-     ========================================================= -->
+     WHY SMARTMART
+========================================================= -->
 
-<section class="py-5 about-cta text-white">
+<section class="smart-about-benefits">
 
-```
-<div class="container text-center py-3 about-reveal">
+    <div class="container">
 
-    <h2 class="fw-bold mb-3">
-        Ready to Shop?
-    </h2>
+        <div class="row align-items-end g-4 mb-5">
 
-    <p class="lead mb-4">
+            <div class="col-lg-8">
 
-        Explore SmartMart and discover products
-        for your everyday needs.
+                <div class="smart-about-reveal">
 
-    </p>
+                    <span class="smart-about-section-label">
+                        WHY SMARTMART
+                    </span>
 
-    <a
-        href="{{ url_for('home') }}#products"
-        class="btn btn-light btn-lg"
-    >
+                    <h2>
+                        Designed to make
+                        <span>shopping easier.</span>
+                    </h2>
 
-        🛍️ Start Shopping
+                </div>
 
-    </a>
+            </div>
 
-</div>
-```
+            <div class="col-lg-4">
+
+                <p class="smart-about-benefits-intro smart-about-reveal">
+                    SmartMart focuses on making the shopping
+                    journey clear, simple and convenient.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <!-- BENEFIT 1 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="smart-about-benefit-card smart-about-reveal">
+
+                    <div class="smart-about-benefit-icon">
+                        🔎
+                    </div>
+
+                    <span class="smart-about-benefit-number">
+                        01
+                    </span>
+
+                    <h4>
+                        Easy Discovery
+                    </h4>
+
+                    <p>
+                        Find products through categories
+                        and product search.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- BENEFIT 2 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="smart-about-benefit-card smart-about-reveal">
+
+                    <div class="smart-about-benefit-icon">
+                        🛒
+                    </div>
+
+                    <span class="smart-about-benefit-number">
+                        02
+                    </span>
+
+                    <h4>
+                        Simple Cart
+                    </h4>
+
+                    <p>
+                        Select products and manage quantities
+                        before checkout.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- BENEFIT 3 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="smart-about-benefit-card smart-about-reveal">
+
+                    <div class="smart-about-benefit-icon">
+                        📦
+                    </div>
+
+                    <span class="smart-about-benefit-number">
+                        03
+                    </span>
+
+                    <h4>
+                        Order Tracking
+                    </h4>
+
+                    <p>
+                        Use your order information to follow
+                        the progress of your order.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- BENEFIT 4 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="smart-about-benefit-card smart-about-reveal">
+
+                    <div class="smart-about-benefit-icon">
+                        📱
+                    </div>
+
+                    <span class="smart-about-benefit-number">
+                        04
+                    </span>
+
+                    <h4>
+                        Communication
+                    </h4>
+
+                    <p>
+                        Contact SmartMart about your order
+                        through the available communication
+                        channels.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
+
+
+<!-- =========================================================
+     FINAL CTA
+========================================================= -->
+
+<section class="smart-about-final-cta">
+
+    <div class="smart-about-cta-glow"></div>
+
+    <div class="container">
+
+        <div class="smart-about-cta-content text-center smart-about-reveal">
+
+            <span class="smart-about-cta-badge">
+                START EXPLORING
+            </span>
+
+            <h2>
+                Your next shopping experience
+                starts here.
+            </h2>
+
+            <p>
+                Explore SmartMart and discover products
+                for your everyday needs.
+            </p>
+
+            <div class="smart-about-cta-actions">
+
+                <a
+                    href="{{ url_for('home') }}#products"
+                    class="smart-about-cta-primary"
+                >
+                    🛍️ Start Shopping
+                </a>
+
+                <a
+                    href="{{ url_for('contact') }}"
+                    class="smart-about-cta-secondary"
+                >
+                    Contact SmartMart
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
 
 {% endblock %}

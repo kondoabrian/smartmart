@@ -8256,39 +8256,70 @@ function copyLinkFallback(websiteUrl) {
 SMARTMART - ABOUT PAGE ANIMATIONS
 ========================================================= */
 
+/* =========================================================
+   SMARTMART ABOUT PAGE
+   SCROLL REVEAL
+========================================================= */
+
 document.addEventListener("DOMContentLoaded", function () {
 
-```
-const revealElements = document.querySelectorAll(".about-reveal");
+    const aboutElements =
+        document.querySelectorAll(".smart-about-reveal");
 
-if (!revealElements.length) {
-    return;
-}
+    if (!aboutElements.length) {
+        return;
+    }
 
-const revealObserver = new IntersectionObserver(
-    function (entries) {
+    /*
+     * If the browser does not support IntersectionObserver,
+     * display everything normally.
+     */
 
-        entries.forEach(function (entry) {
+    if (!("IntersectionObserver" in window)) {
 
-            if (entry.isIntersecting) {
-
-                entry.target.classList.add("show");
-
-                revealObserver.unobserve(entry.target);
-            }
-
+        aboutElements.forEach(function (element) {
+            element.classList.add("show");
         });
 
-    },
-    {
-        threshold: 0.15
+        return;
     }
-);
 
-revealElements.forEach(function (element) {
-    revealObserver.observe(element);
-});
-```
+
+    /*
+     * Watch elements as they enter the screen.
+     */
+
+    const aboutObserver = new IntersectionObserver(
+        function (entries) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("show");
+
+                    aboutObserver.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+
+    /*
+     * Start observing each About-page element.
+     */
+
+    aboutElements.forEach(function (element) {
+
+        aboutObserver.observe(element);
+
+    });
 
 });
 /* =========================================================

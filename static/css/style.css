@@ -23926,3 +23926,1194 @@ box-shadow: 0 10px 25px rgba(13, 110, 253, 0.25);
     }
 
 }
+/* =========================================================
+   SMARTMART ABOUT PAGE
+   PREMIUM REDESIGN
+========================================================= */
+
+
+/* =========================================================
+   GLOBAL ABOUT VARIABLES
+========================================================= */
+
+.smart-about-hero,
+.smart-about-section,
+.smart-about-offer,
+.smart-about-benefits,
+.smart-about-final-cta {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   REVEAL ANIMATION
+========================================================= */
+
+.smart-about-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+}
+
+.smart-about-reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.smart-about-hero {
+    min-height: 650px;
+    display: flex;
+    align-items: center;
+    padding: 100px 0 120px;
+    background:
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(13, 110, 253, 0.14),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            #f8fbff 0%,
+            #ffffff 50%,
+            #f3f8ff 100%
+        );
+}
+
+.smart-about-hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(2px);
+}
+
+.smart-about-glow-one {
+    width: 300px;
+    height: 300px;
+    right: -100px;
+    top: 80px;
+    background: rgba(13, 110, 253, 0.07);
+}
+
+.smart-about-glow-two {
+    width: 220px;
+    height: 220px;
+    left: -100px;
+    bottom: -70px;
+    background: rgba(13, 110, 253, 0.05);
+}
+
+
+/* =========================================================
+   HERO TEXT
+========================================================= */
+
+.smart-about-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    margin-bottom: 22px;
+    border-radius: 50px;
+    background: #eaf2ff;
+    color: #0d6efd;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.smart-about-eyebrow::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #0d6efd;
+}
+
+.smart-about-title {
+    max-width: 720px;
+    margin-bottom: 24px;
+    color: #111827;
+    font-size: clamp(3rem, 6vw, 5.3rem);
+    line-height: 0.98;
+    letter-spacing: -3px;
+    font-weight: 800;
+}
+
+.smart-about-title span {
+    display: block;
+    color: #0d6efd;
+}
+
+.smart-about-lead {
+    max-width: 650px;
+    margin-bottom: 14px;
+    color: #374151;
+    font-size: 1.25rem;
+    line-height: 1.7;
+}
+
+.smart-about-description {
+    max-width: 620px;
+    margin-bottom: 32px;
+    color: #6b7280;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.smart-about-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.smart-about-primary-btn,
+.smart-about-secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 52px;
+    padding: 0 23px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.smart-about-primary-btn {
+    color: #ffffff;
+    background: #0d6efd;
+    box-shadow: 0 10px 25px rgba(13, 110, 253, 0.22);
+}
+
+.smart-about-primary-btn:hover {
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(13, 110, 253, 0.3);
+}
+
+.smart-about-secondary-btn {
+    color: #1f2937;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+}
+
+.smart-about-secondary-btn:hover {
+    color: #0d6efd;
+    transform: translateY(-3px);
+    border-color: #cfe0ff;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+
+/* =========================================================
+   HERO VISUAL
+========================================================= */
+
+.smart-about-visual {
+    position: relative;
+    min-height: 470px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.smart-about-visual-main {
+    position: relative;
+    width: min(100%, 390px);
+    min-height: 410px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 50px 40px;
+    overflow: hidden;
+    border-radius: 35px;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            145deg,
+            #0d6efd 0%,
+            #0857cc 55%,
+            #0645a3 100%
+        );
+    box-shadow:
+        0 35px 70px rgba(13, 110, 253, 0.24);
+}
+
+.smart-about-visual-main::before {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    top: -80px;
+    right: -80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.smart-about-visual-main::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    bottom: -90px;
+    left: -70px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.smart-about-bag {
+    position: relative;
+    z-index: 1;
+    width: 82px;
+    height: 82px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 2.5rem;
+}
+
+.smart-about-visual-label {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.smart-about-visual-main h3 {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 18px;
+    font-size: 2.35rem;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+.smart-about-visual-main p {
+    position: relative;
+    z-index: 1;
+    max-width: 290px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FLOATING HERO CARD
+========================================================= */
+
+.smart-about-floating-card {
+    position: absolute;
+    z-index: 5;
+    right: -20px;
+    bottom: 42px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.15);
+}
+
+.smart-about-floating-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #198754;
+    background: #e9f8ef;
+    font-weight: 900;
+}
+
+.smart-about-floating-card strong {
+    display: block;
+    color: #111827;
+    font-size: 0.88rem;
+}
+
+.smart-about-floating-card small {
+    display: block;
+    margin-top: 3px;
+    color: #6b7280;
+    font-size: 0.72rem;
+}
+
+.smart-about-floating-dot {
+    position: absolute;
+    border-radius: 50%;
+}
+
+.dot-one {
+    width: 18px;
+    height: 18px;
+    top: 35px;
+    left: 10px;
+    background: #0d6efd;
+}
+
+.dot-two {
+    width: 12px;
+    height: 12px;
+    top: 80px;
+    right: 15px;
+    background: #ffc107;
+}
+
+
+/* =========================================================
+   QUICK STATS
+========================================================= */
+
+.smart-about-stats {
+    position: relative;
+    z-index: 10;
+    margin-top: -45px;
+}
+
+.smart-about-stats-card {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center;
+    padding: 25px 30px;
+    border: 1px solid #e8edf5;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+}
+
+.smart-about-stat {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.smart-about-stat-icon {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #eef5ff;
+    font-size: 1.35rem;
+}
+
+.smart-about-stat strong {
+    display: block;
+    margin-bottom: 3px;
+    color: #111827;
+    font-size: 0.9rem;
+}
+
+.smart-about-stat span {
+    display: block;
+    color: #6b7280;
+    font-size: 0.78rem;
+}
+
+.smart-about-stat-divider {
+    width: 1px;
+    height: 45px;
+    background: #e5e7eb;
+}
+
+
+/* =========================================================
+   GENERAL SECTION
+========================================================= */
+
+.smart-about-section {
+    padding: 110px 0;
+}
+
+.smart-about-who {
+    background: #ffffff;
+}
+
+.smart-about-section-label {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: #0d6efd;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+}
+
+.smart-about-section-heading h2 {
+    max-width: 500px;
+    margin-bottom: 22px;
+    color: #111827;
+    font-size: clamp(2.1rem, 4vw, 3.3rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.smart-about-section-heading h2 span,
+.smart-about-benefits h2 span,
+.smart-about-offer-title span {
+    color: #0d6efd;
+}
+
+.smart-about-section-heading p {
+    max-width: 490px;
+    margin: 0;
+    color: #6b7280;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   FEATURE CARDS
+========================================================= */
+
+.smart-about-feature-card {
+    position: relative;
+    height: 100%;
+    padding: 30px 24px;
+    overflow: hidden;
+    border: 1px solid #e8edf5;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.smart-about-feature-card:hover {
+    transform: translateY(-7px);
+    border-color: #cfe0ff;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.09);
+}
+
+.smart-about-feature-number {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    color: #e9f1ff;
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+.smart-about-feature-icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    border-radius: 17px;
+    background: #eef5ff;
+    font-size: 1.7rem;
+}
+
+.smart-about-feature-card h4 {
+    margin-bottom: 12px;
+    color: #111827;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.smart-about-feature-card p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.87rem;
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   MARKETPLACE SECTION
+========================================================= */
+
+.smart-about-offer {
+    padding: 110px 0;
+    background: #f7f9fc;
+}
+
+.smart-about-offer-title {
+    max-width: 650px;
+    margin-bottom: 20px;
+    color: #111827;
+    font-size: clamp(2.1rem, 4vw, 3.5rem);
+    line-height: 1.08;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.smart-about-offer-description {
+    max-width: 600px;
+    margin-bottom: 35px;
+    color: #6b7280;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   CATEGORY GRID
+========================================================= */
+
+.smart-about-category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.smart-about-category {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 78px;
+    padding: 13px 16px;
+    border: 1px solid #e7ebf2;
+    border-radius: 14px;
+    background: #ffffff;
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.smart-about-category:hover {
+    transform: translateY(-4px);
+    border-color: #cfe0ff;
+    box-shadow: 0 12px 25px rgba(15, 23, 42, 0.07);
+}
+
+.smart-about-category-icon {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: #f1f6ff;
+    font-size: 1.4rem;
+}
+
+.smart-about-category strong {
+    display: block;
+    color: #111827;
+    font-size: 0.88rem;
+}
+
+.smart-about-category span {
+    display: block;
+    margin-top: 3px;
+    color: #8a93a3;
+    font-size: 0.72rem;
+}
+
+
+/* =========================================================
+   MARKETPLACE MESSAGE CARD
+========================================================= */
+
+.smart-about-marketplace-card {
+    position: relative;
+    min-height: 510px;
+    padding: 42px;
+    overflow: hidden;
+    border-radius: 28px;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            145deg,
+            #111827 0%,
+            #1f2937 100%
+        );
+    box-shadow: 0 25px 60px rgba(15, 23, 42, 0.18);
+}
+
+.smart-about-marketplace-card::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    right: -130px;
+    top: -120px;
+    border-radius: 50%;
+    background: rgba(13, 110, 253, 0.25);
+}
+
+.smart-about-marketplace-top {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 70px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.smart-about-marketplace-top div {
+    color: #ffc107;
+    font-size: 1.3rem;
+}
+
+.smart-about-marketplace-icon {
+    position: relative;
+    z-index: 1;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 2rem;
+}
+
+.smart-about-marketplace-card h3 {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+    font-size: 2.1rem;
+    line-height: 1.15;
+    font-weight: 800;
+}
+
+.smart-about-marketplace-card h3 span {
+    color: #72aaff;
+}
+
+.smart-about-marketplace-card p {
+    position: relative;
+    z-index: 1;
+    max-width: 420px;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.68);
+    line-height: 1.8;
+}
+
+.smart-about-marketplace-link {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.smart-about-marketplace-link span {
+    transition: transform 0.2s ease;
+}
+
+.smart-about-marketplace-link:hover {
+    color: #72aaff;
+}
+
+.smart-about-marketplace-link:hover span {
+    transform: translateX(5px);
+}
+
+
+/* =========================================================
+   PROCESS SECTION
+========================================================= */
+
+.smart-about-process {
+    background: #ffffff;
+}
+
+.smart-about-process-title {
+    margin-bottom: 15px;
+    color: #111827;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.smart-about-process-description {
+    max-width: 600px;
+    margin: 0 auto;
+    color: #6b7280;
+    line-height: 1.7;
+}
+
+.smart-about-process-wrapper {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    align-items: center;
+    margin-top: 65px;
+}
+
+.smart-about-step {
+    text-align: center;
+}
+
+.smart-about-step-number {
+    margin-bottom: 10px;
+    color: #c8d9f6;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.smart-about-step-icon {
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    border: 1px solid #dce9fc;
+    border-radius: 20px;
+    background: #f3f7ff;
+    font-size: 1.8rem;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.smart-about-step:hover .smart-about-step-icon {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(13, 110, 253, 0.1);
+}
+
+.smart-about-step h4 {
+    margin-bottom: 9px;
+    color: #111827;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.smart-about-step p {
+    max-width: 190px;
+    margin: 0 auto;
+    color: #6b7280;
+    font-size: 0.82rem;
+    line-height: 1.65;
+}
+
+.smart-about-step-line {
+    width: 55px;
+    height: 1px;
+    background: #dce5f2;
+}
+
+
+/* =========================================================
+   BENEFITS
+========================================================= */
+
+.smart-about-benefits {
+    padding: 110px 0;
+    background: #f7f9fc;
+}
+
+.smart-about-benefits h2 {
+    max-width: 650px;
+    margin: 0;
+    color: #111827;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.smart-about-benefits-intro {
+    max-width: 350px;
+    margin-left: auto;
+    margin-bottom: 5px;
+    color: #6b7280;
+    line-height: 1.7;
+}
+
+.smart-about-benefit-card {
+    position: relative;
+    height: 100%;
+    padding: 30px 25px;
+    border: 1px solid #e5eaf2;
+    border-radius: 18px;
+    background: #ffffff;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.smart-about-benefit-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+}
+
+.smart-about-benefit-icon {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 22px;
+    border-radius: 15px;
+    background: #eef5ff;
+    font-size: 1.45rem;
+}
+
+.smart-about-benefit-number {
+    position: absolute;
+    top: 30px;
+    right: 24px;
+    color: #dbe8fa;
+    font-size: 0.75rem;
+    font-weight: 900;
+}
+
+.smart-about-benefit-card h4 {
+    margin-bottom: 10px;
+    color: #111827;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.smart-about-benefit-card p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 0.83rem;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.smart-about-final-cta {
+    padding: 105px 0;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            135deg,
+            #0758cf 0%,
+            #0d6efd 50%,
+            #0647aa 100%
+        );
+}
+
+.smart-about-cta-glow {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    top: -220px;
+    right: -120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.smart-about-cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.smart-about-cta-badge {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 7px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.smart-about-cta-content h2 {
+    max-width: 750px;
+    margin: 0 auto 18px;
+    font-size: clamp(2.3rem, 5vw, 4.2rem);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.smart-about-cta-content p {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 1.05rem;
+}
+
+.smart-about-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.smart-about-cta-primary,
+.smart-about-cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.smart-about-cta-primary {
+    color: #0d6efd;
+    background: #ffffff;
+}
+
+.smart-about-cta-primary:hover {
+    color: #0d6efd;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.smart-about-cta-secondary {
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.smart-about-cta-secondary:hover {
+    color: #ffffff;
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 991.98px) {
+
+    .smart-about-hero {
+        padding: 80px 0 100px;
+    }
+
+    .smart-about-title {
+        letter-spacing: -2px;
+    }
+
+    .smart-about-visual {
+        min-height: 430px;
+        margin-top: 10px;
+    }
+
+    .smart-about-stats-card {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .smart-about-stat-divider {
+        width: 100%;
+        height: 1px;
+    }
+
+    .smart-about-process-wrapper {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 45px 25px;
+    }
+
+    .smart-about-step-line {
+        display: none;
+    }
+
+    .smart-about-marketplace-card {
+        min-height: 430px;
+    }
+
+    .smart-about-benefits-intro {
+        margin-left: 0;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 767.98px) {
+
+    .smart-about-hero {
+        min-height: auto;
+        padding: 65px 0 90px;
+    }
+
+    .smart-about-title {
+        font-size: 3rem;
+        letter-spacing: -2px;
+    }
+
+    .smart-about-lead {
+        font-size: 1.05rem;
+    }
+
+    .smart-about-description {
+        font-size: 0.92rem;
+    }
+
+    .smart-about-hero-actions {
+        flex-direction: column;
+    }
+
+    .smart-about-primary-btn,
+    .smart-about-secondary-btn {
+        width: 100%;
+    }
+
+    .smart-about-visual {
+        min-height: 390px;
+        margin-top: 20px;
+    }
+
+    .smart-about-visual-main {
+        min-height: 360px;
+        padding: 35px 28px;
+        border-radius: 27px;
+    }
+
+    .smart-about-visual-main h3 {
+        font-size: 1.9rem;
+    }
+
+    .smart-about-floating-card {
+        right: 5px;
+        bottom: 20px;
+    }
+
+    .smart-about-stats {
+        margin-top: -35px;
+    }
+
+    .smart-about-stats-card {
+        padding: 22px;
+        border-radius: 17px;
+    }
+
+    .smart-about-section,
+    .smart-about-offer,
+    .smart-about-benefits {
+        padding: 75px 0;
+    }
+
+    .smart-about-section-heading h2,
+    .smart-about-offer-title,
+    .smart-about-benefits h2 {
+        font-size: 2.25rem;
+    }
+
+    .smart-about-category-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .smart-about-marketplace-card {
+        min-height: 420px;
+        padding: 32px 27px;
+        border-radius: 24px;
+    }
+
+    .smart-about-marketplace-top {
+        margin-bottom: 50px;
+    }
+
+    .smart-about-marketplace-card h3 {
+        font-size: 1.8rem;
+    }
+
+    .smart-about-process-wrapper {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        margin-top: 45px;
+    }
+
+    .smart-about-step p {
+        max-width: 280px;
+    }
+
+    .smart-about-final-cta {
+        padding: 80px 0;
+    }
+
+    .smart-about-cta-content h2 {
+        font-size: 2.35rem;
+    }
+
+    .smart-about-cta-actions {
+        flex-direction: column;
+    }
+
+    .smart-about-cta-primary,
+    .smart-about-cta-secondary {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .smart-about-title {
+        font-size: 2.55rem;
+    }
+
+    .smart-about-floating-card {
+        right: 0;
+        left: 20px;
+        width: calc(100% - 20px);
+    }
+
+    .smart-about-floating-dot {
+        display: none;
+    }
+
+    .smart-about-feature-card {
+        padding: 25px 20px;
+    }
+
+    .smart-about-category {
+        min-height: 72px;
+    }
+
+    .smart-about-marketplace-card {
+        min-height: 450px;
+    }
+}

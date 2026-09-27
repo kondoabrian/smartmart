@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found | SmartMart{% endblock %}
+
+{% block content %}
+
+<section class="smart-404-page">
+
+    <!-- BACKGROUND DECORATION -->
+    <div class="smart-404-circle smart-404-circle-one"></div>
+    <div class="smart-404-circle smart-404-circle-two"></div>
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-8 col-xl-7">
+
+                <div class="smart-404-content text-center">
+
+                    <!-- ERROR ICON -->
+                    <div class="smart-404-icon smart-404-reveal">
+                        🛒
+                    </div>
+
+                    <!-- ERROR CODE -->
+                    <div class="smart-404-code smart-404-reveal">
+                        404
+                    </div>
+
+                    <!-- ERROR MESSAGE -->
+                    <h1 class="smart-404-title smart-404-reveal">
+                        Oops! This page isn't available.
+                    </h1>
+
+                    <p class="smart-404-description smart-404-reveal">
+                        The page you are looking for may have been moved,
+                        removed, or the address may have been entered
+                        incorrectly.
+                    </p>
+
+                    <!-- ACTION BUTTONS -->
+                    <div class="smart-404-actions smart-404-reveal">
+
+                        <a
+                            href="{{ url_for('home') }}"
+                            class="btn smart-404-home-btn"
+                        >
+                            🏠 Back to Home
+                        </a>
+
+                        <a
+                            href="{{ url_for('cart') }}"
+                            class="btn smart-404-cart-btn"
+                        >
+                            🛒 View Cart
+                        </a>
+
+                    </div>
+
+                    <!-- ADDITIONAL LINKS -->
+                    <div class="smart-404-links smart-404-reveal">
+
+                        <p>
+                            Looking for something else?
+                        </p>
+
+                        <div class="smart-404-link-list">
+
+                            <a href="{{ url_for('about') }}">
+                                About Us
+                            </a>
+
+                            <span>•</span>
+
+                            <a href="{{ url_for('faq') }}">
+                                FAQ
+                            </a>
+
+                            <span>•</span>
+
+                            <a href="{{ url_for('contact') }}">
+                                Contact Us
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

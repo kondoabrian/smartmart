@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +9,11 @@
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="SmartMart - Shop products online with convenient ordering and delivery."
     >
 
     <title>
@@ -46,7 +52,7 @@
      NAVIGATION BAR
      ========================================================= -->
 
-<nav class="navbar navbar-expand-lg bg-white shadow-sm">
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
 
     <div class="container">
 
@@ -61,7 +67,6 @@
             🛍️ SmartMart
 
         </a>
-
 
 
         <!-- MOBILE MENU BUTTON -->
@@ -79,7 +84,6 @@
             <span class="navbar-toggler-icon"></span>
 
         </button>
-
 
 
         <!-- NAVIGATION LINKS -->
@@ -108,7 +112,6 @@
                 </li>
 
 
-
                 <!-- PRODUCTS -->
 
                 <li class="nav-item">
@@ -123,7 +126,6 @@
                     </a>
 
                 </li>
-
 
 
                 <!-- CATEGORIES -->
@@ -142,6 +144,53 @@
                 </li>
 
 
+                <!-- ABOUT -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('about') }}"
+                    >
+
+                        About Us
+
+                    </a>
+
+                </li>
+
+
+                <!-- CONTACT -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('contact') }}"
+                    >
+
+                        Contact
+
+                    </a>
+
+                </li>
+
+
+                <!-- FAQ -->
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{{ url_for('faq') }}"
+                    >
+
+                        FAQ
+
+                    </a>
+
+                </li>
+
 
                 <!-- CART -->
 
@@ -157,7 +206,6 @@
                     </a>
 
                 </li>
-
 
 
                 <!-- TRACK ORDER -->
@@ -176,19 +224,19 @@
                 </li>
 
 
-
-                <!-- ADMIN -->
+                <!-- SHARE -->
 
                 <li class="nav-item">
 
-                    <a
-                        class="nav-link"
-                        href="{{ url_for('admin_login') }}"
+                    <button
+                        type="button"
+                        class="btn btn-outline-primary btn-sm ms-lg-2 mt-2 mt-lg-0"
+                        onclick="shareSmartMart()"
                     >
 
-                        Admin
+                        🔗 Share
 
-                    </a>
+                    </button>
 
                 </li>
 
@@ -266,9 +314,9 @@
         <div class="row g-4">
 
 
-            <!-- ABOUT SMARTMART -->
+            <!-- SMARTMART -->
 
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6">
 
                 <h5 class="fw-bold">
                     🛍️ SmartMart
@@ -276,21 +324,33 @@
 
                 <p class="text-white-50">
 
-                    SmartMart makes shopping simple,
-                    convenient and reliable.
+                    Everything you need, in one smart place.
+
+                    Shop products across different categories
+                    and enjoy convenient ordering and delivery.
 
                 </p>
+
+
+                <button
+                    type="button"
+                    class="btn btn-outline-light btn-sm"
+                    onclick="shareSmartMart()"
+                >
+
+                    🔗 Share SmartMart
+
+                </button>
 
             </div>
 
 
+            <!-- SHOP -->
 
-            <!-- QUICK LINKS -->
-
-            <div class="col-md-4">
+            <div class="col-lg-2 col-md-6">
 
                 <h5 class="fw-bold">
-                    Quick Links
+                    Shop
                 </h5>
 
                 <ul class="list-unstyled">
@@ -298,11 +358,25 @@
                     <li class="mb-2">
 
                         <a
-                            href="{{ url_for('home') }}"
+                            href="{{ url_for('home') }}#products"
                             class="text-white-50 text-decoration-none"
                         >
 
-                            Home
+                            Products
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="mb-2">
+
+                        <a
+                            href="{{ url_for('home') }}#categories"
+                            class="text-white-50 text-decoration-none"
+                        >
+
+                            Categories
 
                         </a>
 
@@ -316,21 +390,7 @@
                             class="text-white-50 text-decoration-none"
                         >
 
-                            Cart
-
-                        </a>
-
-                    </li>
-
-
-                    <li class="mb-2">
-
-                        <a
-                            href="{{ url_for('track_order') }}"
-                            class="text-white-50 text-decoration-none"
-                        >
-
-                            Track Order
+                            🛒 Cart
 
                         </a>
 
@@ -340,11 +400,11 @@
                     <li>
 
                         <a
-                            href="{{ url_for('admin_login') }}"
+                            href="{{ url_for('track_order') }}"
                             class="text-white-50 text-decoration-none"
                         >
 
-                            Admin
+                            📦 Track Order
 
                         </a>
 
@@ -355,13 +415,83 @@
             </div>
 
 
+            <!-- INFORMATION -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <h5 class="fw-bold">
+                    Information
+                </h5>
+
+                <ul class="list-unstyled">
+
+                    <li class="mb-2">
+
+                        <a
+                            href="{{ url_for('about') }}"
+                            class="text-white-50 text-decoration-none"
+                        >
+
+                            About Us
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="mb-2">
+
+                        <a
+                            href="{{ url_for('contact') }}"
+                            class="text-white-50 text-decoration-none"
+                        >
+
+                            Contact Us
+
+                        </a>
+
+                    </li>
+
+
+                    <li class="mb-2">
+
+                        <a
+                            href="{{ url_for('faq') }}"
+                            class="text-white-50 text-decoration-none"
+                        >
+
+                            Frequently Asked Questions
+
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <button
+                            type="button"
+                            class="btn btn-link p-0 text-white-50 text-decoration-none"
+                            onclick="copySmartMartLink()"
+                        >
+
+                            📋 Copy Website Link
+
+                        </button>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
 
             <!-- CONTACT -->
 
-            <div class="col-md-4">
+            <div class="col-lg-3 col-md-6">
 
                 <h5 class="fw-bold">
-                    Contact
+                    Contact SmartMart
                 </h5>
 
                 <p class="text-white-50 mb-2">
@@ -372,15 +502,26 @@
 
                 <p class="text-white-50 mb-2">
 
-                    📱 Easy Ordering
+                    💬 Easy WhatsApp Ordering
 
                 </p>
 
-                <p class="text-white-50">
+                <p class="text-white-50 mb-2">
 
                     🚚 Convenient Delivery
 
                 </p>
+
+                 <a
+                    href="{{ url_for('contact') }}"
+                    class="text-white-50 text-decoration-none me-3"
+                >
+
+                    Contact
+
+                </a>
+
+                </a>
 
             </div>
 
@@ -388,17 +529,68 @@
         </div>
 
 
-        <hr class="border-secondary">
+        <hr class="border-secondary mt-4">
 
 
-        <div class="text-center text-white-50">
+        <!-- BOTTOM FOOTER -->
 
-            <small>
+        <div class="row align-items-center">
 
-                © {{ now().year if now is defined else "2026" }}
-                SmartMart. All rights reserved.
+            <div class="col-md-6">
 
-            </small>
+                <small class="text-white-50">
+
+                    © 2026 SmartMart.
+                    All rights reserved.
+
+                </small>
+
+            </div>
+
+
+            <div class="col-md-6 text-md-end mt-2 mt-md-0">
+
+                <a
+                    href="{{ url_for('about') }}"
+                    class="text-white-50 text-decoration-none me-3"
+                >
+
+                    About
+
+                </a>
+
+
+
+
+
+                <a
+                    href="{{ url_for('faq') }}"
+                    class="text-white-50 text-decoration-none"
+                >
+
+                    FAQ
+
+                </a>
+                <li class="mb-2">
+                 <a
+                  href="{{ url_for('privacy') }}"
+                  class="text-white-50 text-decoration-none"
+                     >
+                     Privacy Policy
+                   </a>
+                  </li>
+                <li class="mb-2">
+
+                <a
+                  href="{{ url_for('terms') }}"
+                  class="text-white-50 text-decoration-none"
+                   >
+                  Terms & Conditions
+                    </a>
+
+                  </li>
+
+            </div>
 
         </div>
 
@@ -440,3 +632,4 @@
 </body>
 
 </html>
+```

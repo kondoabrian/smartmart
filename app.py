@@ -4395,6 +4395,98 @@ def update_cart(product_id):
     session.modified = True
 
     return redirect(url_for("cart"))
+@app.route("/about")
+def about():
+
+    return render_template(
+        "about.html"
+    )
+
+
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+
+    if request.method == "POST":
+
+        name = request.form.get(
+            "name",
+            ""
+        ).strip()
+
+        phone = request.form.get(
+            "phone",
+            ""
+        ).strip()
+
+        email = request.form.get(
+            "email",
+            ""
+        ).strip()
+
+        subject = request.form.get(
+            "subject",
+            ""
+        ).strip()
+
+        order_number = request.form.get(
+            "order_number",
+            ""
+        ).strip()
+
+        message = request.form.get(
+            "message",
+            ""
+        ).strip()
+
+        # For now, display the submitted information.
+        # We can connect this to WhatsApp/email later.
+
+        return render_template(
+            "contact.html",
+            success=True,
+            name=name,
+            phone=phone,
+            email=email,
+            subject=subject,
+            order_number=order_number,
+            message=message
+        )
+
+    return render_template(
+        "contact.html"
+    )
+
+
+@app.route("/faq")
+def faq():
+
+    return render_template(
+        "faq.html"
+    )
+
+
+@app.route("/privacy")
+def privacy():
+
+    return render_template(
+        "privacy.html"
+    )
+
+
+@app.route("/terms")
+def terms():
+
+    return render_template(
+        "terms.html"
+    )
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+
+    return render_template(
+        "404.html"
+    ), 404
 
 if __name__ == "__main__":
     app.run(debug=False)

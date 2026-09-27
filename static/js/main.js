@@ -8140,3 +8140,491 @@ function initAdminDeliveries() {
     }
 
 }
+// =========================================================
+// SMARTMART SHARING
+// =========================================================
+
+// =========================================================
+// SMARTMART - SHARE WEBSITE
+// =========================================================
+
+function shareSmartMart() {
+
+    const websiteUrl = window.location.origin;
+
+    const shareData = {
+        title: "SmartMart",
+        text: "Check out SmartMart - everything you need in one smart place.",
+        url: websiteUrl
+    };
+
+    // Check whether the browser supports the Web Share API
+    if (navigator.share) {
+
+        navigator.share(shareData)
+            .then(function () {
+
+                console.log("SmartMart shared successfully.");
+
+            })
+            .catch(function (error) {
+
+                // Do not show an error when the user simply
+                // cancels the sharing window
+                if (error.name !== "AbortError") {
+
+                    console.log("Sharing failed:", error);
+
+                }
+
+            });
+
+    } else {
+
+        // If sharing is not supported,
+        // copy the website link instead
+        copySmartMartLink();
+
+    }
+}
+
+
+// =========================================================
+// SMARTMART - COPY WEBSITE LINK
+// =========================================================
+
+function copySmartMartLink() {
+
+    const websiteUrl = window.location.origin;
+
+    // Modern clipboard support
+    if (navigator.clipboard) {
+
+        navigator.clipboard.writeText(websiteUrl)
+            .then(function () {
+
+                alert("✅ SmartMart website link copied!");
+
+            })
+            .catch(function () {
+
+                copyLinkFallback(websiteUrl);
+
+            });
+
+    } else {
+
+        // Older browsers
+        copyLinkFallback(websiteUrl);
+
+    }
+}
+
+
+// =========================================================
+// COPY LINK FALLBACK
+// =========================================================
+
+function copyLinkFallback(websiteUrl) {
+
+    const temporaryInput = document.createElement("input");
+
+    temporaryInput.value = websiteUrl;
+
+    document.body.appendChild(temporaryInput);
+
+    temporaryInput.select();
+
+    try {
+
+        document.execCommand("copy");
+
+        alert("✅ SmartMart website link copied!");
+
+    } catch (error) {
+
+        alert(
+            "Please copy the website address manually:\n\n" +
+            websiteUrl
+        );
+
+    }
+
+    document.body.removeChild(temporaryInput);
+}
+/* =========================================================
+SMARTMART - ABOUT PAGE ANIMATIONS
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+```
+const revealElements = document.querySelectorAll(".about-reveal");
+
+if (!revealElements.length) {
+    return;
+}
+
+const revealObserver = new IntersectionObserver(
+    function (entries) {
+
+        entries.forEach(function (entry) {
+
+            if (entry.isIntersecting) {
+
+                entry.target.classList.add("show");
+
+                revealObserver.unobserve(entry.target);
+            }
+
+        });
+
+    },
+    {
+        threshold: 0.15
+    }
+);
+
+revealElements.forEach(function (element) {
+    revealObserver.observe(element);
+});
+```
+
+});
+/* =========================================================
+   SMARTMART - 404 PAGE ANIMATIONS
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const revealElements =
+        document.querySelectorAll(".smart-404-reveal");
+
+    if (!revealElements.length) {
+        return;
+    }
+
+
+    /*
+     * If the browser does not support
+     * IntersectionObserver, show everything.
+     */
+
+    if (!("IntersectionObserver" in window)) {
+
+        revealElements.forEach(function (element) {
+
+            element.classList.add("show");
+
+        });
+
+        return;
+    }
+
+
+    /*
+     * Create the observer.
+     */
+
+    const revealObserver = new IntersectionObserver(
+        function (entries) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("show");
+
+                    revealObserver.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.15
+        }
+    );
+
+
+    /*
+     * Observe all 404 page elements.
+     */
+
+    revealElements.forEach(function (element) {
+
+        revealObserver.observe(element);
+
+    });
+
+});
+/* =========================================================
+   SMARTMART - CONTACT PAGE ANIMATIONS
+   ========================================================= */
+
+/* =========================================================
+   SMARTMART - CONTACT PAGE ANIMATIONS
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const revealElements =
+        document.querySelectorAll(".smart-contact-reveal");
+
+    if (!revealElements.length) {
+        return;
+    }
+
+
+    /* =====================================================
+       FALLBACK FOR OLDER BROWSERS
+    ===================================================== */
+
+    if (!("IntersectionObserver" in window)) {
+
+        revealElements.forEach(function (element) {
+
+            element.classList.add("show");
+
+        });
+
+        return;
+    }
+
+
+    /* =====================================================
+       INTERSECTION OBSERVER
+    ===================================================== */
+
+    const revealObserver = new IntersectionObserver(
+
+        function (entries) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("show");
+
+                    revealObserver.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold: 0.15
+        }
+
+    );
+
+
+    /* =====================================================
+       OBSERVE CONTACT PAGE ELEMENTS
+    ===================================================== */
+
+    revealElements.forEach(function (element) {
+
+        revealObserver.observe(element);
+
+    });
+
+});
+/* =========================================================
+   SMARTMART - FAQ PAGE ANIMATIONS
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const revealElements =
+        document.querySelectorAll(".smart-faq-reveal");
+
+    if (!revealElements.length) {
+        return;
+    }
+
+
+    /*
+     * If IntersectionObserver is not supported,
+     * show the elements immediately.
+     */
+
+    if (!("IntersectionObserver" in window)) {
+
+        revealElements.forEach(function (element) {
+
+            element.classList.add("show");
+
+        });
+
+        return;
+    }
+
+
+    /*
+     * Create the observer.
+     */
+
+    const revealObserver = new IntersectionObserver(
+        function (entries) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("show");
+
+                    revealObserver.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.15
+        }
+    );
+
+
+    /*
+     * Observe FAQ page elements.
+     */
+
+    revealElements.forEach(function (element) {
+
+        revealObserver.observe(element);
+
+    });
+
+});
+/* =========================================================
+   SMARTMART - PRIVACY POLICY PAGE ANIMATIONS
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const revealElements =
+        document.querySelectorAll(".smart-privacy-reveal");
+
+    if (!revealElements.length) {
+        return;
+    }
+
+    if (!("IntersectionObserver" in window)) {
+
+        revealElements.forEach(function (element) {
+            element.classList.add("show");
+        });
+
+        return;
+    }
+
+    const revealObserver = new IntersectionObserver(
+        function (entries) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("show");
+
+                    revealObserver.unobserve(
+                        entry.target
+                    );
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.15
+        }
+    );
+
+    revealElements.forEach(function (element) {
+        revealObserver.observe(element);
+    });
+
+});
+/* =========================================================
+   SMARTMART - TERMS PAGE ANIMATIONS
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const revealElements =
+        document.querySelectorAll(".smart-terms-reveal");
+
+    if (!revealElements.length) {
+        return;
+    }
+
+
+    /* =====================================================
+       FALLBACK
+    ===================================================== */
+
+    if (!("IntersectionObserver" in window)) {
+
+        revealElements.forEach(function (element) {
+
+            element.classList.add("show");
+
+        });
+
+        return;
+    }
+
+
+    /* =====================================================
+       INTERSECTION OBSERVER
+    ===================================================== */
+
+    const revealObserver = new IntersectionObserver(
+
+        function (entries) {
+
+            entries.forEach(function (entry) {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("show");
+
+                    revealObserver.unobserve(
+                        entry.target
+                    );
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold: 0.15
+        }
+
+    );
+
+
+    /* =====================================================
+       OBSERVE ELEMENTS
+    ===================================================== */
+
+    revealElements.forEach(function (element) {
+
+        revealObserver.observe(element);
+
+    });
+
+});

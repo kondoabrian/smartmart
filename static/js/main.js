@@ -27,40 +27,63 @@ document.addEventListener("DOMContentLoaded", function () {
     initTrackOrder();
 
     initOrderTracking();
-    initAdminEditProduct();
-    initAdminInventory();
-    initAdminUpdateStock();
-    initAdminStockHistory();
-    initAdminOrders();
+
+
     // =====================================================
     // ADMIN FEATURES
     // =====================================================
+
+    initAdminEditProduct();
+
+    initAdminInventory();
+
+    initAdminUpdateStock();
+
+    initAdminStockHistory();
+
+    initAdminOrders();
 
     initAdminDashboard();
 
     initAdminProducts();
 
     initAdminAddProduct();
+
     initAdminSales();
+
     initAdminOrderDetails();
-    initDeliveryDashboard();
-    initDeliveryOrderDetails();
-    initDeliveryProfile();
+
     initAdminDeliveryPersonnel();
+
     initAdminAddDeliveryPerson();
+
     initAdminEditDeliveryPerson();
+
     initAdminCustomers();
+
     initAdminCustomerDetails();
 
     initAdminDeliveries();
+
+
+    // =====================================================
+    // DELIVERY FEATURES
+    // =====================================================
+
+    initDeliveryDashboard();
+
+    initDeliveryOrderDetails();
+
+    initDeliveryProfile();
+
+
+    // =====================================================
+    // SMARTMART PWA
+    // =====================================================
+
+    initSmartMartPWA();
+
 });
-
-
-
-// =========================================================
-// PRODUCT SEARCH
-// =========================================================
-
 function initProductSearch() {
 
     const searchInput =
@@ -8659,3 +8682,405 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+// =========================================================
+// SMARTMART PWA INSTALLATION
+// =========================================================
+
+let smartMartInstallPrompt = null;
+
+
+
+// =========================================================
+// INITIALIZE SMARTMART PWA
+// =========================================================
+
+function initSmartMartPWA() {
+
+
+    // =====================================================
+    // INSTALL BUTTONS
+    // =====================================================
+
+    const installButtons = [
+
+        document.getElementById(
+            "installAppButton"
+        ),
+
+        document.getElementById(
+            "installAppButtonSection"
+        ),
+
+        document.getElementById(
+            "footerInstallAppButton"
+        )
+
+    ].filter(Boolean);
+
+
+
+    // =====================================================
+    // INSTALL INFORMATION
+    // =====================================================
+
+    const installInfo =
+        document.getElementById(
+            "installAppInfo"
+        );
+
+
+    const installedMessage =
+        document.getElementById(
+            "smartMartInstalledMessage"
+        );
+
+
+
+    // =====================================================
+    // REGISTER SERVICE WORKER
+    // =====================================================
+
+    if ("serviceWorker" in navigator) {
+
+        window.addEventListener(
+            "load",
+            function () {
+
+                navigator.serviceWorker
+                    .register(
+                        "/static/service-worker.js"
+                    )
+
+                    .then(
+                        function (registration) {
+
+                            console.log(
+                                "SmartMart service worker registered:",
+                                registration.scope
+                            );
+
+                        }
+                    )
+
+                    .catch(
+                        function (error) {
+
+                            console.log(
+                                "SmartMart service worker registration failed:",
+                                error
+                            );
+
+                        }
+                    );
+
+            }
+        );
+
+    }
+
+
+
+    // =====================================================
+    // CHECK IF SMARTMART IS ALREADY INSTALLED
+    // =====================================================
+
+    function smartMartIsInstalled() {
+
+        return (
+
+            window.matchMedia(
+                "(display-mode: standalone)"
+            ).matches
+
+            ||
+
+            window.navigator.standalone === true
+
+        );
+
+    }
+
+
+
+    // =====================================================
+    // HIDE INSTALL BUTTONS
+    // =====================================================
+
+    function hideInstallButtons() {
+
+        installButtons.forEach(
+            function (button) {
+
+                button.classList.add(
+                    "d-none"
+                );
+
+            }
+        );
+
+
+        if (installInfo) {
+
+            installInfo.classList.add(
+                "d-none"
+            );
+
+        }
+
+    }
+
+
+
+    // =====================================================
+    // SHOW INSTALL BUTTONS
+    // =====================================================
+
+    function showInstallButtons() {
+
+        installButtons.forEach(
+            function (button) {
+
+                button.classList.remove(
+                    "d-none"
+                );
+
+            }
+        );
+
+
+        if (installInfo) {
+
+            installInfo.classList.remove(
+                "d-none"
+            );
+
+        }
+
+    }
+
+
+
+    // =====================================================
+    // SHOW INSTALLED MESSAGE
+    // =====================================================
+
+    function showInstalledState() {
+
+        hideInstallButtons();
+
+
+        if (installedMessage) {
+
+            installedMessage.classList.remove(
+                "d-none"
+            );
+
+        }
+
+    }
+
+
+
+    // =====================================================
+    // ALREADY INSTALLED
+    // =====================================================
+
+    if (smartMartIsInstalled()) {
+
+        showInstalledState();
+
+    }
+
+
+
+    // =====================================================
+    // BROWSER INSTALL EVENT
+    // =====================================================
+
+    window.addEventListener(
+        "beforeinstallprompt",
+        function (event) {
+
+            // Prevent browser from automatically
+            // showing its own installation prompt.
+
+            event.preventDefault();
+
+
+            // Save the prompt so that we can
+            // open it when the user clicks
+            // Install SmartMart.
+
+            smartMartInstallPrompt =
+                event;
+
+
+            // Show our SmartMart install buttons.
+
+            showInstallButtons();
+
+        }
+    );
+
+
+
+    // =====================================================
+    // INSTALL BUTTON CLICK
+    // =====================================================
+
+    installButtons.forEach(
+        function (button) {
+
+            button.addEventListener(
+                "click",
+                async function () {
+
+
+                    // =========================================
+                    // INSTALL PROMPT NOT AVAILABLE
+                    // =========================================
+
+                    if (!smartMartInstallPrompt) {
+
+
+                        // Check for iPhone / iPad.
+
+                        const isIOS =
+                            /iphone|ipad|ipod/i.test(
+                                window.navigator.userAgent
+                            );
+
+
+                        // =====================================
+                        // IOS
+                        // =====================================
+
+                        if (isIOS) {
+
+                            alert(
+
+                                "To install SmartMart on iPhone or iPad:\n\n" +
+
+                                "1. Open SmartMart in Safari.\n" +
+
+                                "2. Tap the Share button.\n" +
+
+                                "3. Choose Add to Home Screen."
+
+                            );
+
+                        }
+
+
+                        // =====================================
+                        // OTHER BROWSERS
+                        // =====================================
+
+                        else {
+
+                            alert(
+
+                                "SmartMart cannot show the install prompt yet. " +
+
+                                "Open the deployed SmartMart website using " +
+
+                                "Chrome or Edge and try again."
+
+                            );
+
+                        }
+
+
+                        return;
+
+                    }
+
+
+
+                    // =========================================
+                    // OPEN INSTALLATION PROMPT
+                    // =========================================
+
+                    smartMartInstallPrompt.prompt();
+
+
+
+                    // =========================================
+                    // WAIT FOR USER'S CHOICE
+                    // =========================================
+
+                    const choice =
+                        await smartMartInstallPrompt.userChoice;
+
+
+
+                    // =========================================
+                    // ACCEPTED
+                    // =========================================
+
+                    if (
+                        choice.outcome ===
+                        "accepted"
+                    ) {
+
+                        console.log(
+                            "SmartMart installation accepted."
+                        );
+
+                    }
+
+
+                    // =========================================
+                    // DISMISSED
+                    // =========================================
+
+                    else {
+
+                        console.log(
+                            "SmartMart installation dismissed."
+                        );
+
+                    }
+
+
+
+                    // The saved prompt cannot
+                    // be reused.
+
+                    smartMartInstallPrompt =
+                        null;
+
+
+                    hideInstallButtons();
+
+                }
+            );
+
+        }
+    );
+
+
+
+    // =====================================================
+    // INSTALLATION COMPLETED
+    // =====================================================
+
+    window.addEventListener(
+        "appinstalled",
+        function () {
+
+            smartMartInstallPrompt =
+                null;
+
+
+            showInstalledState();
+
+
+            console.log(
+                "SmartMart was installed successfully."
+            );
+
+        }
+    );
+
+}

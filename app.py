@@ -4223,9 +4223,9 @@ def delivery_change_password():
             )
 
 
-        # -----------------------------------------------------
+
         # HASH NEW PASSWORD
-        # -----------------------------------------------------
+
 
         hashed_password = generate_password_hash(
             new_password
@@ -4438,8 +4438,6 @@ def contact():
             ""
         ).strip()
 
-        # For now, display the submitted information.
-        # We can connect this to WhatsApp/email later.
 
         return render_template(
             "contact.html",
